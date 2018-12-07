@@ -1,6 +1,19 @@
 \expandafter\ifx\csname readornot\endcsname\relax
- \documentclass{jsarticle}
- \begin{document}
+  \documentclass[uplatex]{jsarticle}
+  \usepackage{octopus}
+  \usepackage{url}
+  \usepackage{tikz}
+
+  \renewcommand{\proofname}{\textsf{証明}}
+  \renewcommand{\postpartname}{章}
+  \renewcommand{\thesection}{\thepart.\arabic{section}}
+  \renewcommand{\thepart}{\arabic{part}}
+  \makeatletter\renewcommand{\theequation}{\thesection.\arabic{equation}}\@addtoreset{equation}{section}\makeatother
+
+  \newcommand{\octopuspart}[1]{\newpage\part{#1}\setcounter{section}{0}\vspace{3\baselineskip}}
+
+  \DeclareMathOperator{\dcup}{\dot{\cup}}
+  \begin{document}
 \fi
 
 \section{距離空間}
@@ -132,14 +145,50 @@
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[clip,width=0.8\columnwidth]{euclid_dist.png}
+    \newcommand{\makeaxis}{
+    \draw[thick, ->] (-2.5,0) -- (2.5,0) node [below] {$x$};%x軸
+    \draw[thick, ->] (0,-2.5) -- (0,2.5) node [left] {$y$};%y軸
+    \coordinate (O) at (0,0);
+    \node at (O) [above left] {$a$};
+    }
+    \centering    
+    \begin{tikzpicture}
+        \makeaxis
+        \draw[dashed] (O) circle (1.5);
+        \draw[->] (O) -- node[midway, right]{$\varepsilon$} (45:1.5);
+        \node at (-2,2) {$(\mathbb{R}^{2}, d_{2})$};
+    \end{tikzpicture}
+    \begin{tikzpicture}
+        \makeaxis
+        \draw[dashed] (1.5,0) -- (0,1.5) -- (-1.5,0) -- (0,-1.5) -- cycle;
+        \node at (1.5,0) [below] {$a + \varepsilon$};
+        \node at (-1.5,0) [below] {$a - \varepsilon$};
+        \node at (-2,2) {$(\mathbb{R}^{2}, d_{1})$};
+    \end{tikzpicture}
+    \begin{tikzpicture}
+        \makeaxis
+        \draw[dashed] (-1.5,-1.5) -- (1.5,-1.5) -- (1.5,1.5) -- (-1.5,1.5) -- cycle;
+        \node at (-1.5,0) [below left] {$a-\varepsilon$};
+        \node at (0,-1.5) [below right] {$a-\varepsilon$};
+        \node at (1.5,0) [above right] {$a+\varepsilon$};
+        \node at (0,1.5) [above right] {$a+\varepsilon$};
+        \node at (-2,2) {$(\mathbb{R}^{2}, d_{\infty})$};
+    \end{tikzpicture}
     \caption{距離空間$(\mathbb{R}^{2},d)$上の近傍の違い}
     \label{fig:euclid_dist}
 \end{figure}
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[clip,width=0.3\columnwidth]{in_ex_boundary.png}
+    \begin{tikzpicture}
+        \draw[dashed] (-30:2) arc (-30:210:2);
+        \fill [black!20] (0,0) circle [x radius=1.97, y radius=1.97];
+        \draw[thick] (210:2) arc (210:330:2);
+        \draw[<-] (-50:2.1) -- (-50:2.4) node[right] {\bf 外点};
+        \draw (20:0.5) node {\bf 内点};
+        \draw[<-] (160:2.1) -- (160:2.6) node[left] {\bf 境界点};
+        \draw (45:2.5) node {$A$};
+    \end{tikzpicture}
     \caption{$A \subseteq X$の内部，外部，境界}
     \label{fig:in_ex_boundary}
 \end{figure}
@@ -183,6 +232,23 @@
 
 \begin{proof}
     $\left( A^{\circ} \right)^{\circ} \subseteq A^{\circ}$より，$\supseteq$向きを示す。
+    $x \in A^{\circ}$とする。
+    \begin{equation}
+       \exists \varepsilon > 0, \quad N(x, \varepsilon) \subseteq A
+    \end{equation}
+    である。$N(x, \varepsilon) = N(x, \varepsilon)^{\circ} \subseteq A^{\circ}$，
+    つまり$N(x, \varepsilon) \subseteq A^{\circ}$である。
+    $x \in \left( A^{\circ} \right)^{\circ}$である。
+
+    $\overline{\overline{A}} \subseteq \overline{A}$より，$\subseteq$向きを示す。
+    $x \in \overline{\overline{A}}$とする。
+    \begin{equation}
+        \forall \varepsilon > 0, \quad N(x,\varepsilon) \cap \overline{A} \neq \emptyset
+    \end{equation}
+    である。$y \in N(x, \varepsilon) \cap \overline{A}$，$\delta := \varepsilon - d(x,y) > 0$とする。
+    $y \in \overline{A}$より$N(y, \delta) \cap A \neq \emptyset$である。
+    $N(y, \delta) \subseteq N(x,\varepsilon)$より，\footnote{上と同じロジックで}\,
+    $\emptyset \neq N(y, \delta) \cap A \subseteq N(x, \varepsilon) \cap A$である。よって，$x \in \overline{A}$である。
 \end{proof}
 
 \begin{prop}
@@ -192,7 +258,12 @@
 \end{prop}
 
 \begin{proof}
-    
+    \begin{align*}
+        A\text{が開でない} & \Longleftrightarrow \exists x \in A, \quad \forall \varepsilon > 0, \quad N(x, \varepsilon) \not\subseteq A \\
+        & \Longleftrightarrow \exists x \in A, \quad \forall \varepsilon > 0, \quad N(x, \varepsilon) \cap (X \setminus A) \neq \emptyset \\
+        & \Longleftrightarrow X \setminus A \text{が閉でない}
+    \end{align*}
+    ここで2行目の同値性は，$x$は$X \setminus A$の触点であるが$X \setminus A$でないことから従う。
 \end{proof}
 
 開集合全体の集合を\nw{開集合系}といい，記号$\mathcal{O}$で表す。
@@ -212,9 +283,16 @@
 \begin{proof}
     \midashi{1. } obvious.
 
-    \midashi{2. }
+    \midashi{2. } $x \in O_{1} \cap O_{2} \cap \dots \cap O_{k}$をとる。$i = 1,2,\dots,k$に対して$\varepsilon_{i} > 0$が存在して
+    \begin{equation}
+        N(x_{i}, \varepsilon_{i}) \subseteq O_{i}
+    \end{equation}
+    である。${\displaystyle \varepsilon := \min_{i} \varepsilon_{i}}$とすると，
+    $N(x, \varepsilon) \subseteq O_{1} \cap O_{2} \cap \dots \cap O_{k}$である。
+    $x$は$O_{1} \cap O_{2} \cap \dots \cap O_{k}$の内点である。よって，$\left( O_{1} \cap O_{2} \cap \dots \cap O_{k} \right)^{\circ} = O_{1} \cap O_{2} \cap \dots \cap O_{k}$である。
 
-    \midashi{3. }
+    \midashi{3. } ${x \in \displaystyle \bigcup_{\lambda \in \Lambda} O_{\lambda}}$とすると，
+    $\exists \lambda \in \Lambda, \quad x \in O_{\lambda}$である。${\displaystyle \exists \varepsilon > 0, \quad N(x, \varepsilon) \subseteq O_{\lambda} \subseteq \bigcup_{\lambda} O_{\lambda}}$とする。
 \end{proof}
 
 \begin{prop}
@@ -230,9 +308,15 @@
 \begin{proof}
     \midashi{1. } $\mathfrak{A} = \sets{ X \setminus O | O \in \mathcal{O}}$に注意すると明らか。
 
-    \midashi{2. }
+    \midashi{2. } $A_{i} = X \setminus O_{i}$とかくと，
+    \begin{equation}
+        A_{1} \cup A_{2} \cup \dots \cup A_{k}
+        = (X \setminus O_{1}) \cup (X \setminus O_{2}) \cup \dots \cup (X \setminus O_{k})
+        = X \setminus (O_{1} \cap O_{2} \cap \dots \cap O_{k}) \in \mathfrak{A}
+    \end{equation}
+    である。
 
-    \midashi{3. }
+    \midashi{3. } ${\displaystyle \bigcap_{\lambda \in \Lambda} A_{\lambda} = \bigcap_{\lambda \in \Lambda} (X \setminus O_{\lambda}) = X \setminus \bigcup_{\lambda \in \Lambda} O_{\lambda}}$であるから従う。
 \end{proof}
 
 収束性，連続性なども距離空間で定義できる。
@@ -248,6 +332,45 @@
         \forall \varepsilon > 0, \quad \exists \delta > 0, d(a,x) < \delta \Longrightarrow \left| f(a) - f(x) \right| < \varepsilon
     \end{equation}
 \end{teigi}
+
+では，$X$上の異なる距離$d$，$d'$の下で連続性や収束性も変わるのか。
+
+$\longrightarrow$位相空間の考え方へ
+
+実際，開集合系を与える（空間に「位相」を与える）ことによって，
+連続性や収束性が定義でき，
+開集合系が同じとき，連続性や収束性も等しくなる。
+
+\begin{rei}
+    $(\mathbb{R}^{n},d_{2})$と$(\mathbb{R}^{n},d_{\infty})$が定義する開集合系は等しい。（位相は等しい）
+    \begin{proof}
+        $A$：$d_{2}$の下で開集合とする。
+        $x \in A$をとる。$\exists \varepsilon > 0, \quad N_{2}(x,\varepsilon) \subseteq A$である。
+        $\exists c > 0, \quad N_{\infty} (x, c \varepsilon) \subseteq N_{2} (x, \varepsilon) \subseteq A$である。
+        $A$は$d_{\infty}$の下でも開。逆も同様に言える。 
+    \end{proof}
+    結局，連続性や収束性はどちらの距離で考えても同じになる。
+\end{rei}
+
+\begin{rei}
+    $\mathbb{R}^{n}$上のノルム$\left\| \cdot \right\|$とは，
+    \begin{itemize}
+        \vspace{-0.5\baselineskip}
+        \item $\left\| v \right\| \ge 0$，\qquad $\left\| v \right\| = 0 \Longleftrightarrow v = 0$
+        \item $\forall a \in \mathbb{R}$，$v \in \mathbb{R}^{n}$，$\left\| av \right\| = \left| a \right| \left\| v \right\|$
+        \item $\forall u,v \in \mathbb{R}^{n}$，$\left\| u + v \right\| \le \left\| u \right\| + \left\| v \right\|$
+        \vspace{-0.5\baselineskip}
+    \end{itemize}
+    を満たすものである。このとき，$d(x,y) := \left\| x - y \right\|$で定義すると距離関数である。
+\end{rei}
+
+
+\midashi{知っておいてほしいこと}
+\begin{itemize}
+    \vspace{-0.5\baselineskip}
+    \item $\mathbb{R}^{n}$上のどんなノルムを定める「位相」は等しい。
+    \item 無限次元では，そうはいかない（{\bf らしい}）。
+\end{itemize}
 
 \expandafter\ifx\csname readornot\endcsname\relax
   \end{document}

@@ -1,6 +1,18 @@
 \expandafter\ifx\csname readornot\endcsname\relax
- \documentclass{jsarticle}
- \begin{document}
+  \documentclass[uplatex]{jsarticle}
+  \usepackage{octopus}
+  \usepackage{url}
+
+  \renewcommand{\proofname}{\textsf{証明}}
+  \renewcommand{\postpartname}{章}
+  \renewcommand{\thesection}{\thepart.\arabic{section}}
+  \renewcommand{\thepart}{\arabic{part}}
+  \makeatletter\renewcommand{\theequation}{\thesection.\arabic{equation}}\@addtoreset{equation}{section}\makeatother
+
+  \newcommand{\octopuspart}[1]{\newpage\part{#1}\setcounter{section}{0}\vspace{3\baselineskip}}
+
+  \DeclareMathOperator{\dcup}{\dot{\cup}}
+  \begin{document}
 \fi
 
 \section{双対空間}
