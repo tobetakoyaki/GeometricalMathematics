@@ -7,15 +7,51 @@
   \renewcommand{\postpartname}{章}
   \renewcommand{\thesection}{\thepart.\arabic{section}}
   \renewcommand{\thepart}{\arabic{part}}
+  \renewcommand{\restriction}[2]{\left. #1 \right|_{#2}}
   \makeatletter\renewcommand{\theequation}{\thesection.\arabic{equation}}\@addtoreset{equation}{section}\makeatother
 
   \newcommand{\octopuspart}[1]{\newpage\part{#1}\setcounter{section}{0}\vspace{3\baselineskip}}
 
   \DeclareMathOperator{\dcup}{\dot{\cup}}
+  % sub-resume-7.tex
   \begin{document}
 \fi
 
 \section{被覆空間}
+\begin{teigi}[被覆空間]
+  $E,X$を位相空間，$p\colon E \to X$を全射な連続関数とする．任意の$x\in X$について$x$の開近傍$U$が存在し，$p^{-1}(U)$が$E$の互いに交わらない開集合$V_\alpha$で表されているとする．このとき，$\restriction{p}{V_\alpha} \colon V_\alpha \to U$が同相写像であるとき，$p$を被覆写像(covering map)，$E$を$X$の被覆空間という．
+\end{teigi}
+
+\begin{rei}
+  $\mathbb{R}$は$S^1$の被覆空間．
+\end{rei}
+
+\begin{teigi}[リフト]
+  $p\colon E\to X$，$f\colon Y\to X$をそれぞれ連続写像とする．このとき$f$のリフト$\tilde{f}\colon Y\to E$を$p\circ \tilde{f} = f$を満たすものとして定義する．
+\end{teigi}
+
+\begin{teiri}
+  $f\colon \left[0,1\right]\to X$をパス，$f(0)=x_0$とする．このとき，$\tilde{x}_0 \in p^{-1}(\{x_0\})$に対して$f$のリフト$\tilde{f}\colon \left[0,1\right]\to E,\tilde{f}(0)=\tilde{x}_0$が一意に存在する．
+\end{teiri}
+\begin{proof}
+  自明
+\end{proof}
+
+\begin{teiri}
+  $f_t \colon \left[0,1\right]\to X$をパスのホモトピー，$f_t(0)=x_0$とする．このとき，$\tilde{x}_0 \in p^{-1}(\{x_0\})$に対して$f_t$のリフト$\tilde{f_t}\colon \left[0,1\right]\to E,\tilde{f_t}(0)=\tilde{x}_0$が一意に存在する．
+\end{teiri}
+\begin{proof}
+  自明
+\end{proof}
+\begin{teiri}
+  $p\colon E\to X$を被覆写像，とする．このとき，$E$が弧状連結なら$\phi$は全射，$E$が単連結なら$\phi$は全単射となる．
+\end{teiri}
+\begin{proof}
+  自明
+\end{proof}
+\begin{teiri}
+  $\pi_1(S^1) \simeq \mathbb{Z}$
+\end{teiri}
 
 \expandafter\ifx\csname readornot\endcsname\relax
   \end{document}
