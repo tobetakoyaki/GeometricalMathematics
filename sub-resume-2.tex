@@ -6,6 +6,7 @@
   \renewcommand{\proofname}{\textsf{証明}}
   \renewcommand{\postpartname}{章}
   \renewcommand{\thesection}{\thepart.\arabic{section}}
+  \renewcommand{\thesubsection}{\thepart.\arabic{section}.\arabic{subsection}}
   \renewcommand{\thepart}{\arabic{part}}
   \makeatletter\renewcommand{\theequation}{\thesection.\arabic{equation}}\@addtoreset{equation}{section}\makeatother
 
@@ -16,6 +17,7 @@
 \fi
 
 \section{位相空間}
+\subsection{位相空間}
 
 $X$を非空な集合とする。$X$は「\nw{位相}」（topology）を入れて「空間」にする。
 「位相」を入れるとは，$X$の開集合族を指定することである。
@@ -29,8 +31,144 @@ $X$を非空な集合とする。$X$は「\nw{位相}」（topology）を入れ�
 
   \midashi{O3. } 任意の集合$\Lambda$に対して$O_{\lambda} \in \mathcal{O}$（$\forall \lambda \in \Lambda$） ${\displaystyle \Longrightarrow \bigcup_{\lambda \in \Lambda} O_{\lambda} \in \mathcal{O}}$
 
-  $\mathcal{O}$の元を\nw{開集合}という。
+  $\mathcal{O}$の元を\nw{開集合}という。また，開集合族$\mathcal{O}$が指定された集合$X$を\nw{位相空間}という。
+  これを$(X,\mathcal{O})$で表すこともある。
 \end{teigi}
+
+\begin{rei}
+  \begin{itemize}
+    \item \nw{離散位相} $\mathcal{O} = 2^{X}$
+    \item \nw{密着位相} $\mathcal{O} = \sets{\emptyset, X}$
+    \item 距離空間$(X,d)$；$\mathcal{O} := \sets{O \subseteq X | \forall x \in O, \quad \exists \varepsilon > 0, \quad N(x, \varepsilon) \subseteq O}$
+    （これは距離空間のところで定義した開集合の集まり）
+  \end{itemize}
+\end{rei}
+
+距離空間のときに定義したいくつかの用語を位相空間の言葉で記述し直す。
+
+\begin{itemize}
+  \vspace{-0.5\baselineskip}
+  \item $A \subseteq X$の内部$A^{\circ}$
+  \begin{equation}
+    A^{\circ} := \bigcup \sets{O \in \mathcal{O} | O \subseteq A} \in \mathcal{O}
+  \end{equation}
+  これは$A$に含まれる最大の開集合のこと。$A$の内点$x$とは$A^{\circ}$の元のこと。
+  \item 閉集合とは，ある開集合の補集合になっているものとする。
+  すると，閉集合族$\mathfrak{A}$は以下を満たす。：
+
+  \midashi{A1. } $X \in \mathfrak{A}$，$\emptyset \in \mathfrak{A}$
+
+  \midashi{A2. } $F_{1}, F_{2}, \dots, F_{k} \in \mathfrak{A} \Longrightarrow F_{1} \cup F_{2} \cup \dots \cup F_{k} \in \mathfrak{A}$
+
+  \midashi{A3. } 任意の集合$\Lambda$に対して$F_{\lambda} \in \mathfrak{A} $（$\lambda \in \Lambda$）$\Longrightarrow {\displaystyle \bigcap_{\lambda} F_{\lambda} \in \mathfrak{A}}$
+
+  \item $A$の閉包$\overline{A}$
+  \begin{equation}
+    \overline{A} := \bigcap \sets{F \in \mathfrak{A} | A \subseteq F} \in \mathfrak{A}
+  \end{equation}
+  これは$A$を含む最小の閉集合のこと。$A$の触点$x$とは$\overline{A}$の元のこと。
+  \item $N$が$x \in X$の近傍であるとは，$x \in N^{\circ}$となること，すなわち，
+  \begin{equation}
+    \exists O \in \mathcal{O}, \quad x \in O \subseteq N
+  \end{equation}
+  となること。特に$N$が開集合であるとき，$N$を$x$の開近傍という。
+  \item $\mathcal{N}(x)$：$x$の近傍全体
+  \vspace{-0.5\baselineskip}
+\end{itemize}
+
+位相の与え方にはいろいろある。
+
+\begin{enumerate}
+  \item {\bf (A1)}，{\bf (A2)}，{\bf (A3)}を満たす集合族$\mathfrak{A}$（閉集合族）を指定する。
+  \item 各$A \subseteq X$に$A^{\circ}$を対応させる写像$2^{X} \longrightarrow 2^{X}$を指定する。（\nw{開核作用子}）
+  \item 各$A \subseteq X$に$\overline{A}$を対応させる写像$2^{X} \longrightarrow 2^{X}$を指定する。（\nw{閉包作用子}）
+  \item 各点$x$に$\mathcal{N}(x)$を対応させる写像$X \longrightarrow 2^{2^{X}}$を指定する。
+\end{enumerate}
+
+ただし，指定する写像はどんなものでもいいわけではない。
+それぞれある条件を満たすような写像に限られる。
+例えば，閉包作用子$\tau \colon 2^{X} \longrightarrow 2^{X}$は次を満たす必要がある。
+\begin{itemize}
+  \vspace{-0.5\baselineskip}
+  \item $\tau (\emptyset) = \emptyset$
+  \item $A \subseteq \tau(A)$
+  \item $\tau (A \cup B) = \tau (A) \cup \tau (B)$
+  \item $\tau (\tau (A)) = \tau (A)$
+  \vspace{-0.5\baselineskip}
+\end{itemize}
+
+これらから自然に開集合族が決まる。
+例えば，閉包作用子に対しては，$A = \tau (A)$となるような$A$を閉集合と定める。
+詳細は演習。
+
+\subsection{連続写像}
+\renewcommand{\arraystretch}{0.8}
+\begin{tabular}{ll@{\,}l@{\,}l}
+  位相空間 & $X$， & $\mathcal{O}_{X}$：開集合族， & $\mathfrak{A}_{X}$：閉集合族 \\
+           & $Y$， & $\mathcal{O}_{Y}$：開集合族， & $\mathfrak{A}_{X}$：閉集合族
+\end{tabular}
+
+\begin{teigi}
+  写像$f \colon X \longrightarrow Y$が$x \in X$で\nw{連続} $\defines$ 
+  「$\forall N$：$f(x)$の近傍 $\Longrightarrow$ $f^{-1}(N)$は$x$の近傍」
+\end{teigi}
+
+\midashi{距離空間の場合の連続性}
+\begin{align*}
+  x \in X \text{で連続} & \Longleftrightarrow \forall \varepsilon > 0, \quad \exists \delta > 0, \quad d_{X} (x,y) < \delta \Longrightarrow d_{Y}(f(x), f(y)) < \varepsilon \\
+  & \Longleftrightarrow \forall \varepsilon > 0, \quad \exists \delta > 0, \quad N(x,\delta) \subseteq f^{-1} (N(f(x), \varepsilon)) \\
+  & \Longleftrightarrow f(x) \text{の任意の近傍の逆像は} x \text{の近傍}
+\end{align*}
+
+\begin{teiri}
+  以下の{\bf (1)},{\bf (2)},{\bf (3)}は同値。：
+  
+  \midashi{(1)} $f$は$X$の各点で連続
+
+  \midashi{(2)} $\forall O \in \mathcal{O}_{Y}, \quad f^{-1}(O) \in \mathcal{O}_{X}$
+
+  \midashi{(3)} $\forall F \in \mathfrak{A}_{Y}, \quad f^{-1}(F) \in \mathfrak{A}_{X}$
+\end{teiri}
+
+\begin{proof}
+  \midashi{(1) $\Longrightarrow$ (2)：}
+
+  \midashi{(2) $\Longrightarrow$ (3)：}
+
+  \midashi{(3) $\Longrightarrow$ (2)：}
+
+  \midashi{(2) $\Longrightarrow$ (1)：}
+\end{proof}
+
+演習：全単射連続写像であって同相でないものの例を与えよ。
+
+\begin{teigi}
+  \midashi{(1)} $f \colon X \longrightarrow Y$が\nw{連続} $\defines$ 上の{\bf (1)}から{\bf (3)}のどれかの条件を満たす
+
+  \midashi{(2)} $f \colon X \longrightarrow Y$が\nw{同相}（homeomorphic） $\defines$ $f$：連続全単射 かつ $f^{-1} \colon Y \longrightarrow X$：連続
+
+  $X$と$Y$の間に同相写像が存在するとき，$X$と$Y$は\nw{同相}あるいは\nw{位相同型}といい，
+  記号$X \simeq Y$で表す。
+\end{teigi}
+
+\begin{teigi}
+  $X$上の2つの位相$\mathcal{O}$，$\mathcal{O}'$を考える。
+  $\mathcal{O} \subseteq \mathcal{O}'$のとき，
+  「$\mathcal{O}$は$\mathcal{O}'$より\nw{弱い}位相である」，「$\mathcal{O}'$は$\mathcal{O}$より\nw{強い}位相である」という。
+\end{teigi}
+
+つまり，$\mathcal{O}$で連続な写像は，$\mathcal{O}'$でも連続な写像になる。
+
+\subsection{いろいろな位相}
+
+\begin{teigi}
+  $X$：集合，$(Y,\mathcal{O}_{Y})$：位相空間，$f \colon X \longrightarrow Y$とする。
+  \begin{equation}
+    \mathcal{O}_{X} := \sets{f^{-1}(O) | O \in \mathcal{O}_{Y}}
+  \end{equation}
+  を$f$による\nw{誘導位相}という。
+\end{teigi}
+
 
 
 \expandafter\ifx\csname readornot\endcsname\relax
