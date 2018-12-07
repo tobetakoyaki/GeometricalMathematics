@@ -27,7 +27,13 @@
 \end{rei}
 
 \begin{teigi}[リフト]
-  $p\colon E\to X$，$f\colon Y\to X$をそれぞれ連続写像とする．このとき$f$のリフト$\tilde{f}\colon Y\to E$を$p\circ \tilde{f} = f$を満たすものとして定義する．
+  $p\colon E\to X$，$f\colon Y\to X$をそれぞれ連続写像とする．このとき$f$のリフト$\tilde{f}\colon Y\to E$を$p\circ \tilde{f} = f$を満たすものとして定義する．つまり$\tilde{f}$は以下を可換にする．
+  \begin{align*}
+    \begin{diagram}
+      \node{ } \node{E} \arrow{s,r}{p}\\
+      \node{Y} \arrow{ne,t}{\tilde{f}} \arrow{e,b}{f} \node{X}
+    \end{diagram}
+  \end{align*}
 \end{teigi}
 
 \begin{teiri}
