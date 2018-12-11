@@ -18,7 +18,7 @@
 
 \section{距離空間}
 
-\begin{teigi}
+\begin{teigi}[距離空間]
     $X$を非空な集合，$d: \, X \times X \to \mathbb{R}$を実数値関数とする。次の三つの条件{\bf D1}，{\bf D2}，{\bf D3}を考える。
     
     \midashi{D1. } $\forall x, y \in X, \quad d(x,y) \ge 0$，\qquad $d(x,y) = 0 \quad \Longleftrightarrow \quad x = y$
@@ -112,7 +112,7 @@
 
 以下，$(X,d)$を距離空間とする。
 
-\begin{teigi}
+\begin{teigi}[内点・外点・境界点・触点]
     \midashi{1. } $a \in X$，$\varepsilon > 0$とする。集合$N(a,\varepsilon) := \sets{x \in X | d(a,x) < \varepsilon}$を，$a$の\nw{$\varepsilon$-近傍}という。
 
     \midashi{2. } $A \subseteq X$の\nw{内点}とは，次の条件を満たす点$x \in X$のこと：
@@ -202,7 +202,7 @@
     & \overline { A } = A ^ { \circ } \cup \partial A
 \end{align}
 
-\begin{teigi}
+\begin{teigi}[開集合・閉集合]
     \begin{equation*}
         \begin{array}{lcccl}
             A \subseteq X \text{：\nw{開集合}} & \defines & \forall x \in A, \quad \exists \varepsilon > 0, \quad  N(x , \varepsilon ) \subseteq A & \Longleftrightarrow & A = A^{\circ} \\
@@ -245,7 +245,7 @@
     \end{equation}
     である。$y \in N(x, \varepsilon) \cap \overline{A}$，$\delta := \varepsilon - d(x,y) > 0$とする。
     $y \in \overline{A}$より$N(y, \delta) \cap A \neq \emptyset$である。
-    $N(y, \delta) \subseteq N(x,\varepsilon)$より，\footnote{上と同じロジックで}\,
+    $N(y, \delta) \subseteq N(x,\varepsilon)$より，上と同じロジックで
     $\emptyset \neq N(y, \delta) \cap A \subseteq N(x, \varepsilon) \cap A$である。よって，$x \in \overline{A}$である。
 \end{proof}
 
@@ -319,7 +319,7 @@
 
 収束性，連続性なども距離空間で定義できる。
 
-\begin{teigi}
+\begin{teigi}[収束性・連続性]
     \midashi{1. } $a_{i} \in X$（$i=1,2,\dots$）：\nw{収束}とは，
     \begin{equation}
         \lim_{i \to \infty} a_{i} = a \defines \lim_{i \to \infty} d(a, a_{i}) = 0

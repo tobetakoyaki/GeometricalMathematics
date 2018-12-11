@@ -6,23 +6,23 @@
   \renewcommand{\proofname}{\textsf{証明}}
   \renewcommand{\postpartname}{章}
   \renewcommand{\thesection}{\thepart.\arabic{section}}
-  \renewcommand{\thesubsection}{\thepart.\arabic{section}.\arabic{subsection}}
   \renewcommand{\thepart}{\arabic{part}}
   \makeatletter\renewcommand{\theequation}{\thesection.\arabic{equation}}\@addtoreset{equation}{section}\makeatother
-
+  
   \newcommand{\octopuspart}[1]{\newpage\part{#1}\setcounter{section}{0}\vspace{3\baselineskip}}
-
+  
   \DeclareMathOperator{\dcup}{\dot{\cup}}
   \begin{document}
-\fi
-
+  \fi
+\renewcommand{\thesubsection}{\thepart.\arabic{section}.\arabic{subsection}}
+  
 \section{位相空間}
 \subsection{位相空間}
 
 $X$を非空な集合とする。$X$は「\nw{位相}」（topology）を入れて「空間」にする。
 「位相」を入れるとは，$X$の開集合族を指定することである。
 
-\begin{teigi}
+\begin{teigi}[位相]
   以下を満たす開集合系$\mathcal{O} \subseteq 2^{X}$を\nw{位相}という。
 
   \midashi{O1. } $X \in \mathcal{O}$，$\emptyset \in \mathcal{O}$
@@ -107,13 +107,14 @@ $X$を非空な集合とする。$X$は「\nw{位相}」（topology）を入れ�
   位相空間 & $X$， & $\mathcal{O}_{X}$：開集合族， & $\mathfrak{A}_{X}$：閉集合族 \\
            & $Y$， & $\mathcal{O}_{Y}$：開集合族， & $\mathfrak{A}_{X}$：閉集合族
 \end{tabular}
+\renewcommand{\arraystretch}{1}
 
-\begin{teigi}
+\begin{teigi}[連続性]
   写像$f \colon X \longrightarrow Y$が$x \in X$で\nw{連続} $\defines$ 
   「$\forall N$：$f(x)$の近傍 $\Longrightarrow$ $f^{-1}(N)$は$x$の近傍」
 \end{teigi}
 
-\midashi{距離空間の場合の連続性}
+\midashi{距離空間の連続性との同値性}
 \begin{align*}
   x \in X \text{で連続} & \Longleftrightarrow \forall \varepsilon > 0, \quad \exists \delta > 0, \quad d_{X} (x,y) < \delta \Longrightarrow d_{Y}(f(x), f(y)) < \varepsilon \\
   & \Longleftrightarrow \forall \varepsilon > 0, \quad \exists \delta > 0, \quad N(x,\delta) \subseteq f^{-1} (N(f(x), \varepsilon)) \\
@@ -131,37 +132,49 @@ $X$を非空な集合とする。$X$は「\nw{位相}」（topology）を入れ�
 \end{teiri}
 
 \begin{proof}
-  \midashi{(1) $\Longrightarrow$ (2)：}
+  \midashi{(1) $\Longrightarrow$ (2)：} $O \in \mathcal{O}_{Y}$を任意にとり，$x \in f^{-1}(O)$とする。$O$は$f(x)$の開近傍である。
+  連続性の定義からある$x$の開近傍$O_{x}$が存在して，$O_{x} \subseteq f^{-1} (O)$である。
+  \begin{equation}
+    f^{-1} (O) = \bigcup_{x \in f^{-1}(O)} \sets{x} \subseteq \bigcup_{x \in f^{-1}(O)} O_{x} \subseteq f^{-1}(O)
+  \end{equation}
+  であるから，${\displaystyle f^{-1}(O) = \bigcup_{x \in f^{-1} (O)} O_{x} \in \mathcal{O}_{X}}$である。
 
-  \midashi{(2) $\Longrightarrow$ (3)：}
+  \midashi{(2) $\Longrightarrow$ (3)：} $F \in \mathfrak{A}_{Y}$を任意にとる。$Y \setminus F \in \mathcal{O}_{Y}$であり，
+  したがって，$f^{-1} (Y \setminus F) = X \setminus f^{-1}(F) \in \mathcal{O}_{X}$である。
+  よって，$f^{-1} (F) \in \mathfrak{A}_{X}$である。
 
-  \midashi{(3) $\Longrightarrow$ (2)：}
+  \midashi{(3) $\Longrightarrow$ (2)：} $O \in \mathcal{O}_{Y}$を任意にとる。$Y \setminus O \in \mathfrak{A}_{Y}$であり，
+  したがって，$f^{-1} (Y \setminus O) = X \setminus f^{-1} (O) \in \mathfrak{A}_{X}$である。
+  よって，$f^{-1} (O) \in \mathcal{O}_{X}$である。
 
-  \midashi{(2) $\Longrightarrow$ (1)：}
+  \midashi{(2) $\Longrightarrow$ (1)：} $x \in X$を任意にとる。$N$を$f(x)$の近傍として，その内部を$O := N^{\circ}$とすれば$f(x) \in O$である。
+  {\bf (2)}より$f^{-1}(O) \in \mathcal{O}_{X}$であってこれは$x$の開近傍である。
+  $x \in f^{-1} (O) \subseteq f^{-1} (N)$である。
 \end{proof}
 
-演習：全単射連続写像であって同相でないものの例を与えよ。
-
-\begin{teigi}
+\begin{teigi}[同相]
   \midashi{(1)} $f \colon X \longrightarrow Y$が\nw{連続} $\defines$ 上の{\bf (1)}から{\bf (3)}のどれかの条件を満たす
-
+  
   \midashi{(2)} $f \colon X \longrightarrow Y$が\nw{同相}（homeomorphic） $\defines$ $f$：連続全単射 かつ $f^{-1} \colon Y \longrightarrow X$：連続
-
+  
   $X$と$Y$の間に同相写像が存在するとき，$X$と$Y$は\nw{同相}あるいは\nw{位相同型}といい，
   記号$X \simeq Y$で表す。
 \end{teigi}
 
-\begin{teigi}
+\midashi{演習：}全単射連続写像であって同相でないものの例を与えよ。
+
+\begin{teigi}[位相の強弱]
   $X$上の2つの位相$\mathcal{O}$，$\mathcal{O}'$を考える。
   $\mathcal{O} \subseteq \mathcal{O}'$のとき，
   「$\mathcal{O}$は$\mathcal{O}'$より\nw{弱い}位相である」，「$\mathcal{O}'$は$\mathcal{O}$より\nw{強い}位相である」という。
 \end{teigi}
 
 つまり，$\mathcal{O}$で連続な写像は，$\mathcal{O}'$でも連続な写像になる。
+{\footnotesize「使ったことない」「弱い強い混乱するわロクでもない概念」などと。}
 
 \subsection{いろいろな位相}
 
-\begin{teigi}
+\begin{teigi}[誘導位相]
   $X$：集合，$(Y,\mathcal{O}_{Y})$：位相空間，$f \colon X \longrightarrow Y$とする。
   \begin{equation}
     \mathcal{O}_{X} := \sets{f^{-1}(O) | O \in \mathcal{O}_{Y}}
@@ -169,7 +182,41 @@ $X$を非空な集合とする。$X$は「\nw{位相}」（topology）を入れ�
   を$f$による\nw{誘導位相}という。
 \end{teigi}
 
+$f^{-1} (O \cup O') = f^{-1} (O) \cup f^{-1} (O')$，
+$f^{-1} (O \cap O') = f^{-1} (O) \cap f^{-1} (O')$に注意すると，位相の定義の条件を満たすことは理解できる。
 
+\begin{teigi}[相対位相]
+  $(X, \mathcal{O}_{X})$：位相空間，$Z \subseteq X$：部分集合。
+  \begin{equation}
+    \mathcal{O}_{Z} := \sets{O \cap Z | O \in \mathcal{O}_{X}}
+  \end{equation}
+  とすると，$(Z, \mathcal{O}_{Z})$は$(X, \mathcal{O}_{X}$の部分（位相）空間をなす。
+  この位相を\nw{誘導位相}という。
+\end{teigi}
+
+誘導位相は包含写像$Z \hookrightarrow X$による誘導位相でもある。
+
+\sukima \midashi{直積位相}
+
+$(X, \mathcal{O}_{X})$，$(Y, \mathcal{O}_{Y})$：位相空間として，
+直積$X \times Y = \sets{(x,y) | x \in X, y \in Y}$に位相を与えたい。しかし，
+\begin{equation}
+  \mathcal{B} := \sets{O \times O' | O \in \mathcal{O}_{X}, O' \in \mathcal{O}_{Y}}
+\end{equation}
+は開集合の条件を満たさない。そこで$\mathcal{B}$が「生成する」位相$\mathcal{O}_{X} \times \mathcal{O}_{Y}$を
+\begin{equation}
+  \mathcal{O}_{X} \times \mathcal{O}_{Y} := \sets{ \bigcup_{W \in \mathcal{B}'} W | \mathcal{B}' \subseteq \mathcal{B}}
+\end{equation}
+で定めると，$(X \times Y, \mathcal{O}_{X} \times \mathcal{O}_{Y})$は位相空間になる。
+
+3つ以上の位相空間に対しても同様にして直積位相を定めることができる。
+
+\begin{rei}[$(\mathbb{R}^{2}, d_{2})$の位相]
+  $x$の$d_{2}$の下での$\varepsilon$-近傍に含まれる$d_{\infty}$の下での$\varepsilon'$-近傍をとることができる。
+  $\mathbb{R}^{2}$の開集合は$d_{\infty}$の近傍たちの和集合で書くことができる。
+  $d_{\infty}$の$\varepsilon'$-近傍はすべて$\mathcal{B}$の元である。
+  よって，$\mathbb{R}^{2}$の位相は$\mathbb{R} \times \mathbb{R}$の直積位相に等しい。
+\end{rei}
 
 \expandafter\ifx\csname readornot\endcsname\relax
   \end{document}
