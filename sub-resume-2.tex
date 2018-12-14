@@ -17,7 +17,6 @@
 \renewcommand{\thesubsection}{\thepart.\arabic{section}.\arabic{subsection}}
   
 \section{位相空間}
-\subsection{位相空間}
 
 $X$を非空な集合とする。$X$は「\nw{位相}」（topology）を入れて「空間」にする。
 「位相」を入れるとは，$X$の開集合族を指定することである。
@@ -101,11 +100,13 @@ $X$を非空な集合とする。$X$は「\nw{位相}」（topology）を入れ�
 例えば，閉包作用子に対しては，$A = \tau (A)$となるような$A$を閉集合と定める。
 詳細は演習。
 
-\subsection{連続写像}
+\sukima \midashi{\large 連続写像}
+
 \renewcommand{\arraystretch}{0.8}
+\vspace{0.2\baselineskip}
 \begin{tabular}{ll@{\,}l@{\,}l}
   位相空間 & $X$， & $\mathcal{O}_{X}$：開集合族， & $\mathfrak{A}_{X}$：閉集合族 \\
-           & $Y$， & $\mathcal{O}_{Y}$：開集合族， & $\mathfrak{A}_{X}$：閉集合族
+           & $Y$， & $\mathcal{O}_{Y}$：開集合族， & $\mathfrak{A}_{Y}$：閉集合族
 \end{tabular}
 \renewcommand{\arraystretch}{1}
 
@@ -172,7 +173,9 @@ $X$を非空な集合とする。$X$は「\nw{位相}」（topology）を入れ�
 つまり，$\mathcal{O}$で連続な写像は，$\mathcal{O}'$でも連続な写像になる。
 {\footnotesize「使ったことない」「弱い強い混乱するわロクでもない概念」などと。}
 
-\subsection{いろいろな位相}
+\sukima \midashi{\large いろいろな位相}
+
+\newcommand{\dtimes}{\times\mkern-16mu\times}
 
 \begin{teigi}[誘導位相]
   $X$：集合，$(Y,\mathcal{O}_{Y})$：位相空間，$f \colon X \longrightarrow Y$とする。
@@ -203,11 +206,11 @@ $(X, \mathcal{O}_{X})$，$(Y, \mathcal{O}_{Y})$：位相空間として，
 \begin{equation}
   \mathcal{B} := \sets{O \times O' | O \in \mathcal{O}_{X}, O' \in \mathcal{O}_{Y}}
 \end{equation}
-は開集合の条件を満たさない。そこで$\mathcal{B}$が「生成する」位相$\mathcal{O}_{X} \times \mathcal{O}_{Y}$を
+は開集合の条件を満たさない。そこで$\mathcal{B}$が「生成する」位相$\mathcal{O}_{X} \dtimes \mathcal{O}_{Y}$を
 \begin{equation}
-  \mathcal{O}_{X} \times \mathcal{O}_{Y} := \sets{ \bigcup_{W \in \mathcal{B}'} W | \mathcal{B}' \subseteq \mathcal{B}}
+  \mathcal{O}_{X} \dtimes \mathcal{O}_{Y} := \sets{ \bigcup_{W \in \mathcal{B}'} W | \mathcal{B}' \subseteq \mathcal{B}}
 \end{equation}
-で定めると，$(X \times Y, \mathcal{O}_{X} \times \mathcal{O}_{Y})$は位相空間になる。
+で定めると，$(X \times Y, \mathcal{O}_{X} \dtimes \mathcal{O}_{Y})$は位相空間になる。
 
 3つ以上の位相空間に対しても同様にして直積位相を定めることができる。
 
@@ -216,6 +219,135 @@ $(X, \mathcal{O}_{X})$，$(Y, \mathcal{O}_{Y})$：位相空間として，
   $\mathbb{R}^{2}$の開集合は$d_{\infty}$の近傍たちの和集合で書くことができる。
   $d_{\infty}$の$\varepsilon'$-近傍はすべて$\mathcal{B}$の元である。
   よって，$\mathbb{R}^{2}$の位相は$\mathbb{R} \times \mathbb{R}$の直積位相に等しい。
+\end{rei}
+
+\sukima \midashi{商位相}
+
+2つの位相空間を貼り合わせて新たな位相空間を作りたい。
+% 貼り合わせる図 if needed
+
+\begin{itemize}
+  \vspace{-0.5\baselineskip}
+  \item まず$X$と$Y$の直和$X \amalg Y$を考える。$X \amalg Y$に位相を入れる。
+  $\mathcal{O}_{X \amalg Y} := \sets{O \cup O' | O \in \mathcal{O}_{X}, O' \in \mathcal{O}_{Y}}$
+  \item 同一視したい点たちを同値関係$\sim$で同一視して，商集合$(X \amalg Y) / \sim$を作る。
+  \item 商集合に商位相を入れる。
+  \vspace{-0.5\baselineskip}
+\end{itemize}
+
+位相空間$(X,\mathcal{O})$，$\sim$：$X$上の同値関係，
+$X / \sim$：商集合，$\varphi \colon X \longrightarrow X / \sim$：自然な射影（自身を代表元とする同値類を返す）
+\begin{equation}
+  {\mathcal{O} / \sim} := \sets{H \subseteq {X / \sim} | \varphi^{-1}(H) \subseteq \mathcal{O}}
+\end{equation}
+$({X / \sim}, {\mathcal{O} / \sim})$は位相空間になる。
+%よくわからない絵
+
+\sukima \midashi{\large 重要な位相空間の例}
+
+$\mathbb{R}^{n}$：Euclid空間（位相はEuclid距離から）
+
+\begin{itemize}
+  \vspace{-0.5\baselineskip}
+  \item $S^{n}$：$n$次元球面
+  \begin{equation}
+    S^{n} := \sets{x \in \mathbb{R}^{n+1} | \sum_{j=1}^{n+1} {x_{j}}^{2} = 1}
+  \end{equation}
+  位相は$\mathbb{R}^{n+1}$からの相対位相とする。
+
+  \item $D^{n}$：$n$次元ディスク
+  \begin{equation}
+    D^{n} := \sets{x \in \mathbb{R}^{n} | \sum_{j=1}^{n} {x_{j}}^{2} \le 1}
+  \end{equation}
+
+  \begin{center}
+    $D^{2} \simeq$
+    \begin{tikzpicture}[baseline=12pt] \filldraw[fill opacity=.3,draw = black] (0,0) rectangle (1,1); \end{tikzpicture}
+      , \quad $S^{2} \simeq {D^{2} / \sim} \simeq$
+    \begin{tikzpicture}[baseline=12pt]
+      \filldraw[fill opacity=.3, draw = black] (0,0) rectangle (1,1);
+      \draw (0.55,-0.1) -- (0.45, 0) -- (0.55,0.1);
+      \draw (0.9,0.45) -- (1, 0.55) -- (1.1,0.45);
+      \draw (-0.1,0.6) -- (0, 0.5) -- (0.1,0.6);
+      \draw (-0.1,0.5) -- (0, 0.4) -- (0.1,0.5);
+      \draw (0.4,1.1) -- (0.5,1) -- (0.4,0.9);
+      \draw (0.5,1.1) -- (0.6,1) -- (0.5,0.9);
+    \end{tikzpicture}
+  \end{center}
+
+  \item $P^{n}$：射影空間
+  \begin{equation}
+    P^{n} := (\mathbb{R}^{n+1} \setminus \sets{0}) / \sim
+  \end{equation}
+  このときの同値関係は
+  \begin{equation}
+    (x_{1},x_{2},\dots,x_{n+1}) \sim (y_{1},y_{2},\dots,y_{n+1}) \defines \exists \alpha \in \mathbb{R}, \quad (x_{1},x_{2},\dots,x_{n+1}) = \alpha (y_{1},y_{2},\dots,y_{n+1})
+  \end{equation}
+  で定めている。
+  位相は$\mathbb{R}^{n+1}$の部分空間$+$商位相で定める。
+  ちなみに$S_{+}^{n}$は上半球面として
+  \begin{align}
+    P^{n} &\simeq S^{n} / (\text{対蹠点を同一視}) \\
+    &\simeq S_{+}^{n} / (\text{対蹠点を同一視}) \\
+    &\simeq D^{n-1} / (\text{対蹠点を同一視})
+  \end{align}
+  が成り立つ。
+  %図
+
+  \item $T^{n}$：$n$次元トーラス
+  \begin{equation}
+    T^{n} := \underbrace{S^{1} \times S^{1} \times \dots \times S^{1}}_{n}
+  \end{equation}
+  位相は直積位相で定める。
+
+  \item M\"obiusの輪
+  \item Kleinの壺
+  \vspace{-0.5\baselineskip}
+\end{itemize}
+% 適宜図を挿入
+
+\sukima
+\begin{teigi}(Hausdorff空間)
+  $X$：位相空間。
+  \vspace{-0.5\baselineskip}
+  \begin{equation*}
+    \begin{array}{lll}
+      X \colon \text{\nw{Hausdorff空間}} & \defines & 「\forall x,y \in X, \quad x \neq y \Longrightarrow \exists U \in \mathcal{O}, \quad
+      \exists V \in \mathcal{O}, \quad x \in U, \quad y \in V, \quad U \cap V = \emptyset」
+    \end{array}
+  \end{equation*}
+\end{teigi}
+
+\begin{prop}
+  距離空間はHausdorff空間である。
+\end{prop}
+
+\begin{teigi}[多様体]
+  $M$：Hausdorff空間。
+  \vspace{-0.5\baselineskip}
+  \begin{equation*}
+    \begin{array}{lll}
+      M \colon \text{\nw{$n$次元多様体}} & \defines & \forall p \in M, \quad \exists U \colon \text{$p$の開近傍}, \quad
+      \exists U' \colon \mathbb{R}^{n} \text{の開集合}, \quad
+      \exists \varphi \colon U \longrightarrow U' \subseteq \mathbb{R}^{n}, \quad \varphi \colon \text{同相写像}
+    \end{array}
+  \end{equation*}
+\end{teigi}
+
+\begin{rei}
+  $S^{n}$，$P^{n}$，$T^{n}$は多様体。
+\end{rei}
+
+\midashi{演習：}$f \colon \mathbb{R}^{n} \longrightarrow \mathbb{R}$に対して
+$\sets{x \in \mathbb{R}^{n} | f(x) = 0}$が多様体となるのはどんなときか。
+
+\begin{rei}[単体複体]
+  $S_{\lambda}$（$\lambda \in \Lambda$）：単体（これも位相空間の一種）の集合
+  \begin{equation}
+    X := \coprod_{\lambda \in \Lambda} S_{\lambda} = \bigcup_{\lambda \in \Lambda} S_{\lambda} \times \sets{\lambda}
+  \end{equation}
+  として，ここに同値関係$\sim$を貼り合わせの同一視の関係として定める。
+  商空間$K = X / \sim$で全体の単体複体を表す。
 \end{rei}
 
 \expandafter\ifx\csname readornot\endcsname\relax
