@@ -16,6 +16,88 @@
 \fi
 
 \section{連結性}
+$(X, \mathcal{O})$を位相空間とする。
+
+\sukima \midashi{復習}（省略）
+
+\begin{teigi}[連結]
+  \begin{flushleft}
+    \begin{tabular}{llll}
+      $X$：\nw{連結} & $\defines$ & $\mathcal{O} \cap \mathfrak{A} = \sets{\emptyset, X}$ & （$X$上開かつ閉なる集合は$\emptyset$，$X$のみ）\\
+      $A \subseteq X$：連結 & $\defines$ & $A$が$X$の部分位相空間として連結である
+    \end{tabular}
+  \end{flushleft}
+\end{teigi}
+
+すなわち，$X$が連結{\bf でない}ことが次の二つの同値な条件で特徴づけられる。：
+\begin{center}
+  $\exists O \in \mathcal{O} \colon \quad O \neq \emptyset, \quad X \setminus O \in \mathcal{O}$ \\
+  $X$は非交で非空な開集合の和集合に分解される
+\end{center}
+
+\begin{prop}
+  $f \colon X \longrightarrow Y$：連続，$A \subseteq X$：連結のとき，$f(A)$：連結
+\end{prop}
+
+「連結性」は連続写像によって「不変」な性質であり，
+位相的な性質であるといえる。（同相写像によって不変）
+
+\begin{proof}
+  $B \subseteq f(A)$を開かつ閉な集合とする。
+  \begin{align}
+    & \exists G: Y\text{上開}, \quad \exists F: Y\text{上閉}, \quad B = G \cap f(A) = F \cap f(A) \\
+    \to & f^{-1}(B) = f^{-1} (G) \cap f^{-1}(f(A)) = f^{-1}(F) \cap f^{-1}(f(A)) \\
+    \to & f^{-1}(B) \cap A = f^{-1}(G) \cap A = f^{-1}(F) \cap A
+  \end{align}
+  $f$の連続性より$f^{-1}(G)$：開，$f^{-1}(F)$：閉。
+  よって，相対位相の定義より，$f^{-1}(G) \cap A$：$A$上開，$f^{-1}(F) \cap A$：$A$上閉。
+  $f^{-1}(B) \cap A$は$A$の相対位相で開かつ閉。
+  $A$の連結性より$f^{-1}(B) \cap A = \emptyset \: \text{or} \: A$である。
+
+  $f^{-1} (B) \cap A = \emptyset$なら$B = \emptyset$，
+  $f^{-1} (B) \cap A = A$なら$f(f^{-1}(B)) \cap f(A) = f(A)$であるから$B = f(A)$である。
+  つまり，$f(A)$上で開かつ閉な集合は$\emptyset$か$f(A)$であるので，$f(A)$は連結である。
+\end{proof}
+
+\begin{prop}
+  $A, B \subseteq X$に対し，$A \subseteq B \subseteq \overline{A}$であるとする。
+  このとき，$A$：連結$\Longrightarrow B$：連結である。
+  特に，連結な集合の閉包は連結である。
+\end{prop}
+
+\begin{proof}
+  $B' \subseteq B$：$B$上開かつ閉とする。
+  \begin{equation}
+    \exists G: X\text{上開},\quad \exists F: X\text{上閉}, \quad B' = G \cap B = F \cap B
+  \end{equation}
+  であり，$A \subseteq B$より
+  $A \cap B' = G \cap A = F \cap A$である。よって，$A \cap B'$は$A$上開かつ閉である。
+  よって，$A$の連結性から$A \cap B' = \emptyset \: \text{or} \: A$である。
+
+  $A \cap B' = \emptyset$のとき，$G \cap A = \emptyset$であり，$G \cap \overline{A} = \emptyset$，よって，$B' = \emptyset$である。
+
+  $A \cap B' = A$のとき，$F \supseteq A$であるから，$F \supseteq \overline{A} \supseteq B$であり，$B' = F \cap B = B$である。
+
+  これより$B$の連結性が従う。
+\end{proof}
+
+\begin{prop}
+  $A,B$：連結，$A \cap B \neq \emptyset$とする。このとき$A \cup B$：連結である。
+\end{prop}
+
+\begin{proof}
+  $N \subseteq A \cap B$：$A \cup B$上開かつ閉とする。
+  \begin{equation}
+    \exists G: X\text{上開},\quad \exists F: X\text{上閉}, \quad N = G \cap (A \cup B) = F \cap (A \cup B)
+  \end{equation}
+  特に$N \cap A = G \cap A = F \cap A$であり，$N \cap A$は$A$上開かつ閉。
+  $N \cap B = G \cap B = F \cap B$であり，$N \cap B$は$B$上開かつ閉。
+  よって，$N \cap A = \emptyset \: \text{or} \: A$，$N \cap B = \emptyset \: \text{or} \: B$である。
+
+  もし$N \cap A = \emptyset$ならば$A \cap B \neq \emptyset$より$N \cap B = B$となることはない。よって，$N = \emptyset$である。
+
+  もし$N \cap A = A$ならば$N \supseteq A \supseteq A \cap B \neq \emptyset$より$N \cap B = B$である。よって，$N = A \cup B$である。
+\end{proof}
 
 \expandafter\ifx\csname readornot\endcsname\relax
   \end{document}
