@@ -82,11 +82,12 @@ $(X, \mathcal{O})$を位相空間とする。
 \end{proof}
 
 \begin{prop}
+  \label{prop:renketu.union}
   $A,B$：連結，$A \cap B \neq \emptyset$とする。このとき$A \cup B$：連結である。
 \end{prop}
 
 \begin{proof}
-  $N \subseteq A \cap B$：$A \cup B$上開かつ閉とする。
+  $N \subseteq A \cup B$：$A \cup B$上開かつ閉とする。
   \begin{equation}
     \exists G: X\text{上開},\quad \exists F: X\text{上閉}, \quad N = G \cap (A \cup B) = F \cap (A \cup B)
   \end{equation}
@@ -97,6 +98,95 @@ $(X, \mathcal{O})$を位相空間とする。
   もし$N \cap A = \emptyset$ならば$A \cap B \neq \emptyset$より$N \cap B = B$となることはない。よって，$N = \emptyset$である。
 
   もし$N \cap A = A$ならば$N \supseteq A \supseteq A \cap B \neq \emptyset$より$N \cap B = B$である。よって，$N = A \cup B$である。
+\end{proof}
+
+同様に次も成立する。
+
+\begin{prop}
+  \label{prop:renketu.union.gen}
+  $\forall \lambda \in \Lambda, A_{\lambda}$：連結，
+  ${\displaystyle \bigcap_{\lambda \in \Lambda} A_{\lambda} \neq \emptyset}$とする。
+  このとき，${\displaystyle \bigcup_{\lambda \in \Lambda} A_{\lambda}}$：連結である。
+\end{prop}
+
+\begin{teigi}[連結成分]
+  関係$\sim$を
+  \begin{equation}
+    x \sim y \quad \defines \quad \exists A \subseteq X \text{：連結}, \quad x \in A, \quad y \in A
+  \end{equation}
+  で定めるとこれは同値関係である。この同値関係による同値類を\nw{連結成分}という。
+  $C_{x}$で$x$を含む連結成分を表すとする。
+\end{teigi}
+
+\begin{proof}
+  \midashi{$\sim$が同値関係をなすこと}
+
+  $\sets{x}$は連結であるから，$x \sim x$である。
+  また，明らかに$x \sim y$ならば$y \sim x$である。
+  $x \sim y$かつ$y \sim z$とする。このとき，ある連結な集合$A,B$が存在して，
+  $x, y \in A$かつ$y, z \in B$である。いま，$y \in A \cap B \neq \emptyset$であるから，
+  \rref{命題}{prop:renketu.union}より$A \cup B$は連結である。
+  $x, z \in A \cup B$であるから，$x \sim z$である。
+\end{proof}
+
+\begin{prop}
+  $C_{x}$は$x$を含む最大の連結部分集合である。
+  また，$C_{x}$は閉集合である。
+\end{prop}
+
+\begin{proof}
+  $A$を$x$を含む連結な集合とする。このとき，すべての$y \in A$に対して$y \sim x$であるから，$A \subseteq C_{x}$である。
+  よって，${\displaystyle \bigcup \sets{A | x \in A \text{かつ} Aは連結}} \subseteq C_{x}$であり，結局，
+  ${\displaystyle \bigcup \sets{A | x \in A \text{かつ} Aは連結}} = C_{x}$である。
+  これより\rref{命題}{prop:renketu.union.gen}から$C_{x}$は連結である。
+  よって，$C_{x}$の最大性が従う。また，最大性から
+  $\overline{C_{x}} = C_{x}$となり，$C_{x}$は閉集合である。
+\end{proof}
+
+\begin{prop}
+  $X,Y$：連結とする。このとき直積位相のもとで$X \times Y$：連結である。
+\end{prop}
+
+\begin{proof}
+  $(x,y), (x', y') \in X \times Y$をとる。$C_{(x,y)} = C_{(x',y')}$を示せばよい。
+  いま，$Y$：連結ならば$\sets{x} \times Y$：連結である。
+  \begin{quote}
+    背理法による。すなわち，$\sets{x} \times Y$が連結でないとする。
+    このとき，ある非空非交な$\sets{x} \times Y$上の開集合$A,B$が存在して，$\sets{x} \times Y = A \cup B$である。
+    このときさらにある非空な$Y$上の開集合$A',B'$が存在して
+    $A = \sets{(x,y) | y \in A'} = \sets{x} \times A'$，
+    $B = \sets{(x,y) | y \in B'} = \sets{x} \times B'$である。
+    よって，$A' \cup B' = Y$となり$Y$は連結でない。これは矛盾。
+  \end{quote}
+  同様に$X$：連結ならば$X \times \sets{y'}$：連結である。
+  したがって，連結成分を定義したときの同値関係を$\sim$として
+  $(x,y) \sim (x, y') \sim (x',y')$となる。よって，$C_{(x,y)} = C_{(x',y')}$である。
+\end{proof}
+
+\begin{prop}[中間値の定理]
+  $X$：連結，$f \colon X \longrightarrow \mathbb{R}$：連続，
+  $x,y \in X$ならば$f(x) < f(y)$とする。
+  このとき，
+  \begin{equation}
+    \forall \alpha \in \mathbb{R}, \quad f(x) < \alpha < f(y) \Longrightarrow \exists z \in X, \quad f(z) = \alpha
+  \end{equation}
+\end{prop}
+
+\begin{proof}
+  背理法による。$f^{-1} (\alpha) = \emptyset$とする。
+  $M := f^{-1}((- \infty, \alpha))$は$f$の連続性から開集合である。
+  また，$f^{-1}((- \infty, \alpha]) = f^{-1}((- \infty, \alpha)) \cup f^{-1}(\alpha) = f^{-1}((- \infty, \alpha))$は$f$の連続性から閉集合である。
+  ここで，$x \in M$であるが$y \notin M$であるので，これは$X$の連結性に矛盾する。
+\end{proof}
+
+\begin{hodai}
+  $a<b$として，$\left[ a,b \right]$は連結。
+\end{hodai}
+
+\begin{proof}
+  $O, O'$：開，$O \cap O' \neq \emptyset$，$\left[ a,b \right] = O \cup O'$とする。
+  $a \in O$とする。$c = \sup \sets{x| \left[ a, x \right] \subseteq O}$とする。
+  このとき，$a < c < b$であり，任意の$\varepsilon > 0$に対して$c - \varepsilon \notin O'$，$c + \varepsilon \notin O$
 \end{proof}
 
 \expandafter\ifx\csname readornot\endcsname\relax
