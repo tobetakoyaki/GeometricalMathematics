@@ -16,6 +16,35 @@
 \fi
 
 \section{コンパクト性}
+$(X, \mathcal{O})$：位相空間，$A \subseteq X$とする。
+
+\begin{teigi}[被覆]
+  $\mathcal{C} \subseteq 2^{X}$：$A$の\nw{被覆} $\defines$ ${\displaystyle A \subseteq \bigcup_{C \in \mathcal{C}} C}$
+
+  特に，$\mathcal{C} \subseteq \mathcal{O}$のとき，$\mathcal{C}$を\nw{開被覆}という。
+\end{teigi}
+
+\begin{teigi}[コンパクト]
+  \midashi{(1)} $A \subseteq X$：\nw{コンパクト} $\defines$ $\forall \mathcal{C}$：$A$の開被覆，$\exists O_{1}, \dots, O_{k} \in \mathcal{C}$，${\displaystyle A \subseteq \bigcup_{j=1}^{k} O_{j}}$
+
+  \midashi{(2)} $X$がコンパクトのとき，$(X, \mathcal{O})$をコンパクト空間という。
+\end{teigi}
+
+$A \subseteq X$がコンパクトであることは，標語的に「任意の開被覆は有限部分開被覆を含む」ということができる。
+また，$A \subseteq X$がコンパクトであることは，$(A, \mathcal{O}_{A})$がコンパクト空間であることと同値である。
+ただし，$\mathcal{O}_{A}$は相対位相。
+
+\begin{hodai}
+  $A_{1}, \dots, A_{k} \subseteq X$ ：コンパクト $\Longrightarrow$ $A_{1} \cup \dots \cup A_{k}$：コンパクト
+\end{hodai}
+
+\begin{hodai}
+  $(X, \mathcal{O})$：コンパクト $\Longrightarrow$ $A \in \mathfrak{A}$：コンパクト
+\end{hodai}
+
+\begin{proof}
+  $A$の開被覆と$X \setminus A$が$X$の開被覆になっていることから従う。
+\end{proof}
 
 \expandafter\ifx\csname readornot\endcsname\relax
   \end{document}
