@@ -184,10 +184,71 @@ $(X, \mathcal{O})$を位相空間とする。
 \end{hodai}
 
 \begin{proof}
+  背理法による。
   $O, O'$：開，$O \cap O' \neq \emptyset$，$\left[ a,b \right] = O \cup O'$とする。
-  $a \in O$とする。$c = \sup \sets{x| \left[ a, x \right] \subseteq O}$とする。
-  このとき，$a < c < b$であり，任意の$\varepsilon > 0$に対して$c - \varepsilon \notin O'$，$c + \varepsilon \notin O$
+  $a \in O$としても一般性を欠かない。
+  $c = \sup \sets{x| \left[ a, x \right] \subseteq O}$とすると，$a < c < b$であり，
+  任意の$\varepsilon > 0$に対して$c - \varepsilon \notin O'$，$c + \varepsilon \notin O$である。
+
+  いま$c \in O \cup O'$であるが，$c \in O'$とすると，$O'$が開集合であることと$c - \varepsilon \notin O'$であることが矛盾。
+  $c \in O$とすると，$O$が開集合であることと$c + \varepsilon \notin O$であることが矛盾。
+  よって，$\left[ a,b \right]$は連結。
 \end{proof}
+
+\begin{teigi}[弧状連結性]
+  $X$：\nw{弧状連結} $\defines$ $\forall x, y \in X, \quad \exists f \colon \left[ 0, 1 \right] \longrightarrow X$：連続，$f(0) = x$，$f(1) = y$
+
+  $A \subseteq X$：弧状連結 $\defines$ $A$が部分位相空間として連結
+\end{teigi}
+
+\begin{prop}
+  弧状連結ならば連結である。
+\end{prop}
+
+\begin{proof}
+  $f([0,1])$は連結であるので，任意の$x,y \in X$に対してそれらを含む連結な集合が存在する。
+  よって，$C_{x} = C_{y}$であり，$x,y$の任意性より$C_{x} = X$である。
+\end{proof}
+
+\midashi{注意}：$[0,1]$が連結であることは自明ではない。
+
+\midashi{注意}：一般に「連結ならば弧状連結」は成立しない。
+
+\begin{prop}
+  $A \subseteq \mathbb{R}^{n}$：開集合について，
+  「$A$：弧状連結 $\Longleftrightarrow$ $A$：連結」が成立する。
+\end{prop}
+
+\begin{proof}
+  \midashi{$\Longleftarrow$：} $x \in A$，$O$：$x$とパスで結ばれる$A$の点全体の集合とする。
+  $O$は開集合である。
+  \begin{quote}
+    $A$は開集合であるから，任意の$y \in O$に対してある$\delta > 0$が存在して$N(y,\delta) \subseteq A$である。
+    $N(y,\delta)$に属する任意の点$z$は$y$とパスで結ばれるので，$x$と$z$もパスで結ばれる。
+    よって$N(y,\delta) \subseteq O$である。
+  \end{quote}
+  また，$A \setminus O$も開集合である。
+  \begin{quote}
+    $A$は開集合であるから，任意の$y \in A \setminus O$に対して，ある$\delta > 0$が存在して$N(y,\delta) \subseteq A$である。
+    $O \cap N(y,\delta) = \emptyset$でなければ$y$と$x$はパスで結ばれてしまう。
+    よって，$N(y,\delta) \subseteq A \setminus O$である。
+  \end{quote}
+  いま，$A$は連結であるから$A = O$である。よって$A$は弧状連結である。
+\end{proof}
+
+\begin{prop}
+  $X,Y$：弧状連結 $\Longrightarrow$ $X \times Y$：弧状連結
+\end{prop}
+
+\begin{proof}
+  $(x, y) , (\tilde{x}, \tilde{y}) \in X \times Y$を任意にとる。
+  このとき，$X$の連結性から$(\tilde{x}, \tilde{y})$と$(x, \tilde{y})$はパスで結ばれる。
+  また，$Y$の連結性から$(x, \tilde{y})$と$(x,y)$はパスで結ばれる。
+  したがって，$(x,y)$と$(\tilde{x}, \tilde{y})$はパスで結ばれる。
+  これより，$X \times Y$は弧状連結である。
+\end{proof}
+
+\midashi{演習：}上のいくつかの{\bf 命題}について，「連結」を「弧状連結」に変えても成立するかいなかを議論せよ。
 
 \expandafter\ifx\csname readornot\endcsname\relax
   \end{document}
