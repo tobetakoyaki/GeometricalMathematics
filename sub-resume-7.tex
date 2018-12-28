@@ -19,12 +19,19 @@
 
 \section{被覆空間}
 \begin{teigi}[被覆空間]
-  $E,X$を位相空間，$p\colon E \to X$を全射な連続関数とする．任意の$x\in X$について$x$の開近傍$U$が存在し，$p^{-1}(U)$が$E$の互いに交わらない開集合$V_\alpha$で表されているとする．このとき，$\restriction{p}{V_\alpha} \colon V_\alpha \to U$が同相写像であるとき，$p$を被覆写像(covering map)，$E$を$X$の被覆空間という．
+  $E,X$を位相空間，$p\colon E \to X$を全射な連続関数とする．任意の$x\in X$について$x$の開近傍$U$が存在し，$p^{-1}(U)$が$E$の互いに交わらない開集合$V_\alpha\ (\alpha \in \Lambda)$で
+  \begin{align*}
+    p^{-1}(U) = \bigcup_{\alpha \in \Lambda} V_\alpha
+  \end{align*}
+  と表されているとする．このとき，$\restriction{p}{V_\alpha} \colon V_\alpha \to U$が同相写像であるとき，$p$を\textbf{被覆写像(covering map)}，$E$を$X$の\textbf{被覆空間}という．
 \end{teigi}
 
 \begin{rei}
   $\mathbb{R}$は$S^1$の被覆空間．
 \end{rei}
+\begin{proof}
+  $p\colon \mathbb{R} \to S^1$として$p(x) = (\cos 2\pi x,\sin 2\pi x)$を考えると，これは全射な連続関数になっている．
+\end{proof}
 
 \begin{teigi}[リフト]
   $p\colon E\to X$，$f\colon Y\to X$をそれぞれ連続写像とする．このとき$f$のリフト$\tilde{f}\colon Y\to E$を$p\circ \tilde{f} = f$を満たすものとして定義する．つまり$\tilde{f}$は以下を可換にする．
@@ -40,24 +47,39 @@
   $f\colon \left[0,1\right]\to X$をパス，$f(0)=x_0$とする．このとき，$\tilde{x}_0 \in p^{-1}(\{x_0\})$に対して$f$のリフト$\tilde{f}\colon \left[0,1\right]\to E,\tilde{f}(0)=\tilde{x}_0$が一意に存在する．
 \end{teiri}
 \begin{proof}
-  自明ではない(あとで書く)
+  ルベーグ数の補題より，ある開被覆に対して$\delta > 0$が存在し，任意の$x \in \left[0,1\right]$に対してある$U_i \in\mathcal{C}$が存在して$\mathcal{N}(x;\delta) \subseteq U_i$が成り立つ．これより，$x_0$を含む$U_0$の逆像の連結成分$V_0$は一意に決まり，$\tilde{f}\colon \left[s_0,s_1\right]\to V_0$で$p\circ \tilde{f} = \restriction{f}{\left[s_0,s_1\right]}$となる$\tilde{f}$が一意に定まる．これを$\left[s_1,s_2\right],\left[s_2,s_3\right],\cdots$に対して行えばよい．
 \end{proof}
 
 \begin{teiri}
   $f_t \colon \left[0,1\right]\to X$をパスのホモトピー，$f_t(0)=x_0$とする．このとき，$\tilde{x}_0 \in p^{-1}(\{x_0\})$に対して$f_t$のリフト$\tilde{f_t}\colon \left[0,1\right]\to E,\tilde{f_t}(0)=\tilde{x}_0$が一意に存在する．
 \end{teiri}
 \begin{proof}
-  自明ではない
+  上と同様の議論を$\left[0,1\right]\times \left[0,1\right]$に対して行う．
 \end{proof}
 \begin{teiri}
-  $p\colon E\to X$を被覆写像，とする．このとき，$E$が弧状連結なら$\phi$は全射，$E$が単連結なら$\phi$は全単射となる．
+  $p\colon E\to X$を被覆写像，$\phi\colon \pi_1(X,x_0)\to p^{-1}(x_0)$を
+  \begin{align*}
+    \phi(\left[f\right]) := \tilde{f}(1)
+  \end{align*}
+  で定義する．ただし$\tilde{f}$は$f$のリフトで$\tilde{f}(0)=\tilde{x_0}$となるものとする．このとき，$E$が弧状連結なら$\phi$は全射，$E$が単連結なら$\phi$は全単射となる．
 \end{teiri}
 \begin{proof}
-  自明ではない
+  任意の$z\in p^{-1}(x_0)$に対し$\tilde{x_0}$と$z$を結ぶパス$h$をとれば$\left[p\circ h\right] \in \pi_1(X,x_0)$で$\phi(\left[p\circ h\right]) = h(1) = z$となる．$E$が単連結のとき，$\phi(\left[f\right]) = \phi(\left[f'\right])=z\in p^{-1}(x_0)$．$\tilde{f},\tilde{f'}$は$\tilde{x_0}$と$z$を結ぶパスで，単連結性より$\tilde{f}\simeq \tilde{f'}$．よって$p\cdot \tilde{f} \simeq p\cdot \tilde{f'}$であり，$f\simeq f'$．
 \end{proof}
 \begin{teiri}
   $\pi_1(S^1) \simeq \mathbb{Z}$
 \end{teiri}
+\begin{proof}
+  $p\colon \mathbb{R}\to S^1 , p(x) = (\cos 2\pi x,\sin 2\pi x)$とし，$x_0=(1,0)$を基点とする基本群を考える．$\mathbb{R}$は単連結であるから，$\phi \colon \pi_1(S^1)\to \mathbb{Z}$は全単射．また，
+  \begin{align*}
+    \phi(\left[f\right]\cdot \left[g\right]) = \phi(\left[f\right]) + \phi(\left[g\right])
+  \end{align*}
+  が成り立つので，$\phi$は準同型．よって$\pi_1(S^1)\simeq \mathbb{Z}$
+\end{proof}
+\begin{midashi}{射影平面$P^2$の基本群}
+
+  $S^2$の元$x$に対して，同値関係$\sim$を$x\sim y \Leftrightarrow y = -x$で定める．この同値関係による同値類を$\left[x\right]$と書く．すると，$P^2 \simeq S^2 \mathbin{/} \sim$と考えることが出来る．ここで$p\colon S^2\to P^2$として$p(x) = \left[x\right]$を考えると，これは被覆写像となる．ここで，$S^2$は単連結であるため，上で定義される$\phi\colon \pi_1(P^2,x_0)\to p^{-1}(x_0)$は全単射．$\left|p^{-1}(x_0)\right| = 2$であるため$\left|\pi_1(P^2,x_0)\right| = 2$．$\pi_1(P^2,x_0)$は群であるので$\pi_1(P^2,x_0) = \pi_1(P^2) \simeq \mathbb{Z}/2\mathbb{Z}$．
+\end{midashi}
 
 \expandafter\ifx\csname readornot\endcsname\relax
   \end{document}
