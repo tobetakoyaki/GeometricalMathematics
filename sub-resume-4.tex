@@ -46,6 +46,65 @@ $A \subseteq X$がコンパクトであることは，標語的に「任意の�
   $A$の開被覆と$X \setminus A$が$X$の開被覆になっていることから従う。
 \end{proof}
 
+\begin{hodai}
+  $X$：コンパクト，$f \colon X \longrightarrow Y$：連続 $\Longrightarrow$ $f(X)$：コンパクト
+\end{hodai}
+
+\begin{proof}
+  $\mathcal{C}$：$f(X)$の開被覆とすると，$f^{-1}(\mathcal{C}) := \sets{f^{-1} (O) | O \in \mathcal{C}}$は$f$の連続性から$f^{-1}(\mathcal{C}) \subseteq \mathcal{O}$を満たし，
+  これは$X$の開被覆である。
+  $X$のコンパクト性から，ある$O_{1}, \dots, O_{k} \in \mathcal{C}$が存在して，
+  $f^{-1}(O_{1}) \cap \dots \cap f^{-1}(O_{k}) = X$を満たす。
+  このとき，$f(X) \subseteq O_{1} \cap \dots \cap O_{k}$である。
+\end{proof}
+
+\begin{hodai}
+  $(X, d)$：距離空間とする。
+  $A \subseteq X$：コンパクト $\Longrightarrow$ $A$は有界な閉集合
+\end{hodai}
+
+\begin{proof}
+  \midashi{［有界性］} $x \in X$とする。開集合族$\sets{N(x,r) | r \in \mathbb{N}}$は$A$の被覆である。
+  したがってコンパクト性から有限個の$r_{1} < r_{2} < \dots < r_{k}$が存在して$\sets{N(x,r_{i})}_{i=1}^{k}$は$A$の開被覆である。
+  よって，$A \subseteq N(x,r_{k})$であり，$A$は有界。
+
+  \midashi{［閉性］} $X \setminus A$が開集合であることを示す。$y \in X \setminus A$とする。
+  ${\displaystyle \sets{X \setminus \overline{N \left( y, \frac{1}{r} \right)} | r \in \mathbb{N}}}$は$A$の開被覆である。
+  したがってコンパクト性から有限個の$r_{1} < r_{2} < \dots < r_{k}$が存在して${\displaystyle \sets{X \setminus \overline{N \left( y,\frac{1}{r_{i}} \right)}}_{i=1}^{k}}$は$A$の開被覆である。
+  よって，${\displaystyle A \subseteq X \setminus \overline{N \left( y,\frac{1}{r_{1}} \right)}}$であり，
+  ${\displaystyle N \left( y, \frac{1}{r_{1}} \right) \subseteq X \setminus A}$であるから，$X \setminus A$は開集合である。
+\end{proof}
+
+\begin{corr}
+  $X$：コンパクト，$f \colon X \longrightarrow \mathbb{R}$：連続とする。
+  このとき，${\displaystyle \max_{x \in X} f(x)}$，${\displaystyle \min_{x \in X} f(x)}$が存在する。
+\end{corr}
+
+\begin{proof}
+  $f(X)$はコンパクトであり有界閉集合であるから。
+\end{proof}
+
+\midashi{演習} 有界閉集合がコンパクトにならない距離空間の例を挙げよ。
+
+\begin{hodai}[Lebesgue数の補題]
+  $(X,d)$：コンパクトな距離空間，$\mathcal{C}$：$X$の開被覆とする。このとき
+  \begin{equation}
+    \exists \delta > 0, \quad \forall x \in X, \quad \exists O \in \mathcal{C}, \quad N(x, \delta) \subseteq O
+  \end{equation}
+  を満たす。
+\end{hodai}
+
+\begin{proof}
+  $X$のコンパクト性から有限な部分開被覆$\sets{O_{i}}_{i=1}^{k} \subseteq \mathcal{C}$が存在する。
+  \begin{equation}
+    f(x) := \frac{1}{k} \sum_{i=1}^{k} d(x, X \setminus O_{i})
+  \end{equation}
+  とすると$f$は連続である。被覆性から常に$f(x) > 0$である。
+  すなわち${\displaystyle \delta := \min_{x \in X} f(x) > 0}$である。よって，$\forall x \in X, \quad f(x) \ge \delta$である。
+  これより，すべての$x \in X$に対してある$i \in \sets{1,\dots,k}$が存在して$d(x, X \setminus O_{i}) \ge \delta$である。
+  よって，$N(x, \delta) \subseteq O_{i}$である。
+\end{proof}
+
 \expandafter\ifx\csname readornot\endcsname\relax
   \end{document}
 \fi
