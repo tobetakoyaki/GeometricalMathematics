@@ -16,6 +16,144 @@
 \fi
 
 \section{双対空間}
+\begin{teigi}[線形汎関数]
+  $f\colon V\to K$が線形汎関数 $\defines$ 任意の$\alpha,\beta \in K, u,v \in V$に対して
+  \begin{align*}
+    f(\alpha u+\beta v) = \alpha f(u) + \beta f(v)
+  \end{align*}
+\end{teigi}
+\begin{teigi}[双対空間]
+  $V$の\textbf{双対空間}$V^\ast$を，$V^\ast := \{ f\colon V\to K \mid fは線形汎関数 \}$で定義する．
+\end{teigi}
+\begin{teigi}[双対基底]
+  $\{e_1,\cdots,e_n\}$を$V$の基底とする．このとき，$V^\ast$の基底$\{e^1,\cdots,e^n\}$を
+  \begin{align*}
+    e^j(e_i) = \delta_i^j := \begin{cases}
+      1 & i=j \\
+      0 & i\neq j
+    \end{cases}
+  \end{align*}
+  を満たす線形汎関数として定義する．
+\end{teigi}
+\begin{prop}
+  $\{e^1,\cdots,e^n\}$は$V^\ast$の基底．
+\end{prop}
+\begin{proof}
+  $f\in V^\ast$に対して
+  \begin{align*}
+    f = \sum_i f(e_i) e^i
+  \end{align*}
+  と表すことが出来る．また，
+  \begin{align*}
+    \sum_i \beta^i e^i = 0
+  \end{align*}
+  が成り立つとき(右辺の0は零写像を表している)，
+  \begin{align*}
+    \left(\sum_i \beta^i e^i \right) (e_j) & = \beta_j \\
+    0(e_j) & = 0 
+  \end{align*}
+  よって$\beta_j = 0$なので$\{e_1,\cdots,e_n\}$は基底である．
+\end{proof}
+\begin{corr}
+  $\dim V = n$ならば$\dim V^\ast = n$．
+\end{corr}
+\begin{prop}
+  $V^{\ast \ast} \simeq V$
+\end{prop}
+\begin{proof}
+  $v\in V$を$f\in V^\ast$に対して$f\mapsto f(v)$という対応を考えることで，$v$を写像$v\colon V^\ast \to K$とみなす．このとき，
+  \begin{align*}
+    v(\alpha f + \beta g) & = (\alpha f + \beta g)(v) \\
+    & = \alpha f(v) + \beta g(v) \\
+    & = \alpha v(f) + \beta v(g)
+  \end{align*}
+  より$v$は$V^\ast$上の線形汎関数．したがって$V\subseteq V^{\ast \ast}$．また$\dim V = \dim V^\ast = \dim V^{\ast \ast}$より，$V \simeq V^{\ast \ast}$．
+\end{proof}
+以下では$U,V$を体$K$上の有限次元ベクトル空間とする．
+\begin{teigi}[双線形写像]
+  $\Phi\colon U\times V\to K$が任意の$\alpha,\alpha',\beta,\beta'\in K,u,u'\in U ,v,v'\in V$に対して
+  \begin{align*}
+    \Phi(\alpha u + \alpha' u',v) & = \alpha \Phi(u,v) + \alpha' \Phi(u',v) \\
+    \Phi(u,\beta v + \beta' v) & = \beta \Phi(u,v) + \beta' \Phi(u,v') 
+  \end{align*}
+  を満たすとき，$\Phi$を\textbf{双線形写像}という．
+\end{teigi}
+
+\begin{rei}
+  $U = \mathbb{R}^n , V = \mathbb{R}^m, A \in \mathbb{R}^{n\times m}$とする．$x \in U , y \in V$に対して
+  \begin{align*}
+    (x,y) \mapsto x^\top A y
+  \end{align*}
+  という対応は双線形写像になっている(この双線形写像を2次形式とよぶ)．
+\end{rei}
+\begin{remark}
+  $\Phi\colon U\times V\to K$を双線形写像とする．$U$の基底$\{e_1,\cdots,e_n\}$，$V$の基底$\{f_1,\cdots,f_m\}$としたとき，$u = \sum_{i} \alpha^i e_i \in U , v = \sum_j \beta^j  f_j \in V$に対して$\Phi(u,v)$は
+  \begin{align*}
+    \Phi\left(\sum_{i} \alpha^i e_i,\sum_j \beta^j f_j\right) = \sum_{i,j} \alpha^i \beta^j \Phi(e_i,f_j)
+  \end{align*}
+  となり，二次形式とみなすことができる．
+\end{remark}
+\begin{teigi}[多重線形写像]
+  $V_i\ (i=1,\cdot,k)$を体$K$上の線形空間とする．$\Phi\colon V_1\times \cdots V_k \to K$で各$i\  ( i=1,\cdots,k)$で線形な写像を多重線形写像という．
+\end{teigi}
+\begin{teigi}[テンソル積]
+  $U$と$V$のテンソル積$U\otimes V$を
+  \begin{align*}
+    U\otimes V := \{ \Phi \colon U^\ast \times V^\ast \to K \mid \Phi\mbox{は双線形写像} \}
+  \end{align*}
+  で定義する．
+
+  また，$u\in U$と$v\in V$のテンソル積 $u\otimes v\in U\times V$を
+  \begin{align*}
+    (u\otimes v)(f,g) = f(u)\cdot g(v)
+  \end{align*}
+  で定義する．これは双線形写像になっている．
+\end{teigi}
+\begin{remark}
+  $U\otimes V \not \simeq \{ u\otimes v \mid u \in U, v \in V\}$である．
+\end{remark}
+\begin{prop}
+  $\{e_1,\cdots,e_n\}$を$U$の基底，$\{f_1,\cdots,f_m\}$を$V$の基底とする．このとき，$\{e_i\otimes f_j \mid i=1,\cdots,n,j=1,\cdots,m \}$は$U\otimes V$の基底．
+\end{prop}
+\begin{proof}
+  $\{e^1,\cdots,e^n\}$を$U^\ast$の基底，$\{f^1,\cdots,f^m\}$を$V^\ast$の基底とする．
+  \begin{align*}
+    \sum_{i,j} \alpha^{i,j} e_i \otimes f_j = 0
+  \end{align*}
+  のとき，
+  \begin{align*}
+    (e_i\otimes f_j)(e^\nu ,f^\mu) = e_i(e^\nu)\cdot f_j(f^\mu) 
+    = \delta_i^\nu \delta_j^\mu = \begin{cases}
+      1 & (i,j) = (\nu,\mu) \\
+      0 & \mathrm{otherwise}
+    \end{cases}
+  \end{align*}
+  より，
+  \begin{align*}
+    \left(\sum_{i,j} \alpha^{i,j} e_i \otimes f_j \right) (e^\nu,f^\mu) = 0
+  \end{align*}
+  よって，$\alpha^{i j} = 0$．
+  また，$\Phi \colon U^\ast \times V^\ast \to K$が双線形写像のとき，
+  \begin{align*}
+    \Phi = \sum_{i,j} \Phi(e^i,f^j) e_i \otimes f_j
+  \end{align*}
+  と表すことが出来る．
+\end{proof}
+\begin{corr}
+  $\dim U\otimes V = \dim U \times \dim V$
+\end{corr}
+\begin{midashi}{テンソル積の定義(II)}
+  \begin{align*}
+    U\otimes V := \left\{ \sum_{\mbox{有限和}} \alpha_i u_i \otimes v_i \relmiddle| u_i \in U, v_i \in V, \alpha_i \in K \right\} \mathbin{/} \sim
+  \end{align*}
+  ただし$\sim$は
+  \begin{align*}
+    (u+u')\otimes v & \sim u \otimes v + u'\otimes v \\
+    u\otimes (v+v') & \sim u\otimes v + u\otimes v' \\
+    \alpha(u\otimes v) & \sim (\alpha u)\otimes v \sim u \otimes (\alpha v)
+  \end{align*}
+  を満たす同値関係．
+\end{midashi}
 
 \expandafter\ifx\csname readornot\endcsname\relax
   \end{document}
