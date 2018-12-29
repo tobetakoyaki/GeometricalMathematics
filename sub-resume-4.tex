@@ -105,6 +105,150 @@ $A \subseteq X$がコンパクトであることは，標語的に「任意の�
   よって，$N(x, \delta) \subseteq O_{i}$である。
 \end{proof}
 
+\begin{hodai}[Heine-Borelの被覆定理]
+  $\mathbb{R}$の閉区間$I:=[a,b] \subseteq \mathbb{R}$はコンパクト
+\end{hodai}
+
+\begin{proof}
+  $\mathcal{C}$：$[a,b]$の開被覆，$I':= \sets{x \in I | \mathcal{C}\text{は}[a,x]\text{の有限開被覆を含む}}$とする。
+  明らかに$a \in I'$であるから$I' \neq \emptyset$である。
+  $I' \subseteq I = [a,b]$であるから$c := \sup I' \le b$である。
+  $\exists C_{0} \in \mathcal{C}, \quad c \in C_{0}$であり$\exists \varepsilon > 0, \quad [c-\varepsilon, c+\varepsilon] \subseteq C_{0}$である。
+  $c = \sup I'$であるから，ある有限開被覆$\mathcal{C}'$が存在して$\mathcal{C}' \subseteq \mathcal{C}$であり${\displaystyle [a,c-\varepsilon] \subseteq \bigcup_{C' \in \mathcal{C}'} C'}$である。
+  このとき，${\displaystyle [a,c+\varepsilon] \subseteq C_{0} \cup \bigcup_{C' \in \mathcal{C}'} C'}$である。
+  これより$[a,c+\varepsilon]$には有限部分開被覆が存在する。以上より$c = b$となる。
+\end{proof}
+
+\begin{prop}
+  $X,Y$：コンパクト $\Longrightarrow$ $X \times Y$：コンパクト
+\end{prop}
+
+\begin{proof}
+  直積位相$\mathcal{O}_{X \times Y} = \sets{\bigcup B | B \subseteq \mathcal{O}_{X} \times \mathcal{O}_{Y}}$を考える。
+  $\mathcal{C}$：$X \times Y$の開被覆とすると，
+  \begin{equation}
+    \mathcal{C} = \sets{\bigcup B_{\lambda} | B_{\lambda} \subseteq \mathcal{O}_{X} \times \mathcal{O}_{Y}} = \sets{U_{\lambda} \times V_{\lambda} | U_{\lambda} \in \mathcal{O}_{X}, V_{\lambda} \in \mathcal{O}_{Y}, \lambda \in \Lambda}
+  \end{equation}
+  としてよい。すべての$x \in X$に対して$\sets{x} \times Y$は$Y$と同相であり，これはコンパクトである。
+  よって$\exists \Lambda(x)$：$\Lambda$の有限部分集合，${\displaystyle \sets{x} \times Y \subseteq \bigcup_{\lambda \in \Lambda(x)} U_{\lambda} \times V_{\lambda}}$となる。
+  また${\displaystyle U_{x} := \bigcap_{\lambda \in \Lambda(x)} U_{\lambda} \in \mathcal{O}_{X}}$であり，${\displaystyle U_{x} \times Y \subseteq \bigcup_{\lambda \in \Lambda(x)} U_{\lambda} \times V_{\lambda}}$である。
+  すると$\sets{U_{x}}_{x \in X}$は$X$の開被覆である。
+  $X$のコンパクト性から有限個の$x_{1},\dots,x_{n}$が存在して$U_{x_{1}} \cup \dots \cup U_{x_{n}} = X$である。
+  よって，${\displaystyle X \times Y = \bigcup_{k=1}^{n} U_{x_{k}} \times Y = \bigcup_{k=1}^{n} \bigcup_{\lambda \in \Lambda(x_{k})} U_{\lambda} \times V_{\lambda}}$であって，$X \times Y$はコンパクトである。
+\end{proof}
+
+\begin{teiri}[Tychonoffの定理]
+  $X_{\lambda}$：コンパクト（$\lambda \in \Lambda$） $\Longrightarrow$ ${\displaystyle \prod_{\lambda} X_{\lambda}}$：コンパクト
+\end{teiri}
+
+\begin{prop}
+  $X \subseteq \mathbb{R}^{n}$に対して次が成り立つ。
+  \begin{center}
+    $X$：コンパクト $\Longleftrightarrow$ $X$：有界閉集合
+  \end{center}
+\end{prop}
+
+\begin{proof}
+  $\Longrightarrow$向きは既に示した。
+
+  $\Longrightarrow$向きについて示す。
+  $X \subseteq [a_{1}, b_{1}] \times [a_{2}, b_{2}] \times \dots \times [a_{n}, b_{n}] \subseteq \mathbb{R}^{n}$と書くことができる。
+  各$[a_{i},b_{i}]$はコンパクトであり，その直積$[a_{1}, b_{1}] \times [a_{2}, b_{2}] \times \dots \times [a_{n}, b_{n}]$もコンパクトである。
+  コンパクト集合の部分閉集合はコンパクトであるから$X$はコンパクトである。
+\end{proof}
+
+\sukima \midashi{\large コンパクトハウスドルフ空間}
+
+\begin{prop}
+  $(X, \mathcal{O})$：Hausdorffとする。
+  $A \subseteq X$：コンパクト，$x \in X \setminus A$とすると，
+  \begin{equation}
+    \exists U, V \in \mathcal{O}, \quad A \subseteq U, \quad x \in V, \quad U \cap V = \emptyset
+  \end{equation}
+\end{prop}
+
+\begin{proof}
+  $X$のHausdorff性から，任意の$a \in A$に対して
+  \begin{equation}
+    \exists U_{a}, V_{a} \in \mathcal{O}, \quad a \in U_{a}, \quad x \in V_{a}, \quad U_{a} \cap V_{a} = \emptyset
+  \end{equation}
+  である。$\sets{U_{a} | a \in A}$は$A$の開被覆であるが，コンパクト性からある$a_{1}, \dots, a_{k} \in A$が存在して
+  $U := U_{a_{1}} \cup \dots \cup U_{a_{k}} \supseteq A$である。
+  $x \in V_{a} \in \mathcal{O}$であるから$i=1, \dots, k$に対して$x \notin \overline{U_{a_{i}}}$である。
+
+  $\overline{U} = \overline{U_{a_{1}}} \cup \overline{U_{a_{2}}} \cup \dots \cup \overline{U_{a_{k}}}$であり，
+  $V := X \setminus \overline{U}$とおくとこれは開集合であり，かつ$U \cap V = \emptyset$である。また，$x \in V$である。 
+\end{proof}
+
+\begin{corr}
+  $X$：Hausdorff，$A \subseteq X$：コンパクトとする。このとき$A$は閉集合である。
+\end{corr}
+
+\begin{proof}
+  $X \setminus A$の各点$x$は$V \subseteq X \setminus A$となる開近傍をもつので。
+\end{proof}
+
+\begin{corr}
+  $X$：コンパクト，$Y$：Hausdorff，$f \colon X \longrightarrow Y$：連続全単射とする。このとき，$f$：同相写像。
+\end{corr}
+
+\begin{proof}
+  逆写像の連続性を示すため，「任意の$X$上の閉集合$A$に対して$f(A)$が$Y$上の閉集合であること」を示す。
+  コンパクト空間上の閉集合である$A$はコンパクトであり，コンパクト集合の連続写像による像である$f(A)$はコンパクトである。
+  Hausdorff空間上のコンパクト集合は閉集合であるから$f(A)$は$Y$上閉である。
+\end{proof}
+
+\begin{teigi}[局所コンパクト]
+  $X$：\nw{局所コンパクト}  $\defines$ 任意の$x \in X$に対してある$x$のコンパクトな近傍が存在する
+\end{teigi}
+
+\begin{prop}
+  コンパクト $\Longrightarrow$ 局所コンパクト
+\end{prop}
+
+\begin{proof}
+  それ自身をコンパクトな近傍としてとればよい。
+\end{proof}
+
+\sukima \midashi{\large 閉曲面}
+
+\begin{teigi}[閉曲面]
+  \nw{閉曲面} $\defines$ コンパクトな2次元多様体
+\end{teigi}
+
+$S$：閉曲面 $\Longrightarrow$ 有限個の2次元の座標近傍がとれて，これらで$S$を覆い尽くせる。
+
+\begin{rei}
+  \begin{itemize}
+    \item 球面$S^{2}$（有界閉集合なのでコンパクト）
+    \item トーラス$S^{1} \times S^{1}$（コンパクト空間の直積）
+    \item 射影平面$P^{2}$（$S^{2}/\sim$なので$S^{2}$の連続像）
+  \end{itemize}
+\end{rei}
+
+\midashi{連結な閉曲面とはどんなものか}
+\begin{itemize}
+  \vspace{-0.5\baselineskip}
+  \item 有限個の多角形をその辺に沿って貼り合わせて得られる。
+  \item 1つの辺はちょうど2つの多角形の共通辺。（$\leftarrow$多様体の定義から）
+\end{itemize}
+
+\begin{rei}
+  % なんか楽しそうな絵がある
+\end{rei}
+
+\sukima \midashi{\large 分類定理}
+
+(連結な閉曲面) $\simeq$ (穴が$k$個の浮き輪) $\simeq$ (射影平面を$k'$個とりつけたもの)
+
+穴の個数$k$を\nw{種数（genus）}という。
+
+\begin{rei}[種数]
+  球の種数は0，トーラスの種数は1である。
+\end{rei}
+
+\midashi{演習}これを証明せよ。
+
 \expandafter\ifx\csname readornot\endcsname\relax
   \end{document}
 \fi
