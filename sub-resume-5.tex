@@ -7,6 +7,7 @@
   \renewcommand{\postpartname}{章}
   \renewcommand{\thesection}{\thepart.\arabic{section}}
   \renewcommand{\thepart}{\arabic{part}}
+  \renewcommand{\restriction}[2]{\left. #1 \right|_{#2}}
   \makeatletter\renewcommand{\theequation}{\thesection.\arabic{equation}}\@addtoreset{equation}{section}\makeatother
 
   \newcommand{\octopuspart}[1]{\newpage\part{#1}\setcounter{section}{0}\vspace{3\baselineskip}}
@@ -16,6 +17,40 @@
 \fi
 
 \section{ホモトピー}
+
+\midashi{2つの空間が「同じ形」をしているとはどういうことか？}
+
+$\xrightarrow{\text{ans}}$位相空間$X,Y$が位相同型 $\defines$ $\exists f \colon X \longrightarrow Y$：連続全単射，$f^{-1}$：連続
+
+例：ドーナツとコーヒーカップ
+
+$\xrightarrow{\text{ans}}$連続変形で移り合う
+
+例：太字のAと細字のAと丸 %図
+
+例：ディスクと一点（明らかにこの2つは位相同型ではない）
+
+このような「空間の連続変形」を定式化したい
+
+\sukima \midashi{\large 変形レトラクション}
+
+$X$：位相空間，$A \subseteq X$とする。
+
+\begin{teigi}[変形レトラクション]
+  $X$から$A$への\nw{変形レトラクション（deformation retraction）}とは，
+  次の条件を満たす$\sets{f_{t} \colon X \longrightarrow X}_{t \in [0,1]}$のこととする。：
+  \begin{itemize}
+    \vspace{-0.5\baselineskip}
+    \item $f_{0} = \mathrm{id}_{X}$
+    \item $f_{1}(X) = A$
+    \item $\restriction{f_{t}}{A} = \mathrm{id}_{A}$（$\forall t \in [0,1]$）
+    \item $\renewcommand{\arraystretch}{0.8} \begin{array}{c@{\:}c@{\:}c@{\:}c}
+               & X \times [0,1] & \longrightarrow & X \\
+      F \colon & \vin           &                 & \vin \\
+               & (x,t)          & \longmapsto     & f_{t}(x)
+    \end{array} \renewcommand{\arraystretch}{1.3}$は連続写像
+  \end{itemize}
+\end{teigi}
 
 \expandafter\ifx\csname readornot\endcsname\relax
   \end{document}
