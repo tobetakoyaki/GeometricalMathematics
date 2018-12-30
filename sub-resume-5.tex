@@ -20,13 +20,13 @@
 
 \midashi{2つの空間が「同じ形」をしているとはどういうことか？}
 
-$\xrightarrow{\text{ans}}$位相空間$X,Y$が位相同型 $\defines$ $\exists f \colon X \longrightarrow Y$：連続全単射，$f^{-1}$：連続
+\noindent $\xrightarrow{\text{ans}}$位相空間$X,Y$が位相同型 $\defines$ $\exists f \colon X \longrightarrow Y$：連続全単射，$f^{-1}$：連続
 
 例：ドーナツとコーヒーカップ
 
-$\xrightarrow{\text{ans}}$連続変形で移り合う
+\noindent $\xrightarrow{\text{ans}}$連続変形で移り合う
 
-例：太字のAと細字のAと丸 %図
+例：太字のAと細字のAと円 %図
 
 例：ディスクと一点（明らかにこの2つは位相同型ではない）
 
@@ -44,13 +44,129 @@ $X$：位相空間，$A \subseteq X$とする。
     \item $f_{0} = \mathrm{id}_{X}$
     \item $f_{1}(X) = A$
     \item $\restriction{f_{t}}{A} = \mathrm{id}_{A}$（$\forall t \in [0,1]$）
-    \item $\renewcommand{\arraystretch}{0.8} \begin{array}{c@{\:}c@{\:}c@{\:}c}
-               & X \times [0,1] & \longrightarrow & X \\
-      F \colon & \vin           &                 & \vin \\
-               & (x,t)          & \longmapsto     & f_{t}(x)
-    \end{array} \renewcommand{\arraystretch}{1.3}$は連続写像
+    \item $F \colon \mapdef{X \times [0,1]}{X}{(x,t)}{f_{t}(x)}$は連続写像
   \end{itemize}
 \end{teigi}
+
+\begin{rei}
+  $X \subseteq \mathbb{R}^{n}$：凸集合 i.e. $\forall x,y \in X, \quad \forall \lambda \in [0,1], \quad (1-\lambda) x + \lambda y \in X$とする。
+  $z \in X$として
+  \begin{equation}
+    f_{t} \colon \mapdef{X}{X}{x}{(1-t) x + t z} ,\qquad（t \in [0,1]）
+  \end{equation}
+  は，$X$から$\sets{z}$への変形レトラクションである。（凸性のおかげで写像の行き先が常に$X$に入る）
+\end{rei}
+
+\begin{rei}
+  $X = \mathbb{R}^{n} \setminus \sets{0}$とする。
+  \begin{equation}
+    f_{t} \colon \mapdef{X}{X}{x}{(1-t)x+t\dfrac{x}{\left\| x \right\|}}
+  \end{equation}
+  は$\mathbb{R}^{n} \setminus \sets{0}$から$S^{n-1}$への変形レトラクションである。
+\end{rei}
+
+\midashi{問題.} $A \subseteq \mathbb{R}^{n}$：閉凸集合として，$\mathbb{R}^{n}$から$A$への変形レトラクションを構成せよ。
+（{\bf ヒント}：近接点写像）
+
+\sukima \midashi{\large ホモトピー}
+
+$X,Y$：位相空間
+
+\begin{teigi}[ホモトピー]
+  $\sets{f_{t}}$：\nw{ホモトピー（homotopy）} $\defines$ 次の条件を満たす$\sets{f_{t} \colon X \longrightarrow Y}_{t \in [0,1]}$のこと：
+  \begin{itemize}
+    \vspace{-0.5\baselineskip}
+    \item $F \colon \mapdef{X \times [0,1]}{Y}{(x,t)}{f_{t}(x)}$が連続
+  \end{itemize}
+
+  また，$g \colon X \longrightarrow Y$と$h \colon X \longrightarrow Y$をつなぐホモトピー$\sets{f_{t}}$とは
+  上の$\sets{f_{t}}$に関する条件に加えて，$f_{0} = g$，$f_{1} = h$を満たすもののことを指す。
+  このとき，$g$と$h$は\nw{ホモトープ（homotope)}または\nw{ホモトピック（homotopic）}といい，$g \simeq h$と書く。
+\end{teigi}
+
+\begin{hodai}
+  ホモトープの関係$\simeq$は同値関係
+\end{hodai}
+
+\begin{proof}
+  \begin{itemize}
+    \vspace{-0.5\baselineskip}
+    \item $g \simeq g$は$f_{t} \equiv g$とすればよい。
+    \item $g \simeq h$とすると，このときのホモトピー$f_{t}$に対して$f_{1-t}$を考えれば$h \simeq g$である。
+    \item $f \simeq g$かつ$g \simeq h$とする。$f$と$g$を結ぶホモトピーを$\sets{f_{t}}$，$g$と$h$を結ぶホモトピーを$\sets{g_{t}}$とする。
+    このとき，$f$と$h$の間に写像の族$\sets{\overline{f}_{t}}$を
+    \begin{equation}
+      \overline{f}_{t} = \begin{cases}
+        f_{2t} & （0 \le t \le 1/2） \\
+        g_{2t-1} & （1/2 \le t \le 1）
+      \end{cases}
+    \end{equation}
+    で定める。すると，$\overline{f}_{0} = f$であり$\overline{f}_{1} = h$である。
+    このとき，
+    \begin{equation}
+      \overline{F} \colon \mapdef{X \times [0,1]}{Y}{(x,t)}{\overline{f}_{t}(x)}
+    \end{equation}
+    は$X \times [0,1/2]$上と$X \times [1/2,1]$上のそれぞれで連続であり，この2つの集合はともに閉集合である。
+    \rref{補題}{close.continuous}から， $f$は$X \times [0,1]$上でも連続であり，$f$と$h$を結ぶホモトピーになっている。
+  \end{itemize}
+\end{proof}
+
+上の補題の証明に用いた事実を明記して証明する。：
+
+\begin{hodai}
+  \label{close.continuous}
+  $X = A \cup B$，$A,B$：閉とする。$f \colon X \longrightarrow Y$に対して
+  $\restriction{f}{A},\restriction{f}{B}$がそれぞれ連続であるならば$f$は$X$上で連続である。
+\end{hodai}
+
+\begin{proof}
+  $F \subseteq Y$：閉とすると，$f^{-1} (F) = \restriction{f^{-1}}{A}(F) \cup \restriction{f^{-1}}{B}(F)$は有限個の閉集合のunionなので閉集合である。
+\end{proof}
+
+\begin{teigi}[ホモトピー類]
+  ホモトピーの同値関係による同値類を\nw{ホモトピー類}という。
+\end{teigi}
+
+\sukima \midashi{注意.} 変形レトラクションは，恒等写像$\mathrm{id}_{X}$とレトラクション$r$を結ぶホモトピーである。
+ここで，\nw{レトラクション}とは次を満たす写像$r \colon X \longrightarrow X$のことである。
+\begin{itemize}
+  \vspace{-0.5\baselineskip}
+  \item $r(X) = A$
+  \item $\restriction{r}{A} = \mathrm{id}_{A}$
+\end{itemize}
+
+\sukima \midashi{注意.} $Y \subseteq \mathbb{R}^{n}$のとき，$g \colon X \longrightarrow Y$，$h \colon X \longrightarrow Y$を結ぶホモトピーとして，
+$(1-t)g+th$（これを\nw{線形ホモトピー}という）を作りたくなるが，
+例えば凸性が保証されていないときには$(1-t)g(x) + t h(x) \notin Y$となる可能性があるので気をつける必要がある。
+
+\sukima \midashi{注意.} もし$Y$が弧状連結であれば，$g(x)$と$h(x)$を結ぶパスに沿っていつもホモトピーを作ることができるのだろうか。
+例えば$X = Y = S^{1}$として，$\mathrm{id}_{S^{1}}$と$S^{1}$上の一点へのレトラクションを結ぶホモトピーは{\bf できなさそう}である。
+
+\sukima \midashi{\large ホモトピー同値}
+
+\begin{teigi}[ホモトピー同値]
+  位相空間$X,Y$が\nw{ホモトピー同値} $\defines$ $\exists f \colon X \longrightarrow Y$：連続，$\exists g \colon Y \longrightarrow X$：連続，
+  $f \circ g \simeq \mathrm{id}_{Y}$，$g \circ f \simeq \mathrm{id}_{X}$
+
+  また，このとき$X$と$Y$は\nw{同じホモトピー型をもつ}ともいう。ホモトピー同値であることを$X \simeq Y$と書く。
+\end{teigi}
+
+\midashi{注意.} 位相同型ならばホモトピー同値である。
+
+\begin{hodai}
+  ホモトピー同値の関係$\simeq$は同値関係
+\end{hodai}
+
+\begin{proof}
+  ここでは推移律だけを示す。$X \simeq Y$かつ$Y \simeq Z$とする。
+  \begin{align}
+    &\exists f \colon X \longrightarrow Y, \quad \exists g \colon Y \longrightarrow X, \quad f \circ g \simeq \mathrm{id}_{Y}, \quad g \circ f \simeq \mathrm{id}_{X} \\
+    &\exists f' \colon Y \longrightarrow Z, \quad \exists g' \colon Z \longrightarrow Y, \quad f' \circ g' \simeq \mathrm{id}_{Z}, \quad g' \circ f' \simeq \mathrm{id}_{Y}
+  \end{align}
+  であるから，$\overline{f} = f' \circ f$，$\overline{g} = g \circ g'$と定めれば，これは連続写像であり，
+  $\overline{f} \circ \overline{g} = f' \circ f \circ g \circ g' \simeq f' \circ g' \simeq \mathrm{id}_{Z}$
+  である。同様に，$\overline{g} \circ \overline{f} \simeq \mathrm{id}_{X}$である。したがって，$X \simeq Z$である。
+\end{proof}
 
 \expandafter\ifx\csname readornot\endcsname\relax
   \end{document}
