@@ -17,6 +17,73 @@
 
 \section{基本群}
 
+\midashi{これからの展望}
+
+\begin{center}
+  \begin{tikzpicture}
+    \draw (0,0) circle [x radius=1, y radius=0.5] node {空間 $X$};
+    \draw (0,-2) circle [x radius=1, y radius=0.5] node {空間 $Y$};
+    \node at (3.5,0) {群$\pi_{1}(X)$};
+    \node at (3.5,-2) {群$\pi_{1}(Y)$};
+    \node[left] at (0,-1) {ホモトピー同値\hspace{1zw}\rotatebox[origin=c]{-90}{$\simeq$}};
+    \node[right] at (3.5,-1) {\rotatebox[origin=c]{-90}{$\simeq$}\hspace{1zw}群同型};
+    \draw[->] (1.5,0) -- (2.5,0);
+    \draw[->] (1.5,-2) -- (2.5,-2);
+  \end{tikzpicture}
+\end{center}
+となるような空間と群の対応を構成したい。
+
+\sukima \midashi{基本群}
+
+$X$：位相空間
+\begin{teigi}[パス]
+  \nw{パス（path）} $\defines$ $f \colon [0,1] \longrightarrow X$：連続
+\end{teigi}
+
+\begin{teigi}[ホモトピー]
+  $\sets{f_{t}}$：パスの\nw{ホモトピー} $\defines$ 次の条件を満たす$\sets{f_{t} \colon [0,1] \longrightarrow X}_{t \in [0,1]}$のこと：
+  \begin{itemize}
+    \vspace{-0.5\baselineskip}
+    \item $\forall t \in [0,1],\quad f_{t}(0) = x_{0},\quad f_{t}(1) = x_{1}$
+    \item $F \colon \mapdef{[0,1] \times [0,1]}{X}{(s,t)}{f_{t}(s)}$が連続
+  \end{itemize}
+\end{teigi}
+
+\begin{teigi}[ホモトープ]
+  2つのパス$f', f''$が\nw{ホモトープ} $\defines$ $f', f''$をつなぐホモトピー$\sets{f_{t}}$であって，
+  $f_{0} = f'$，$f_{1} = f''$であるものが存在する
+
+  このことを$f' \simeq f''$と書く。
+\end{teigi}
+
+\begin{prop}
+  ホモトープの$\simeq$は同値関係である。
+\end{prop}
+
+\begin{proof}
+  パスのホモトープは普通のホモトープの特別な場合であるから，そのときの同値性から従う。
+\end{proof}
+
+\begin{teigi}[パスの積（合成）]
+  $f,g \colon [0,1] \longrightarrow X$：パス，$f(1) = g(0)$を満たすとする。
+  パスの\nw{合成} $f \cdot g \colon [0,1] \longrightarrow X$を次で定義する。
+  \begin{equation}
+    f \cdot g (s) := \begin{cases}
+      f(2s) & \left( 0 \le s \le \dfrac{1}{2} \right) \\
+      g(2s-1) & \left( \dfrac{1}{2} \le s \le 1 \right)
+    \end{cases}
+  \end{equation}
+\end{teigi}
+
+\sukima \midashi{注意.} $f' \simeq f$，$g' \simeq g$ならば$f' \cdot g' \simeq f \cdot g$である。
+
+なぜならば，$f$と$f'$を結ぶホモトピー$\sets{f_{t}}$，$g$と$g'$を結ぶホモトピー$\sets{g_{t}}$に対して
+$\left( f \cdot g \right)_{t} := f_{t} \cdot g_{t}$とすれば，これが$f' \cdot g'$と$f \cdot g$を結ぶホモトピーになるから。
+
+\begin{teigi}[ループ]
+  $x_{0}$を\nw{基点（basepoint）とするループ（loop）} $\defines$ パス$f \colon [0,1] \longrightarrow X$であって，$f(0) = f(1) = x_{0}$
+\end{teigi}
+
 \expandafter\ifx\csname readornot\endcsname\relax
   \end{document}
 \fi
