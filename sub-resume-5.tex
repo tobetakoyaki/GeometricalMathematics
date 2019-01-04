@@ -168,6 +168,137 @@ $(1-t)g+th$（これを\nw{線形ホモトピー}という）を作りたくな�
   である。同様に，$\overline{g} \circ \overline{f} \simeq \mathrm{id}_{X}$である。したがって，$X \simeq Z$である。
 \end{proof}
 
+\begin{hodai}
+  $X$から$A \subseteq X$への変形レトラクションがあるなら$X$と$A$はホモトピー同値である。
+\end{hodai}
+
+\begin{proof}
+  $f_{t} \colon X \longrightarrow X$：$X$から$A$への変形レトラクションとする。つまり，$f_{0} = \mathrm{id}_{X}$，$f_{1}(X) = A$，$\restriction{f_{t}}{A} = \mathrm{id}_{A}$。
+  $g \colon X \longrightarrow A$，$g(x) = f_{1} (x)$，$h \colon A \longrightarrow X$：包含写像とすれば，
+  $g \circ h = \mathrm{id}_{A}$，$h \circ g = f_{1} \simeq f_{0} = \mathrm{id}_{X}$（$\because f_{t}$：変形レトラクション）
+\end{proof}
+
+\begin{corr}
+  {\bf 1.} $\mathbb{R}^{n}$，凸集合，1点はすべてホモトピー同値である。
+
+  {\bf 2.} $\mathbb{R}^{n} \setminus \sets{0}$と$S^{n-1}$はホモトピー同値である。
+\end{corr}
+
+\begin{teigi}
+  1点とホモトピー同値な空間を\nw{可縮}な空間という。
+\end{teigi}
+
+\midashi{注意.} 可縮な空間は凸集合の次に基本的な図形であるといえる。
+
+\sukima \midashi{問題.} 超平面$H_{a,b} := \sets{x \in \mathbb{R}^{n} | \left\langle a, x \right\rangle = b}$，
+半空間$H_{a,b}^{+} := \sets{x \in \mathbb{R}^{n} | \left\langle a, x \right\rangle \le b}$。
+多面体$P$：有限個の半空間の積；${\displaystyle P = \bigcap_{i=1}^{k} H_{a_{i}, b_{i}}^{+}}$，
+$P$の面：$P$または$P \subseteq H_{a,b}^{+}$なる$a,b$に対して$P \cap H_{a,b}$と書けるものである。
+
+（非有界な）多面体の有界な面の和集合は可縮であることを示せ。
+
+\begin{rei}
+  トーラス$T^{2}$から1点を除く。
+  \begin{center}
+    \begin{tikzpicture}[baseline=12pt]
+      \node at (0,0.5) {$T^{2} \setminus \sets{x}$};
+      \node at (1,0.5) {$\simeq$};
+
+      \filldraw[fill opacity=.3, draw=black] (1.5,0) rectangle +(1,1);
+      \draw (1.4,0.45) -- (1.5, 0.55) -- (1.6,0.45);
+      \draw (2.4,0.45) -- (2.5, 0.55) -- (2.6,0.45);
+      \draw (1.9,1.1) -- (2,1) -- (1.9,0.9);
+      \draw (2,1.1) -- (2.1,1) -- (2,0.9);
+      \draw (1.9,0.1) -- (2,0) -- (1.9,-0.1);
+      \draw (2,0.1) -- (2.1,0) -- (2,-0.1);
+      \filldraw[fill=white, opacity=1, draw=black] (2,0.5) circle [radius=0.05];
+      
+      \node at (3,0.5) {$\simeq$};
+
+      \draw (3.5,0) rectangle +(1,1);
+      \draw (3.4,0.45) -- (3.5, 0.55) -- (3.6,0.45);
+      \draw (4.4,0.45) -- (4.5, 0.55) -- (4.6,0.45);
+      \draw (3.9,1.1) -- (4,1) -- (3.9,0.9);
+      \draw (4,1.1) -- (4.1,1) -- (4,0.9);
+      \draw (3.9,0.1) -- (4,0) -- (3.9,-0.1);
+      \draw (4,0.1) -- (4.1,0) -- (4,-0.1);
+
+      \node at (5,0.5) {$\simeq$};
+
+      \draw (6,1) circle [x radius=0.5, y radius=0.2];
+      \draw (6,0) circle [x radius=0.5, y radius=0.2];
+      \draw (5.5,1) -- (5.5,0);
+      \draw (6,0.9) -- (6.1,0.8) -- (6,0.7);
+      \draw (6,-0.1) -- (6.1,-0.2) -- (6,-0.3);
+
+      \node at (7,0.5) {$\simeq$};
+
+      \draw (8,0.9) circle [x radius=0.3, y radius=0.4];
+      \draw (8,0.1) circle [x radius=0.3, y radius=0.4];
+      \filldraw (8,0.5) circle [radius=0.05];
+    \end{tikzpicture}
+  \end{center}
+  $S^{1}$と$S^{1}$を1点で同一視した空間$S^{1} \vee S^{1}$とホモトピー同値。
+\end{rei}
+
+\begin{teigi}
+  $X$と$Y$の\nw{wedge和} $X \vee Y$を次のように定める。
+  $x \in X$，$y \in Y$をとって，
+  \begin{equation}
+    X \vee Y := X \amalg Y \,/\, x \sim y
+  \end{equation}
+\end{teigi}
+
+\midashi{問題.} 閉曲面から何点か除いた空間のホモトピー型をいろいろ調べよ。
+
+\begin{teigi}[セル複体（CW複体）]
+  \nw{$n$--セル} $\simeq$ $n$次元ディスク$D^{n} = \sets{x \in \mathbb{R}^{n} | \left\| x \right\| \le 1}$
+  とする。\nw{セル複体}とは以下のように帰納的につくられる空間をいう。
+  \begin{itemize}
+    \vspace{-0.5\baselineskip}
+    \item $X^{0}$：0--セルからなる離散集合
+    \item $X^{n}$：$n$--スケルトン
+    
+    $X^{n-1}$と$n$--セルの集合$D_{\alpha}^{n}$，$\varphi_{\alpha} \colon S_{\alpha}^{n} = \partial D_{\alpha}^{n} \longrightarrow X^{n-1}$（$\alpha \in \Lambda$）を考えて，
+    同値関係$\sim$を$x \sim \varphi_{\alpha}(x)$として，$X^{n}$を以下で定める。
+    \begin{equation}
+      X^{n} := \left( X^{n - 1} \amalg \coprod_{\alpha} D_{\alpha}^{n} \right) / \sim
+    \end{equation}
+  \end{itemize}
+  セル複体の次元を含まれるセルの最大次元で定める。
+\end{teigi}
+
+\begin{rei}
+  セル複体の例
+\end{rei}
+%%%%% あとで図を入れる %%%%%
+
+\midashi{問題.} 他にもいろいろなセル複体をつくってみよ。
+
+\begin{hodai}
+  $X$：セル複体，$A \subseteq X$：可縮な部分複体とする。$X \sim A$を$A$を1点に潰して得られる空間とする。このとき，
+  $X \simeq X / A$である。
+\end{hodai}
+
+\midashi{問題.} 証明せよ。
+
+\begin{teigi}
+  \nw{グラフ}とは1次元セル複体のことである。
+\end{teigi}
+
+\begin{prop}
+  $X$：連結なグラフ，$n$：$X$の頂点数，$m$：$X$の枝数（取り付けた1--セルの個数）とする。このとき，
+  $X \simeq \underbrace{S^{1} \vee S^{1} \vee \dots \vee S^{1}}_{m-n+1}$である。
+\end{prop}
+
+\begin{proof}
+  グラフの\nw{全域木}とは，すべての頂点と接続するサイクルを含まないグラフとする。
+  全域木の枝数は$n-1$である。
+  グラフのうち全域木の部分を1点に潰して得られる空間を考えれば，これは先の全域木に入らない$m-n+1$本の枝がループになる。
+\end{proof}
+
+\midashi{参考.} house with two rooms
+
 \expandafter\ifx\csname readornot\endcsname\relax
   \end{document}
 \fi
