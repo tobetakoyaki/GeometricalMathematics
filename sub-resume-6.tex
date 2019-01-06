@@ -15,9 +15,10 @@
   \begin{document}
 \fi
 
+\definecolor{mygreen}{rgb}{0,0.75,0}
 \section{基本群}
 
-\midashi{これからの展望}
+\midashi{\large これからの展望}
 
 \begin{center}
   \begin{tikzpicture}
@@ -33,7 +34,7 @@
 \end{center}
 となるような空間と群の対応を構成したい。
 
-\sukima \midashi{基本群}
+\sukima \midashi{\large 基本群}
 
 $X$：位相空間
 \begin{teigi}[パス]
@@ -64,6 +65,8 @@ $X$：位相空間
   パスのホモトープは普通のホモトープの特別な場合であるから，そのときの同値性から従う。
 \end{proof}
 
+ホモトープの同値関係$\simeq$によるパス$f$の同値類$[f]$を\nw{ホモトピー類}という。
+
 \begin{teigi}[パスの積（合成）]
   $f,g \colon [0,1] \longrightarrow X$：パス，$f(1) = g(0)$を満たすとする。
   パスの\nw{合成} $f \cdot g \colon [0,1] \longrightarrow X$を次で定義する。
@@ -83,6 +86,132 @@ $\left( f \cdot g \right)_{t} := f_{t} \cdot g_{t}$とすれば，これが$f' \
 \begin{teigi}[ループ]
   $x_{0}$を\nw{基点（basepoint）とするループ（loop）} $\defines$ パス$f \colon [0,1] \longrightarrow X$であって，$f(0) = f(1) = x_{0}$
 \end{teigi}
+
+ループに対するホモトープの同値関係（パスのそれと同じように定められる）による同値類を考える。
+集合$\pi_{1}(X, x_{0})$を次で定める。
+\begin{equation}
+  \pi_{1}(X, x_{0}) := \sets{[f] | f \text{：$x_{0}$を基点とするループ}}
+\end{equation}
+
+\begin{prop}
+  $\pi_{1}(X,x_{0})$は積$[f] \cdot [g] := [f \cdot g]$の下で
+  \footnote{もう少し正確にいうと，$\pi_{1}(X,x_{0})$のホモトピー類$F,G$の積$F \cdot G$を
+  $F = [f]$，$G = [g]$となるようなループ$f,g$をとって，
+  $F \cdot G := [f \cdot g]$と定義した。}\
+  群になる。
+\end{prop}
+
+\begin{proof}
+  \midashi{［積の定義のwell-defined性］} 
+
+  まず，$x_{0}$を基点とするループの合成も$x_{0}$を基点とするループであることに注意する。
+  $f' \in [f]$，$g' \in [g]$をとって$[f' \cdot g'] = [f \cdot g]$を示せばよい。
+  これは$f' \simeq f$，$g' \simeq g$であるから，先の{\bf 注意.}より$f' \cdot g' \simeq f \cdot g$であるから従う。
+
+  \sukima \midashi{［準備］}
+  
+  $\varphi \colon [0,1] \longrightarrow [0,1]$，$\varphi(0) = 0$，$\varphi(1) = 1$とする。
+  このとき，ホモトピー$(f \circ \varphi)_{t} := f \circ \left( (1-t) \varphi + t \, \mathrm{id} \right)$を考えれば，
+  これは$f \circ \varphi$と$f$を結ぶホモトピーであり，$(f \circ \varphi)_{0} = f \circ \varphi$，$(f \circ \varphi)_{1} = f$である。
+  よって$[f \circ \varphi] = [f]$である。
+
+  この$\varphi$を適切に定めることでパスの進むスピードを変換する。
+
+  \sukima \midashi{［単位元の存在］}
+
+  $c \colon [0,1] \longrightarrow X$を$c(s) \equiv x_{0}$（定ループ）で定める。$[c]$は単位元になる。
+  \begin{quote}
+    $\because)$ $f$を$x_{0}$を基点とするループとして，$c \cdot f$を考える。
+    時刻$s$を
+    \begin{center}
+      \begin{tikzpicture}
+        \filldraw (0,0) circle (0.05);
+        \filldraw (0,1) circle (0.05);
+        \filldraw (0,2) circle (0.05);
+        \filldraw (2,0) circle (0.05);
+        \filldraw (2,2) circle (0.05);
+        \draw[->] (0,0) node[left]{0} -- (0,1) node[left]{1/2} -- (0,2) node[left]{1} -- (0,2.2);
+        \draw[->] (2,0) node[right]{0} -- (2,2) node[right]{1} -- (2,2.2);
+        \draw[dashed] (0,0) -- (2,0);
+        \draw[dashed] (0,1) -- (2,0);
+        \draw[dashed] (0,2) -- (2,2);
+        \draw[->, mygreen] (0.3,1.8) -- (1.7,1.8);
+        \draw[->, mygreen] (0.3,1.2) -- (1.7,0.5);
+        \draw[->, mygreen] (0.3,0.75) -- (1.7,0.05);
+        \draw[->, mygreen] (0.3,-0.1) -- (1.7,-0.1);
+        \node at (1,1.5){\textcolor{mygreen}{$\varphi$}};
+      \end{tikzpicture}
+    \end{center}
+    のように変換する。（つまり時刻1/2まで立ち止まってから2倍のスピードで移動する。）
+    このとき，$f \circ \varphi = c \cdot f$である。
+    よって，$[f] = [f \circ \varphi] = [c \cdot f] = [c] \cdot [f]$である。
+    $[f] \cdot [c] = [f]$も同様。
+  \end{quote}
+
+  \sukima \midashi{［結合律］}
+  
+  $[f \cdot (g \cdot h)] = [(f \cdot g) \cdot h]$を示せばよい。
+  時刻のスピードを
+  \begin{center}
+    \begin{tikzpicture}
+      \filldraw (0,0) circle (0.05);
+      \filldraw (0,1) circle (0.05);
+      \filldraw (0,1.5) circle (0.05);
+      \filldraw (0,2) circle (0.05);
+      \filldraw (2,0) circle (0.05);
+      \filldraw (2,0.5) circle (0.05);
+      \filldraw (2,1) circle (0.05);
+      \filldraw (2,2) circle (0.05);
+      \draw[->] (0,0) node[left]{0} -- (0,1) node[left]{1/2} -- (0,1.5) node[left]{3/4} -- (0,2) node[left]{1} -- (0,2.2);
+      \draw[->] (2,0) node[right]{0} -- (2,0.5) node[right]{1/4} -- (2,1) node[right]{1/2} -- (2,2) node[right]{1} -- (2,2.2);
+      \draw[dashed] (0,0) -- (2,0);
+      \draw[dashed] (0,1) -- (2,0.5);
+      \draw[dashed] (0,1.5) -- (2,1);
+      \draw[dashed] (0,2) -- (2,2);
+      \draw[->, mygreen] (0.3,1.9) -- (1.7,1.9);
+      \draw[->, mygreen] (0.3,1.6) -- (1.7,1.25);
+      \draw[->, mygreen] (0.3,1.2) -- (1.7,0.85);
+      \draw[->, mygreen] (0.3,0.75) -- (1.7,0.4);
+      \draw[->, mygreen] (0.3,0.1) -- (1.7,0.1);
+      \node at (1,-0.25){\textcolor{mygreen}{$\varphi$}};
+      \node at (0.2,0.5){$f$};
+      \node at (0.2,1.25){$g$};
+      \node at (0.2,1.75){$h$};
+      \node at (1.8,0.25){$f$};
+      \node at (1.8,0.75){$g$};
+      \node at (1.8,1.5){$h$};
+    \end{tikzpicture}
+  \end{center}
+  のように変換する$\varphi$を考える。このとき，$(f \cdot (g \cdot h)) \circ \varphi = (f \cdot g) \cdot h$となる。
+  したがって，$[f \cdot (g \cdot h)] = [(f \cdot g) \cdot h]$である。
+
+  \sukima \midashi{［逆元］}
+  
+  $f \colon [0,1] \longrightarrow X$に対し，$\overline{f} \colon [0,1] \longrightarrow X$を
+  $\overline{f}(s) := f(1-s)$で定義すると，$[f][\overline{f}] = [\overline{f}][f] = [c]$である。
+
+  \begin{quote}
+    $\because)$ $f \cdot \overline{f} \simeq c$を示す。
+    $f_{t}$と$g_{t}$を
+    \begin{align}
+      & f_{t}(s) := \begin{cases}
+        f(s) & (0 \le s \le t) \\
+        f(t) & (t \le s \le 1)
+      \end{cases}, \\
+      & g_{t}(s) := \begin{cases}
+        \overline{f}(1-t) = f(t) & (0 \le s \le 1-t) \\
+        \overline{f}(s) & (1-t \le s \le 1)
+      \end{cases}
+    \end{align}
+    で定義すると，$f_{t} \cdot g_{t}$は$f \cdot \overline{f}$と$c$を結ぶホモトピーになる。
+  \end{quote}
+\end{proof}
+
+\begin{teigi}[基本群]
+  $\pi_{1}(X,x_{0})$を，$x_{0}$を基点とする$X$の\nw{基本群（fundamental group）}という。
+\end{teigi}
+
+\sukima \midashi{\large 基点のとりかえ}
 
 \expandafter\ifx\csname readornot\endcsname\relax
   \end{document}
