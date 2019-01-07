@@ -213,6 +213,258 @@ $\left( f \cdot g \right)_{t} := f_{t} \cdot g_{t}$とすれば，これが$f' \
 
 \sukima \midashi{\large 基点のとりかえ}
 
+\renewcommand{\arraystretch}{1.0}
+\begin{tabular}{lll}
+  $x_{0}, x_{1} \in X$， & $h \colon [0,1] \longrightarrow X$，$h(0) = x_{0}$，$h(1) = x_{1}$ &（$x_{0}$から$x_{1}$へのパス）\\
+  & $\overline{h} \colon [0,1] \longrightarrow X$，$\overline{h}(s) = h(1-s)$ &（$x_{1}$から$x_{0}$へのパス）\\
+  \multicolumn{2}{l}{$f$：$x_{0}$を基点とするループ} \\
+  \multicolumn{2}{l}{$\Rightarrow h \cdot f \cdot \overline{h}$：$x_{0}$を基点とするループ}
+\end{tabular}
+\renewcommand{\arraystretch}{1.3}
+
+\begin{tikzpicture}
+	\filldraw (0,0) circle [radius=0.05];
+	\filldraw (2,0.8) circle [radius=0.05];
+	\draw (0,0) node[above]{$x_{1}$} .. controls (1,0.35) .. (2,0.8) node[above left]{$x_{0}$};
+	\draw (3,1) circle [x radius = 1, y radius = 0.8, rotate=15];
+	\draw[->] (0.7,0.5) -- (1.5,0.8);
+	\draw[<-] (0.8,0.1) -- (1.6,0.4);
+	\draw (2.4,1.5) -- (2.4,1.6) -- (2.3,1.6);
+	\draw (3.7,0.4) -- (3.6,0.4) -- (3.6,0.5);
+	\draw (4,1.8) node{$f$};
+	\draw (1,0.9) node{$h$};
+	\draw (1.5,0) node{$\overline{h}$};
+\end{tikzpicture}
+
+いま，ホモトピー$\sets{f_{t}}$によって$f' \simeq f$であるとすると，
+ホモトピー$\sets{h \cdot f_{t} \cdot \overline{h}}$によって$h \cdot f \cdot \overline{h} \simeq h \cdot f' \cdot \overline{h}$である。
+したがって，
+\begin{equation}
+  \beta_{h} \colon \mapdef{\pi_{1}(X,x_{0})}{\pi_{1}(X,x_{1})}{\left[ f \right]}{\left[ h \cdot f \cdot \overline{h} \, \right]}
+\end{equation}
+はwell-definedになる。
+
+\begin{prop}
+  $\beta_{h}$は$\pi_{1}(X,x_{0})$から$\pi_{1}(X,x_{1})$への同型写像
+\end{prop}
+
+\begin{proof}
+  \midashi{［準同型性］}
+  \begin{equation}
+    \beta_{h}([f] \cdot [g]) = [h \cdot f \cdot g \cdot \overline{h}] = [h \cdot f \cdot \overline{h} \cdot h \cdot g \cdot \overline{h}] = [h \cdot f \cdot \overline{h}] \cdot [h \cdot g \cdot \overline{h}] = \beta_{h}([f]) \cdot \beta_{h}([g])
+  \end{equation}
+
+  \sukima \midashi{［全単射性］}
+
+  $\beta_{\overline{h}} \colon \pi_{1}(X, x_{0}) \longrightarrow \pi_{1}(X, x_{1})$を考える。
+  \begin{equation}
+    \beta_{\overline{h}} \circ \beta_{h} ([f]) = \beta_{\overline{h}} ([h \cdot f \cdot \overline{h}]) = [\overline{h} \cdot h \cdot f \cdot \overline{h} \cdot h] = [f]
+  \end{equation}
+  であるから$\beta_{\overline{h}} \circ \beta_{h} = \mathrm{id}$である。同様に$\beta_{h} \circ \beta_{\overline{h}} = \mathrm{id}$である。
+  よって$\beta_{\overline{h}}$が$\beta_{h}$の逆写像である。
+\end{proof}
+
+\begin{prop}
+  $X$が弧状連結ならば，任意の点$x_{0} \in X$に対して$x_{0}$を基点とする基本群$\pi_{1}(X,x_{0})$はすべて同型。
+\end{prop}
+
+そこで，$X$が弧状連結のときには基本群を単に$\pi_{1}(X)$と書く。
+
+\begin{rei}
+  $X \subseteq \mathbb{R}^{n}$：凸集合とする。任意のループ$f$は定ループ$c$とホモトープであるから，$\pi_{1}(X) = \sets{e}$（自明な群）である。
+  同様に，$X$が可縮空間であるときも$\pi_{1}(X) = \sets{e}$である。
+\end{rei}
+
+\begin{teigi}[単連結]
+  $X$：\nw{単連結（simply-connected）} $\defines$ $X$：弧状連結 かつ $\pi_{1}(X) = \sets{e}$
+\end{teigi}
+
+\begin{prop}
+  $X$：単連結 $\Longleftrightarrow$ 「$\forall x, y \in X$，$f, f'$：$x$から$y$へのパス $\Longrightarrow$ $f \simeq f'$」
+\end{prop}
+
+\begin{proof}
+  $x = y$のときを考えれば$\Longleftarrow$向きは明らかである。
+  $\Longrightarrow$向きについては，$f \cdot \overline{f'}$がループであり$\pi_{1}(X) = \sets{e}$であることに注意すれば$f \simeq f \cdot \overline{f'} \cdot f' \simeq f'$である。 
+\end{proof}
+
+\begin{teigi}
+  $\varphi \colon X \longrightarrow Y$：連続，$y_{0} = \varphi(x_{0})$とする。写像$\varphi_{*}$を次のように定める。
+  \begin{equation}
+    \varphi_{*} \colon \mapdef{\pi_{1}(X,x_{0})}{\pi_{1}(Y,y_{0})}{\left[ f \right]}{\left[ \varphi \circ f \right]}
+  \end{equation}
+\end{teigi}
+
+\begin{hodai}
+  $\varphi_{*}$はwell-definedであり準同型
+\end{hodai}
+
+\begin{proof}
+  \midashi{［well-definedness］}
+
+  ホモトピー$\sets{f_{t}}$によって$f \simeq f'$であるならば，ホモトピー$\sets{\varphi \circ f_{t}}$によって$\varphi \circ f \simeq \varphi \circ f'$である。
+
+  \sukima \midashi{［準同型性］}
+  \begin{equation}
+    \varphi_{*} ([f] \cdot [g]) = \varphi_{*} ([f \cdot g]) = [ \varphi \circ (f \cdot g)] = [(\varphi \circ f) \cdot (\varphi \circ g)] = [\varphi \circ f] \cdot [\varphi \circ g] = \varphi_{*}([f]) \cdot \varphi_{*} ([g])
+  \end{equation}
+\end{proof}
+
+\begin{hodai}
+  \midashi{(1)} $\varphi \colon X \longrightarrow Y$，$\phi \colon Y \longrightarrow Z$に対して，$(\phi \circ \varphi)_{*} = \phi_{*} \circ \varphi_{*}$である。
+
+  \midashi{(2)} $(\mathrm{id}_{X})_{*} = \mathrm{id}_{\pi_{1}(X,x_{0})}$
+\end{hodai}
+
+\begin{proof}
+  \midashi{(1)} $(\phi \circ \varphi)_{*}([f]) = [\phi \circ \varphi \circ f] = \phi_{*}([\varphi \circ f]) = (\phi_{*} \circ \varphi_{*}) ([f])$
+
+  \midashi{(2)} 明らか
+\end{proof}
+
+\begin{teiri}
+  $\varphi \colon X \longrightarrow Y$：同相 $\Longrightarrow$ $\varphi_{*} \colon \pi_{1} (X, x_{0}) \longrightarrow \pi_{1} (Y, \varphi (x_{0}))$：同型
+\end{teiri}
+
+\begin{proof}
+  $\phi_{*}$が準同型写像であることは既に示したことに注意する。
+
+  いま，$\varphi^{-1} \circ \varphi = \mathrm{id}_{X}$から$(\varphi^{-1})_{*} \circ \varphi_{*} = \mathrm{id}_{\pi_{1}(X,x_{0})}$である。
+  また，$\varphi \circ \varphi^{-1} = \mathrm{id}_{Y}$から$\varphi_{*} \circ (\varphi^{-1})_{*} = \mathrm{id}_{\pi_{1}(Y,\varphi(x_{0}))}$である。
+  よって，$\varphi_{*}$は同型写像。
+\end{proof}
+
+\begin{corr}
+  $\pi_{1}(X) \not\simeq \pi_{1}(Y)$なら$X$と$Y$は同相でない
+\end{corr}
+
+\begin{teiri}
+  $\varphi \colon X \longrightarrow Y$がホモトピー同値写像なら
+  $\varphi_{*} \colon \pi_{1} (X, x_{0}) \longrightarrow \pi_{1} (Y, \varphi(x_{0}))$は同型写像
+\end{teiri}
+
+\begin{proof}
+  \midashi{［準備］}
+
+  $\rho_{t} \colon X \longrightarrow Y$：ホモトピー，$h \colon s \longmapsto \rho_{s}(x_{0})$：パス，とする。
+  このとき，$(\rho_{0})_{*} = \beta_{h} \circ (\rho_{1})_{*}$である。
+
+  \begin{tikzpicture}
+    \filldraw (0,0) circle [radius=0.05];
+    \draw (0,0) node[below]{$x_{0}$} .. controls (2.5,0) and (0,2) .. (0,0);
+    \node at (0.6,1.2) {$f$};
+    \draw[->] (1.5,0) -- (2,0);
+    \node at (1.75,0) [below]{$\rho_{t}$};
+    \filldraw (2.8,1) circle [radius=0.05];
+    \draw (2.8,1) node[above=8, left=-3]{$\rho_{1}(x_{0})$} .. controls (4.5,0) and (4.3,2) .. (2.8,1);
+    \filldraw (2.5,0) circle [radius=0.05];
+    \draw (2.5,0) .. controls (4.2,-1) and (4,1) .. (2.5,0);
+    \filldraw (2.3,-1) circle [radius=0.05];
+    \draw (2.3,-1) node[below=8, left=-3]{$\rho_{0}(x_{0})$} .. controls (4,-2) and (3.8,0) .. (2.3,-1);
+    \draw (2.3,-1) .. controls (2.5,0) .. (2.8,1);
+    \node at (2.3,0.4) {$h$};
+    \node at (4.5,1.3) {$\rho_{1} \circ f$};
+    \node at (4.2,0.3) {$\rho_{t} \circ f$};
+    \node at (4,-0.7) {$\rho_{0} \circ f$};
+  \end{tikzpicture}
+
+  これは次のようにして示される。：
+  \begin{equation}
+    (\beta_{h} \circ (\rho_{1})_{*}) ([f]) = \beta_{h} ([\rho_{1} \circ f]) = [h \cdot \rho_{1} \circ f \cdot \overline{h}] = [\rho_{0} \circ f] = (\rho_{0})_{*} ([f])
+  \end{equation}
+  なお，後ろから2つ目の等号はホモトピー$\sets{h_{t} \cdot \varphi_{t} \circ f \cdot \overline{h}_{t}}$による。
+
+  \sukima \midashi{［本証明］}
+
+  ホモトピー$\sets{\rho_{t}}$によって$\phi \circ \varphi \simeq \mathrm{id}$となるならば，あるパス$h$が存在して$\phi_{*} \circ \varphi_{*} = \beta_{h}$となる。
+  特に写像$\phi_{*} \circ \varphi_{*}$は$\pi_{1}(X, x_{0})$と$\pi_{1}(X, (\phi \circ \varphi)(x_{0}))$の間の同型写像である。このことから$\varphi_{*}$は単射である。
+  同様に$\varphi_{*} \circ \phi_{*}$は同型写像であり，$\phi_{*}$は単射である。よって$\varphi_{*}$は全単射である。
+\end{proof}
+
+\sukima \midashi{\large $S^{n}$の基本群について}
+
+\begin{teiri}
+  $n \ge 2$に対して，$\pi_{1}(S^{n}) = \sets{e}$である。つまり，2次元以上の球面は単連結である。
+\end{teiri}
+
+\begin{proof}
+  $f$を$x_{0} \in S^{n}$を基点とするループ，とする。
+
+  このとき，$y \in S^{n}$であって$y \neq x_{0}$，$y \notin f([0,1])$を満たす点をとることができる。（{\bf 注意.}へ）
+
+  いま，$S^{n} \setminus \sets{y} \simeq \mathbb{R}^{n}$なので，$f$を$\mathbb{R}^{n}$のループとみると，
+  これは1点にホモトピー同値である。
+\end{proof}
+
+\midashi{注意.} このような条件を満たす$y$がとれることは直感的には明らかであるが，本来は証明が必要な事柄である。
+
+\midashi{問題.} では，これを証明せよ。
+
+\sukima \midashi{注意.} $S^{1}$では$y \notin f([0,1])$をとることができない。
+
+\sukima \midashi{\large Poincar\'e予想}\footnote{Перельман（Perelman）により証明された}
+\begin{teiri}
+  単連結なコンパクト3次元多様体は$S^{3}$に同相である
+\end{teiri}
+
+このことは2次以上のコンパクト多様体についても同様なことがいえる。
+
+\sukima \midashi{\large $S^{1}$の基本群について}
+
+ループ$f$が円周を$n$回「まわり」，$g$が円周を$m$回「まわる」とする。このとき，$f \cdot g$は円周を$n + m$回「まわる」といえる。
+この写像$\pi_{1}(S^{1}) \longrightarrow \mathbb{Z}$は同型写像を与えるのではないかと思える。
+
+このことをあとできちんと示す。
+
+\begin{teiri}
+  $\pi_{1}(S^{1}) \simeq \mathbb{Z}$
+\end{teiri}
+
+証明は，被覆空間の考え方を用いるので，後に回す。
+
+\sukima \midashi{\large 直積の基本群}
+
+\begin{teiri}
+  $\pi_{1} (X \times Y, (x_{0}, y_{0})) \simeq \pi_{1}(X, x_{0}) \times \pi_{1}(Y, y_{0})$
+\end{teiri}
+
+\begin{proof}
+  $f$：$(x_{0}, y_{0})$を基点とする$X \times Y$上のループ，とする。
+  $f \colon [0,1] \longrightarrow X \times Y$であるから
+
+  \renewcommand{\arraystretch}{1.0}
+  \begin{tabular}{lll}
+    $f = (g,h)$, & $g \colon [0,1] \longrightarrow X$, & $g(0) = g(1) = x_{0}$, \\
+    & $h \colon [0,1] \longrightarrow Y$, & $h(0) = h(1) = y_{0}$
+  \end{tabular}
+  \renewcommand{\arraystretch}{1.3}
+
+  と表せる。$g,h$は$X,Y$上のループである。
+  
+  写像
+  \begin{equation}
+    \varphi \colon \mapdef{\pi_{1}(X \times Y, (x_{0}, y_{0}))}{\pi_{1}(X, x_{0}) \times \pi_{1}(Y, y_{0})}{\left[ f \right]}{(\left[ g \right], \left[ h \right])}  
+  \end{equation}
+  は準同型写像である。（well-defined性も準同型性も示せる）
+
+  同様に
+  \begin{equation}
+    \overline{\varphi} \colon \mapdef{\pi_{1}(X, x_{0}) \times \pi_{1}(Y, y_{0})}{\pi_{1}(X \times Y, (x_{0}, y_{0}))}{(\left[ g \right], \left[ h \right])}{\left[ (g,h) \right]}
+  \end{equation}
+  を考える。
+  
+  すると，$\overline{\varphi} \circ \varphi = \mathrm{id}$，$\varphi \circ \overline{\varphi} = \mathrm{id}$であり，$\simeq$が成り立つ。
+\end{proof}
+
+\sukima \midashi{\large トーラスの基本群}
+\begin{corr}
+  $\pi_{1}(T^{2}) \simeq \mathbb{Z} \times \mathbb{Z}$
+\end{corr}
+
+\begin{proof}
+  $T^{2} = S^{1} \times S^{1}$であることから従う。
+\end{proof}
+
 \expandafter\ifx\csname readornot\endcsname\relax
   \end{document}
 \fi
