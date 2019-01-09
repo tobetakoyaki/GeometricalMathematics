@@ -339,16 +339,17 @@ $\left( f \cdot g \right)_{t} := f_{t} \cdot g_{t}$とすれば，これが$f' \
 \end{corr}
 
 \begin{teiri}
+  \label{kihongun.homequiv}
   $\varphi \colon X \longrightarrow Y$がホモトピー同値写像なら
   $\varphi_{*} \colon \pi_{1} (X, x_{0}) \longrightarrow \pi_{1} (Y, \varphi(x_{0}))$は同型写像
 \end{teiri}
 
-\begin{proof}
-  \midashi{［準備］}
+この\rref{定理}{kihongun.homequiv}の証明に際して，次の補題を用いる。
 
-  $\rho_{t} \colon X \longrightarrow Y$：ホモトピー，$h \colon s \longmapsto \rho_{s}(x_{0})$：パス，とする。
-  このとき，$(\rho_{0})_{*} = \beta_{h} \circ (\rho_{1})_{*}$である。
-
+\begin{hodai}
+  $\rho, \rho' \colon X \longrightarrow Y$がホモトピー$\sets{\rho_{t}}$によってホモトピー同値であり，
+  $h \colon t \longmapsto \rho_{t}(x_{0})$：パス，とする。
+  このとき，$\rho_{*} = \beta_{h} \circ \rho'_{*}$である。
   \begin{tikzpicture}
     \filldraw (0,0) circle [radius=0.05];
     \draw (0,0) node[below]{$x_{0}$} .. controls (2.5,0) and (0,2) .. (0,0);
@@ -356,29 +357,30 @@ $\left( f \cdot g \right)_{t} := f_{t} \cdot g_{t}$とすれば，これが$f' \
     \draw[->] (1.5,0) -- (2,0);
     \node at (1.75,0) [below]{$\rho_{t}$};
     \filldraw (2.8,1) circle [radius=0.05];
-    \draw (2.8,1) node[above=8, left=-3]{$\rho_{1}(x_{0})$} .. controls (4.5,0) and (4.3,2) .. (2.8,1);
+    \draw (2.8,1) node[above=8, left=-3]{$\rho'(x_{0})$} .. controls (4.5,0) and (4.3,2) .. (2.8,1);
     \filldraw (2.5,0) circle [radius=0.05];
     \draw (2.5,0) .. controls (4.2,-1) and (4,1) .. (2.5,0);
     \filldraw (2.3,-1) circle [radius=0.05];
-    \draw (2.3,-1) node[below=8, left=-3]{$\rho_{0}(x_{0})$} .. controls (4,-2) and (3.8,0) .. (2.3,-1);
+    \draw (2.3,-1) node[below=8, left=-3]{$\rho(x_{0})$} .. controls (4,-2) and (3.8,0) .. (2.3,-1);
     \draw (2.3,-1) .. controls (2.5,0) .. (2.8,1);
     \node at (2.3,0.4) {$h$};
-    \node at (4.5,1.3) {$\rho_{1} \circ f$};
+    \node at (4.5,1.3) {$\rho' \circ f$};
     \node at (4.2,0.3) {$\rho_{t} \circ f$};
-    \node at (4,-0.7) {$\rho_{0} \circ f$};
+    \node at (4,-0.7) {$\rho \circ f$};
   \end{tikzpicture}
+\end{hodai}
 
-  これは次のようにして示される。：
+\begin{proof}
   \begin{equation}
-    (\beta_{h} \circ (\rho_{1})_{*}) ([f]) = \beta_{h} ([\rho_{1} \circ f]) = [h \cdot \rho_{1} \circ f \cdot \overline{h}] = [\rho_{0} \circ f] = (\rho_{0})_{*} ([f])
+    (\beta_{h} \circ \rho'_{*}) ([f]) = \beta_{h} ([\rho' \circ f]) = [h \cdot \rho' \circ f \cdot \overline{h}] = [\rho \circ f] = \rho_{*} ([f])
   \end{equation}
-  なお，後ろから2つ目の等号はホモトピー$\sets{h_{t} \cdot \varphi_{t} \circ f \cdot \overline{h}_{t}}$による。
+  による。なお，後ろから2つ目の等号はホモトピー$\sets{h_{t} \cdot \rho_{t} \circ f \cdot \overline{h}_{t}}$による。
+\end{proof}
 
-  \sukima \midashi{［本証明］}
-
+\begin{proof}[{\bf \rref{定理}{kihongun.homequiv}の証明}]
   ホモトピー$\sets{\rho_{t}}$によって$\phi \circ \varphi \simeq \mathrm{id}$となるならば，あるパス$h$が存在して$\phi_{*} \circ \varphi_{*} = \beta_{h}$となる。
-  特に写像$\phi_{*} \circ \varphi_{*}$は$\pi_{1}(X, x_{0})$と$\pi_{1}(X, (\phi \circ \varphi)(x_{0}))$の間の同型写像である。このことから$\varphi_{*}$は単射である。
-  同様に$\varphi_{*} \circ \phi_{*}$は同型写像であり，$\phi_{*}$は単射である。よって$\varphi_{*}$は全単射である。
+  特に写像$\phi_{*} \circ \varphi_{*}$は$\pi_{1}(X, x_{0})$と$\pi_{1}(X, (\phi \circ \varphi)(x_{0}))$の間の同型写像である。このことから$\phi_{*}$は全射，$\varphi_{*}$は単射である。
+  同様に$\varphi_{*} \circ \phi_{*}$は同型写像であり，$\varphi_{*}$は全射，$\phi_{*}$は単射である。よって$\varphi_{*}$は全単射である。
 \end{proof}
 
 \sukima \midashi{\large $S^{n}$の基本群について}
@@ -464,6 +466,45 @@ $\left( f \cdot g \right)_{t} := f_{t} \cdot g_{t}$とすれば，これが$f' \
 \begin{proof}
   $T^{2} = S^{1} \times S^{1}$であることから従う。
 \end{proof}
+
+\sukima \midashi{\large wedge和の基本群}
+
+$X \vee Y := X \sqcup Y / \sim$，$\sim$を$x \in X$と$y \in Y$を同一視するような同値関係（$x \sim y$）として定める。
+$\pi_{1}(X)$と$\pi_{1}(Y)$から$\pi_{1}(X \vee Y)$が定まるであろうと考えられる。
+
+\begin{teigi}[準備：群の自由積]
+  $G,G'$：群とする。群の\nw{自由積（free product）}を
+  \begin{equation}
+    G * G' := \sets{g_{1}g_{2} \cdots g_{n} | n \ge 0, \quad g_{i} \in G \, \text{or} \, G', \quad g_{i} \neq e}
+  \end{equation}
+  とする。但し，$g_{1} \cdots g_{i} g_{i+1} \cdots g_{n}$が，$g_{i}, g_{i+1} \in G$または$g_{i}, g_{i+1} \in G'$であって$g_{i} \cdot g_{i+1} = h$であるならば
+  これを$g_{1} \cdots g_{i-1} h g_{i+2} \cdots g_{n}$と同じ元であるとみなす。$h = e$ならばさらに$g_{1} \cdots g_{i-1} g_{i+2} \cdots g_{n}$と同じものであると見なす。
+  ここで，積$\cdot$は列の連結：
+  \begin{equation}
+    ( g_{1} g_{2} \cdots g_{n}) \cdot (h_{1} h_{2} \cdots h_{m}) := g_{1} g_{2} \cdots g_{n} h_{1} h_{2} \cdots h_{m}
+  \end{equation}
+  で定める。
+\end{teigi}
+
+\begin{prop}
+  $G * G'$は積$\cdot$により群をなす。単位元は空列である。
+\end{prop}
+
+この{\bf 命題}は自明ではないが，証明は演習とする。
+
+\begin{teiri}
+  \label{kihongun.Seifelt}
+  $\pi_{1} (X \vee Y) \simeq \pi_{1} (X) * \pi_{1} (Y)$
+\end{teiri}
+
+\begin{corr}
+  $\pi_{1} (S^{1} \vee S^{1} \vee \dots \vee S^{1}) \simeq \mathbb{Z} * \mathbb{Z} * \dots * \mathbb{Z}$
+\end{corr}
+
+意味を考えれば{\bf 確かにそんな気がする}。
+
+\sukima \midashi{演習.} \rref{定理}{kihongun.Seifelt}はSeifelt-van Kampenの定理と呼ばれるものの特殊ケースである。
+この定理について調べ（証明して），いろいろな空間・曲面の基本群を計算せよ。
 
 \expandafter\ifx\csname readornot\endcsname\relax
   \end{document}
