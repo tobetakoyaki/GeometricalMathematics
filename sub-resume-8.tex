@@ -12,10 +12,119 @@
   \newcommand{\octopuspart}[1]{\newpage\part{#1}\setcounter{section}{0}\vspace{3\baselineskip}}
 
   \DeclareMathOperator{\dcup}{\dot{\cup}}
+  \DeclareMathOperator{\conv}{conv}
   \begin{document}
 \fi
 
 \section{ホモロジー}
+
+\midashi{\large ホモロジー群の導入}\\
+\renewcommand{\arraystretch}{1.0}
+\begin{tabular}{ll}
+  基本群 & ・「2次元の穴」が検出できる \\
+  & ・非可換 \\
+  & ・計算は一般に難しい \\
+  ホモロジー群 & ・「高次元の穴」が検出できる \\
+  & ・可換 \\
+  & ・計算が比較的容易（計算機にも相性が良い）
+\end{tabular}
+\renewcommand{\arraystretch}{1.3}
+
+\sukima \midashi{\large 準備：単体}
+
+\begin{teigi}[アフィン独立]
+  $v_{0}, v_{1}, \dots, v_{k} \in \mathbb{R}^{n}$が\nw{アフィン独立} $\defines$
+  ${\displaystyle \sum_{i=0}^{k} \lambda_{i} v_{i} = 0}$ かつ ${\displaystyle \sum_{i=0}^{k} \lambda_{i} = 0}$ならば，$\lambda_{0} = \lambda_{1} = \dots = \lambda_{k} = 0$
+\end{teigi}
+
+アフィン独立であることは，
+\begin{center}
+  $v_{1} - v_{0}, v_{2} - v_{0}, \dots, v_{k} - v_{0}$が一次独立
+\end{center}
+であることと同値である。
+
+\begin{rei}
+  $\mathbb{R}^{2}$上で，
+
+  \begin{center}
+    \begin{tikzpicture}
+      \filldraw (0,0) circle [radius=0.05] node[left] {$v_{0}$};
+      \filldraw (1.5,-0.5) circle [radius=0.05] node[left] {$v_{1}$};
+      \filldraw (0.7,1.2) circle [radius=0.05] node[left] {$v_{2}$};
+      \node at (0.7,-2) {アフィン独立};
+
+      \filldraw (5,-1) circle [radius=0.05] node[left] {$v_{0}$};
+      \filldraw (5.9,0.2) circle [radius=0.05] node[left] {$v_{1}$};
+      \filldraw (6.8,1.4) circle [radius=0.05] node[left] {$v_{2}$};
+      \draw[dashed] (4.7,-1.4) -- (7.1,1.8);
+      \node at (5.9,-2) {アフィン独立でない};
+
+      \filldraw (11.5,0.3) circle [radius=0.05] node[above right] {$v_{0}$};
+      \filldraw (10.5,-0.5) circle [radius=0.05] node[below] {$v_{1}$};
+      \filldraw (12.5,-0.5) circle [radius=0.05] node[below] {$v_{2}$};
+      \filldraw (11.5,1.3) circle [radius=0.05] node[above] {$v_{3}$};
+      \node at (11.5,-2) {アフィン独立でない};
+    \end{tikzpicture}
+  \end{center}
+\end{rei}
+
+\begin{teigi}[$n$次元単体]
+  $\Delta^{n}$：\nw{$n$次元単体（simplex）} $\defines$ 
+  アフィン独立な$v_{0},v_{1},\dots,v_{n}$が存在して次を満たすような$\Delta^{n}$のこと：
+  \begin{equation}
+    \Delta^{n} = \conv \sets{v_{0}, v_{1}, \dots, v_{n}} = \sets{\sum_{i=0}^{n} \lambda_{i} v_{i} | \sum_{i=0}^{n} \lambda_{i} = 1, \quad \lambda_{i} \ge 0}
+  \end{equation}
+\end{teigi}
+
+$n$次元単体を\nw{$n$--単体}ともいう。
+また，定義中に登場した$\conv\sets{v_{0}, \dots, v_{n}}$は\nw{凸包}を表しており，
+\nw{凸結合}と呼ばれる${\displaystyle \sum_{i=0}^{n} \lambda_{i} = 1}$かつ$\lambda_{i} \ge 0$を満たす$\lambda_{i}$らによって
+${\displaystyle \sum_{i=0}^{n} \lambda_{i} v_{i}}$と表される点全体のなす集合のことをいう。
+
+\begin{rei}
+  0--単体から3--単体までを以下に示す。
+  \begin{center}
+    \begin{tikzpicture}
+      % 0-単体
+      \filldraw (0,0) circle [radius=0.05];
+      % 1-単体
+      \filldraw (1.9, -0.3) circle [radius=0.05] -- (2.1,0.3) circle [radius=0.05];
+      % 2-単体
+      \filldraw[fill=gray!50] (3.7, -0.3) -- (4.3, -0.2) -- (4,0.3) -- (3.7, -0.3) -- cycle;
+      \fill (3.7, -0.3) circle [radius=0.05] (4.3,-0.2) circle [radius=0.05] (4,0.3) circle [radius=0.05];
+      \filldraw[fill=gray!50, opacity=0.5,draw=black, opacity=1] (5.5,-0.3) -- (6.3,-0.5) -- (6.5,0.2) -- (5.9,0.5) -- (5.5,-0.3) -- cycle;
+      % 3-単体
+      \draw (6.3,-0.5) -- (5.9,0.5);
+      \draw[dashed] (5.5,-0.3) -- (6.5,0.2);
+      \fill (5.5,-0.3) circle [radius=0.05] (6.3,-0.5) circle [radius=0.05] (6.5,0.2) circle [radius=0.05] (5.9,0.5) circle [radius=0.05];
+      \node at (0,-1) {$\Delta^{0}$};
+      \node at (2,-1) {$\Delta^{1}$};
+      \node at (4,-1) {$\Delta^{2}$};
+      \node at (6,-1) {$\Delta^{3}$};
+    \end{tikzpicture}
+  \end{center}
+\end{rei}
+
+以下，頂点$v_{0}, v_{1}, \dots, v_{n}$による単体を$[v_{0}, v_{1}, \dots, v_{n}]$と書く。
+
+また，\nw{面} $[v_{0}, \dots, \hat{v_{i}}, \dots, v_{n}]$を
+\begin{equation}
+  [v_{0}, \dots, \hat{v_{i}}, \dots, v_{n}] := [v_{0}, \dots, v_{i-1}, v_{i+1}, \dots, v_{n}]
+\end{equation}
+で定める。
+
+\begin{center}
+  \begin{tikzpicture}
+    \filldraw[fill=gray!50] (-0.5, -0.5) node[left]{$v_{0}$} -- (0.5, -0.4) node[right]{$v_{1}$} -- (0,0.5) node[above]{$v_{2}$} -- (-0.5, -0.5) -- cycle;
+    \fill (-0.5, -0.5) circle [radius=0.05] (0.5,-0.4) circle [radius=0.05] (0,0.5) circle [radius=0.05];
+    \draw[<-] node at (0,-1) {$[v_{0}, v_{1}, v_{2}]$} (0.4,0.1) -- (0.8,0.4) node[right] {面$[v_{1},v_{2}]$};
+    \filldraw[fill=gray!50, opacity=0.5,draw=black, opacity=1] (7.3,-0.8) node[below]{$v_{0}$} -- (7.7,0) node[right]{$v_{1}$} -- (6.9,0.5) node[above]{$v_{3}$} -- (7.3,-0.8) -- cycle;
+    \draw (6.3,-0.4) node[left]{$v_{2}$} -- (7.3,-0.8) (6.3,-0.4) -- (6.9,0.5);
+    \draw[dashed] (6.3,-0.4) -- (7.7,0);
+    \fill (6.3,-0.4) circle [radius=0.05] (7.3,-0.8) circle [radius=0.05] (7.7,0) circle [radius=0.05] (6.9,0.5) circle [radius=0.05];
+    \draw[<-] (7.4,0) -- (8,0.5) node[right]{面$[v_{0}, v_{1}, v_{3}]$};
+  \end{tikzpicture}
+\end{center}
 
 \expandafter\ifx\csname readornot\endcsname\relax
   \end{document}
