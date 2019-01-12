@@ -17,11 +17,11 @@
 14. 交代テンソル・擬テンソル・テンソル密度・Eddintonのε
 
 # コンパイル
-`uplatex`と`dvipdfmx`が必要です．
+`uplatex`と`dvipdfmx`が必要です．ターミナル上で
 
 ```
-$ git clone https://github.com/tobetakoyaki/GeometricalMathematics.git
-$ cd GeometricalMathematics
-$ make
+git clone https://github.com/tobetakoyaki/GeometricalMathematics.git
+cd GeometricalMathematics
+make
 ```
-で，`resume.pdf`が生成されます．
+を実行することで，`resume.pdf`が生成されます．
