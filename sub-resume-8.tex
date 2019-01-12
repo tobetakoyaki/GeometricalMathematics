@@ -2,6 +2,7 @@
   \documentclass[uplatex]{jsarticle}
   \usepackage{octopus}
   \usepackage{url}
+  \usetikzlibrary{calc}
 
   \renewcommand{\proofname}{\textsf{証明}}
   \renewcommand{\postpartname}{章}
@@ -11,8 +12,12 @@
 
   \newcommand{\octopuspart}[1]{\newpage\part{#1}\setcounter{section}{0}\vspace{3\baselineskip}}
 
+  \renewcommand{\restriction}[2]{\left. #1 \right|_{#2}}
   \DeclareMathOperator{\dcup}{\dot{\cup}}
   \DeclareMathOperator{\conv}{conv}
+  \DeclareMathOperator{\Image}{Im}
+  \DeclareMathOperator{\Kernel}{Ker}
+  
   \begin{document}
 \fi
 
@@ -107,7 +112,7 @@ ${\displaystyle \sum_{i=0}^{n} \lambda_{i} v_{i}}$と表される点全体のな
 
 以下，頂点$v_{0}, v_{1}, \dots, v_{n}$による単体を$[v_{0}, v_{1}, \dots, v_{n}]$と書く。
 
-また，\nw{面} $[v_{0}, \dots, \hat{v_{i}}, \dots, v_{n}]$を
+また，\nw{面}$[v_{0}, \dots, \hat{v_{i}}, \dots, v_{n}]$を
 \begin{equation}
   [v_{0}, \dots, \hat{v_{i}}, \dots, v_{n}] := [v_{0}, \dots, v_{i-1}, v_{i+1}, \dots, v_{n}]
 \end{equation}
@@ -125,6 +130,209 @@ ${\displaystyle \sum_{i=0}^{n} \lambda_{i} v_{i}}$と表される点全体のな
     \draw[<-] (7.4,0) -- (8,0.5) node[right]{面$[v_{0}, v_{1}, v_{3}]$};
   \end{tikzpicture}
 \end{center}
+
+\sukima \midashi{\large 向き付けられた単体}
+
+\nw{向き付けられた単体}は，頂点の順番が指定されている単体のこと。
+$[v_{0}, v_{1}, \dots, v_{n}]$は頂点に$v_{0} \to v_{1} \to \dots \to v_{n}$の順番が指定されているものとする。
+
+\newcommand{\midwayarrow}[3][black]{
+	\draw[-latex,#1] #2 -- ($#2!0.6!#3$);
+	\draw[#1] ($#2!0.41!#3$) -- #3;
+}
+
+\newcommand{\point}[3]{
+	#1 node[#2]{#3} circle [radius=0.05]
+}
+
+\begin{center}
+	\begin{tikzpicture}
+		\fill \point{(0,0)}{left}{$v_{0}$} \point{(0,2.5)}{left}{$v_{1}$};
+		\midwayarrow{(0,0)}{(0,2.5)};
+	\end{tikzpicture}
+	\qquad
+	\begin{tikzpicture}
+		\fill \point{(0,0)}{below left}{$v_{0}$} \point{(2.5,0)}{below right}{$v_{1}$} \point{(1.25,2)}{right}{$v_{2}$};
+		\midwayarrow{(0,0)}{(2.5,0)} \midwayarrow{(2.5,0)}{(1.25,2)} \midwayarrow{(0,0)}{(1.25,2)}
+		\midwayarrow[red]{(0.4,0.2)}{(2.1,0.2)} \midwayarrow[red]{(2.1,0.2)}{(1.3,1.5)}
+	\end{tikzpicture}
+	\qquad
+	\begin{tikzpicture}
+		\coordinate (v0) at (2,-0.5) coordinate (v1) at (2.5,1) coordinate (v2) at (0,0) coordinate (v3) at (1,2);
+		\fill \point{(v2)}{left}{$v_{2}$} \point{(v0)}{below}{$v_{0}$} \point{(v1)}{right}{$v_{1}$} \point{(v3)}{right}{$v_{3}$};
+		\midwayarrow{(v0)}{(v1)} \midwayarrow{(v2)}{(v0)} \midwayarrow{(v0)}{(v3)} \midwayarrow{(v3)}{(v1)} \midwayarrow[dashed]{(v2)}{(v1)} \midwayarrow{(v2)}{(v3)}
+		\midwayarrow[red]{(0.2,-0.2)}{(1.8,-0.6)} \midwayarrow[red]{(1.8,-0.6)}{(0.8,1.9)} \midwayarrow[red]{(0.8,1.9)}{(2.3,0.9)}
+	\end{tikzpicture}
+\end{center}
+
+このとき，面にも向きが誘導される。すなわち，面$[v_{0}, \dots, \hat{v_{i}}, \dots, v_{n}]$には
+頂点に$v_{0} \to v_{1} \to \dots \to v_{i-1} \to v_{i+1} \to \dots \to v_{n}$の順番が指定される。
+
+するとさらに，向き付けられた$n$--単体どうしの間に次のような自然な全単射が定まる。
+\begin{equation}
+  \mapdef{[v_{0}, \dots, v_{n}]}{[u_{0}, \dots, u_{n}]}{\displaystyle \sum_{i=0}^{n} \lambda_{i} v_{i}}{\displaystyle \sum_{i=0}^{n} \lambda_{i} u_{i}}
+\end{equation}
+
+\begin{teigi}[境界，内部]
+  単体の\nw{境界} $\partial \Delta^{n}$と\nw{内部}$\mathring{\Delta}^{n}$をそれぞれ次で定める。
+  \begin{align}
+    & \partial \Delta^{n} := \bigcup_{i=0}^{n} [v_{0}, \dots, \hat{v_{i}}, \dots, v_{n}], \\
+    & \mathring{\Delta}^{n} := \Delta^{n} \setminus \partial \Delta^{n}
+  \end{align}
+\end{teigi}
+
+\sukima \midashi{\large 特異ホモロジー}
+
+$X$：位相空間
+
+\begin{teigi}[特異$n$-単体]
+  $\sigma$：\nw{特異$n$-単体（singular n-simplex）} $\defines$ $\sigma$：向き付けられた$n$-単体から$X$への連続写像
+\end{teigi}
+
+ものすごい特異的なものも許される。
+例えば，$X$を一点集合にとったりKleinの壺にとったりしてもよい。
+
+\begin{teigi}
+  特異$n$-単体$\sigma \colon [v_{0}, \dots, v_{n}] \longrightarrow X$の\nw{面}を
+  $\restriction{\sigma}{[v_{0}, \dots,\hat{v_{i}}, \dots, v_{n}]}$とする。
+  これは特異$n-1$-単体である。
+\end{teigi}
+
+\begin{teigi}[特異$n$-チェイン]
+  \nw{特異$n$-チェイン} $\defines$ 特異$n$-単体たちの有限な形式的整数結合
+\end{teigi}
+
+すなわち，有限個の$\alpha$以外では$n_{\alpha}=0$であるような$\sets{n_{\alpha} \in \mathbb{Z}}_{\alpha}$を用いて
+\begin{equation}
+  \sum_{\alpha} n_{\alpha} \sigma_{\alpha}
+\end{equation}
+と表されるものを特異$n$-チェインという。
+
+特異$n$-チェイン全体のなす集合を$C_{n}$とする。
+\begin{equation}
+  C_{n} := \sets{\sigma | \sigma\text{：特異$n$-チェイン}}
+\end{equation}
+ここに，
+\begin{equation}
+    \sum_{\alpha} n_{\alpha} \sigma_{\alpha} + \sum_{\alpha} n'_{\alpha} \sigma_{\alpha} := \sum_{\alpha} (n_{\alpha} + n'_{\alpha}) \sigma_{\alpha}
+\end{equation}
+で演算を定めると，
+単位元を${\displaystyle \sum_{\alpha} 0 \cdot \sigma := 0}$として$C_{n}$は可換群になる。
+
+\begin{teigi}[境界作用素]
+  \nw{境界作用素}$\partial_{n} \colon C_{n} \longrightarrow C_{n-1}$を次にようにして定める。
+  \begin{itemize}
+    \vspace{-0.5\baselineskip}
+    \item $n$-単体$\sigma \colon [v_{0},\dots,v_{n}] \longrightarrow X$に対し，
+    \begin{equation}
+      \partial_{n} \sigma := \sum_{i=0}^{n} (-1)^{i} \restriction{\sigma}{[v_{0}, \dots, \hat{v_{i}}, \dots, v_{n}]}
+    \end{equation}
+    \item $n$-チェインに対し，
+    \begin{equation}
+      \partial_{n} \left( \sum_{\alpha} n_{\alpha} \sigma_{\alpha} \right) := \sum_{\alpha} n_{\alpha} \partial_{n} \sigma_{\alpha}
+    \end{equation}
+  \end{itemize}
+\end{teigi}
+
+イメージは以下のよう。
+\begin{center}
+	\begin{tikzpicture}
+		\filldraw[fill=gray!40,draw=black] (-0.5,0) -- (2,0) -- (0.75,2) -- cycle;
+		\fill \point{(-0.5,0)}{below left}{$v_{0}$} \point{(2,0)}{below right}{$v_{1}$} \point{(0.75,2)}{right}{$v_{2}$};
+		\draw[->] (2.5,1) -- node[midway,above]{$\partial_{2}$} (3.5,1);
+		\node at (3.875,1) {$+$};
+		\fill \point{(7,0)}{below right}{$v_{1}$} \point{(5.75,2)}{right}{$v_{2}$};
+		\draw (7,0) -- (5.75,2);
+		\node at (7.625,1) {$-$};
+		\fill \point{(8.25,0)}{below left}{$v_{0}$} \point{(9.5,2)}{right}{$v_{2}$};
+		\draw (8.25,0) -- (9.5,2);
+		\node at (11.375,1) {$+$};
+		\fill \point{(14.5,0)}{below right}{$v_{1}$} \point{(13.25,2)}{right}{$v_{2}$};
+		\draw (14.5,0) -- (13.25,2);
+	\end{tikzpicture}
+\end{center}
+
+\begin{prop}
+  $\partial_{n}$は$C_{n}$から$C_{n-1}$への準同型写像
+\end{prop}
+
+\begin{hodai}
+  $\partial_{n-1} \circ \partial_{n} = 0$
+\end{hodai}
+
+\begin{proof}
+  $\sigma_{\alpha} \colon [v_{0},v_{1},\cdots, v_{n}] \longrightarrow X$に対し，
+  \begin{equation}
+    \partial_{n} \sigma_{\alpha} = \sum_{i=0}^{n} (-1)^{i} \restriction{\sigma_{\alpha}}{[v_{0},\dots,\hat{v_{i}},\dots,v_{n}]}
+  \end{equation}
+  であり，
+  \begin{align}
+    (\partial_{n-1}\circ \partial_{n})\sigma_{\alpha} &=
+    \sum_{i=0}^{n} (-1)^{i} \partial_{n-1} \left( \restriction{\sigma_{\alpha}}{[v_{0},\dots,\hat{v_{i}},\dots,v_{n}]} \right) \\
+    &= \sum_{i=0}^{n} (-1)^{i}
+    \left\{ \sum_{j<i} (-1)^{j} \restriction{\sigma_{\alpha}}{[v_{0},\dots,\hat{v_{j}},\dots,\hat{v_{i}},\dots,v_{n}]} + \sum_{j<i} (-1)^{j-1} \restriction{\sigma_{\alpha}}{[v_{0},\dots,\hat{v_{i}},\dots,\hat{v_{j}},\dots,v_{n}]} \right\} \\
+    &= \sum_{0 \le j < i \le n} (-1)^{i+j} \restriction{\sigma_{\alpha}}{[v_{0},\dots,\hat{v_{j}},\dots,\hat{v_{i}},\dots,v_{n}]} - \sum_{0 \le i < j \le n} (-1)^{i+j} \restriction{\sigma_{\alpha}}{[v_{0},\dots,\hat{v_{i}},\dots,\hat{v_{j}},\dots,v_{n}]} \\
+    &= 0
+  \end{align}
+  である。結局，$\partial_{n-1} \circ \partial_{n} = 0$である。
+\end{proof}
+
+これにより，
+\begin{center}
+  $\dots \to C_{n+1} \xrightarrow{\partial_{n+1}} C_{n} \xrightarrow{\partial_{n}} C_{n-1} \xrightarrow{\partial_{n-1}} \dots \xrightarrow{\partial_{3}} C_{2} \xrightarrow{\partial_{2}} C_{1} \xrightarrow{\partial_{1}} C_{0} \xrightarrow{\partial_{0}} 0$,
+
+  $\partial_{n-1} \circ \partial_{n} = 0$（$n=1,2,\dots$）
+\end{center}
+なる列が得られた。これを\nw{チェイン複体}という。
+
+\begin{prop}
+  $\Image \partial_{n} \subseteq \Kernel \partial_{n-1}$
+\end{prop}
+
+\begin{proof}
+  $\partial_{n-1} \circ \partial_{n} = 0$より従う。
+\end{proof}
+
+\begin{teigi}[サイクル]
+  $\Kernel \partial_{n}$の元を\nw{サイクル}という。
+\end{teigi}
+
+\begin{rei}[サイクルのイメージ]　\\
+  \begin{tikzpicture}
+    \fill \point{(180:2)}{left}{$v_{0}$} \point{(120:2)}{above}{$v_{1}$} \point{(60:2)}{above}{$v_{2}$} \point{(0:2)}{right}{$v_{3}$} \point{(-60:2)}{}{} \point{(-120:2)}{}{};
+    \midwayarrow{(180:2)}{(120:2)} \midwayarrow{(120:2)}{(60:2)} \midwayarrow{(60:2)}{(0:2)} \midwayarrow{(0:2)}{(-60:2)} \midwayarrow{(-60:2)}{(-120:2)} \midwayarrow{(-120:2)}{(-180:2)}
+    \node at (3.5,0) [right]{$= [v_{0},v_{1}] + [v_{1},v_{2}] + \dots + [v_{k},v_{0}]$};
+  \end{tikzpicture}
+
+  $\xrightarrow{\partial_{1}} [v_{1}] - [v_{0}] + [v_{2}] - [v_{1}] + \dots + [v_{0}] - [v_{k}] = 0$
+  
+  であり，これはサイクル。
+  %モウヒトツレイガアル
+\end{rei}
+
+\begin{teigi}[ホモローグ]
+  2つのサイクル$z, z' \in \Kernel \partial_{n}$が\nw{ホモローグ（homologue）} $\defines$ $z - z' \in \Image \partial_{n+1}$
+
+  また，このことを$z \sim z'$と書く。
+\end{teigi}
+
+\begin{hodai}
+  ホモローグの関係$\sim$は同値関係
+\end{hodai}
+
+\begin{proof}
+  推移律のみ示す。$z \sim z'$，$z' \sim z''$とする。このとき，$z - z'' = (z - z') + (z' - z'') \in \Image \partial_{n+1}$であるから，$z \sim z''$である。
+\end{proof}
+
+$\sim$による同値類を\nw{ホモロジー類}という。
+
+\begin{rei}[ホモローグのイメージ]
+  %よくわからない図がある
+\end{rei}
+
+\begin{hodai}
+  $u \sim v$ $\Longleftrightarrow$ $u$と$v$は同じ弧状連結成分に属する
+\end{hodai}
 
 \expandafter\ifx\csname readornot\endcsname\relax
   \end{document}
