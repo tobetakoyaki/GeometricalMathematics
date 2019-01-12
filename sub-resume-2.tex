@@ -18,7 +18,9 @@
   
 \section{位相空間}
 
-$X$を非空な集合とする。$X$は「\nw{位相}」（topology）を入れて「空間」にする。
+\midashi{\large 位相空間}
+
+$X$を非空な集合とする。$X$に「\nw{位相（topology）}」を入れて「空間」にする。
 「位相」を入れるとは，$X$の開集合族を指定することである。
 
 \begin{teigi}[位相]
@@ -72,11 +74,9 @@ $X$を非空な集合とする。$X$は「\nw{位相}」（topology）を入れ�
   \end{equation}
   となること。特に$N$が開集合であるとき，$N$を$x$の開近傍という。
   \item $\mathcal{N}(x)$：$x$の近傍全体
-  \vspace{-0.5\baselineskip}
 \end{itemize}
 
 位相の与え方にはいろいろある。
-
 \begin{enumerate}
   \item {\bf (A1)}，{\bf (A2)}，{\bf (A3)}を満たす集合族$\mathfrak{A}$（閉集合族）を指定する。
   \item 各$A \subseteq X$に$A^{\circ}$を対応させる写像$2^{X} \longrightarrow 2^{X}$を指定する。（\nw{開核作用子}）
@@ -102,13 +102,12 @@ $X$を非空な集合とする。$X$は「\nw{位相}」（topology）を入れ�
 
 \sukima \midashi{\large 連続写像}
 
-\renewcommand{\arraystretch}{0.8}
-\vspace{0.2\baselineskip}
+\renewcommand{\arraystretch}{1}
 \begin{tabular}{ll@{\,}l@{\,}l}
   位相空間 & $X$， & $\mathcal{O}_{X}$：開集合族， & $\mathfrak{A}_{X}$：閉集合族 \\
-           & $Y$， & $\mathcal{O}_{Y}$：開集合族， & $\mathfrak{A}_{Y}$：閉集合族
+          & $Y$， & $\mathcal{O}_{Y}$：開集合族， & $\mathfrak{A}_{Y}$：閉集合族
 \end{tabular}
-\renewcommand{\arraystretch}{1}
+\renewcommand{\arraystretch}{1.3}
 
 \begin{teigi}[連続性]
   写像$f \colon X \longrightarrow Y$が$x \in X$で\nw{連続} $\defines$ 
@@ -123,6 +122,7 @@ $X$を非空な集合とする。$X$は「\nw{位相}」（topology）を入れ�
 \end{align*}
 
 \begin{teiri}
+  \label{isou.renzoku}
   以下の{\bf (1)},{\bf (2)},{\bf (3)}は同値。：
   
   \midashi{(1)} $f$は$X$の各点で連続
@@ -153,16 +153,16 @@ $X$を非空な集合とする。$X$は「\nw{位相}」（topology）を入れ�
   $x \in f^{-1} (O) \subseteq f^{-1} (N)$である。
 \end{proof}
 
-\begin{teigi}[同相]
-  \midashi{(1)} $f \colon X \longrightarrow Y$が\nw{連続} $\defines$ 上の{\bf (1)}から{\bf (3)}のどれかの条件を満たす
+\begin{teigi}[連続・同相]
+  \midashi{(1)} $f \colon X \longrightarrow Y$が\nw{連続} $\defines$ \rref{定理}{isou.renzoku}の条件{\bf (1)}から{\bf (3)}のどれかの条件を満たす
   
-  \midashi{(2)} $f \colon X \longrightarrow Y$が\nw{同相}（homeomorphic） $\defines$ $f$：連続全単射 かつ $f^{-1} \colon Y \longrightarrow X$：連続
+  \midashi{(2)} $f \colon X \longrightarrow Y$が\nw{同相（homeomorphic）} $\defines$ $f$：連続全単射 かつ $f^{-1} \colon Y \longrightarrow X$：連続
   
   $X$と$Y$の間に同相写像が存在するとき，$X$と$Y$は\nw{同相}あるいは\nw{位相同型}といい，
   記号$X \simeq Y$で表す。
 \end{teigi}
 
-\midashi{演習：}全単射連続写像であって同相でないものの例を与えよ。
+\midashi{演習.} 全単射連続写像であって同相でないものの例を与えよ。
 
 \begin{teigi}[位相の強弱]
   $X$上の2つの位相$\mathcal{O}$，$\mathcal{O}'$を考える。
@@ -224,6 +224,19 @@ $(X, \mathcal{O}_{X})$，$(Y, \mathcal{O}_{Y})$：位相空間として，
 \sukima \midashi{商位相}
 
 2つの位相空間を貼り合わせて新たな位相空間を作りたい。
+\begin{center}  
+  \begin{tikzpicture}
+    \draw (150:0.5) arc [start angle = 30, end angle = 330, radius = 1.5] -- cycle;
+    \draw (30:0.5) arc [start angle = 150, end angle = -150, radius = 1.5] -- cycle;
+    \draw[<->] (-0.3,-0.5) -- (0.3,-0.5);
+    \node at (-1.75,-0.5){$X$} node at (1.75,-0.5){$Y$};
+    \draw[->] (3.75,-0.5) -- (4.75,-0.5);
+    \draw (8,0.25) arc [start angle = 30, end angle = 330, radius = 1.5];
+    \draw (8,0.25) arc [start angle = 150, end angle = -150, radius = 1.5];
+    \draw[dashed] (8,0.25) -- (8,-1.25);
+    \node at (6.75,-0.5){$X$} node at (9.25,-0.5){$Y$};
+  \end{tikzpicture}
+\end{center}
 % 貼り合わせる図 if needed
 
 \begin{itemize}
@@ -241,7 +254,6 @@ $X / \sim$：商集合，$\varphi \colon X \longrightarrow X / \sim$：自然な
   {\mathcal{O} / \sim} := \sets{H \subseteq {X / \sim} | \varphi^{-1}(H) \subseteq \mathcal{O}}
 \end{equation}
 $({X / \sim}, {\mathcal{O} / \sim})$は位相空間になる。
-%よくわからない絵
 
 \sukima \midashi{\large 重要な位相空間の例}
 
@@ -262,10 +274,10 @@ $\mathbb{R}^{n}$：Euclid空間（位相はEuclid距離から）
 
   \begin{center}
     $D^{2} \simeq$
-    \begin{tikzpicture}[baseline=12pt] \filldraw[fill opacity=.3,draw = black] (0,0) rectangle (1,1); \end{tikzpicture}
+    \begin{tikzpicture}[baseline=12pt] \filldraw[fill=black!30,draw = black] (0,0) rectangle (1,1); \end{tikzpicture}
       , \quad $S^{2} \simeq {D^{2} / \sim} \simeq$
     \begin{tikzpicture}[baseline=12pt]
-      \filldraw[fill opacity=.3, draw = black] (0,0) rectangle (1,1);
+      \filldraw[fill=black!30] (0,0) rectangle (1,1);
       \draw (0.55,-0.1) -- (0.45, 0) -- (0.55,0.1);
       \draw (0.9,0.45) -- (1, 0.55) -- (1.1,0.45);
       \draw (-0.1,0.6) -- (0, 0.5) -- (0.1,0.6);
@@ -292,7 +304,34 @@ $\mathbb{R}^{n}$：Euclid空間（位相はEuclid距離から）
     &\simeq D^{n-1} / (\text{対蹠点を同一視})
   \end{align}
   が成り立つ。
-  %図
+  
+  このことを$n=1$のときで図示する。
+  \begin{center}
+    \begin{tikzpicture}
+      \draw[->] (-1.6,0) -- (1.6,0);
+      \draw[->] (0,-1.6) -- (0,1.6);
+      \draw (0,0) circle [radius=1.25];
+      \draw[dashed] (60:1.25) -- (240:1.25);
+      \filldraw (60:1.25) circle [radius=0.05] (240:1.25) circle [radius=0.05];
+      \node at (2,0){$\simeq$};
+      \node at (0,-2) {$P^{2} \simeq S^{2} / (対蹠点を同一視)$};
+    \end{tikzpicture}
+    \begin{tikzpicture}
+      \draw[->] (-1.6,0) -- (1.6,0);
+      \draw[->] (0,-1.6) -- (0,1.6);
+      \draw (1.25,0) arc [start angle=0, end angle=180, radius=1.25];
+      \filldraw (1.25,0) circle [radius=0.05] (-1.25,0) circle [radius=0.05];
+      \draw[<-] (-1.25,-0.25) -- (0.25,-1) node[right]{同一視};
+      \draw[<-] (1.25,-0.25) -- (1.25,-0.6);
+      \node at (2,0){$\simeq$};
+      \node at (0,-2) {$S^{2}_{+} / (対蹠点を同一視)$};
+    \end{tikzpicture}
+    \begin{tikzpicture}
+      \draw[white] (0,-1.6) -- (0,1.6); %位置合わせ
+      \draw (0,0) circle [radius=1.25];
+      \node at (0,-2) {$S^{1}$};
+    \end{tikzpicture}
+  \end{center}
 
   \item $T^{n}$：$n$次元トーラス
   \begin{equation}
