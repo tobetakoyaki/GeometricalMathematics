@@ -15,3 +15,13 @@
 12. テンソルの定義
 13. 反変性・共変性・スカラー・混合テンソル
 14. 交代テンソル・擬テンソル・テンソル密度・Eddintonのε
+
+# コンパイル
+`uplatex`と`dvipdfmx`が必要です．
+
+```
+$ git clone https://github.com/tobetakoyaki/GeometricalMathematics.git
+$ cd GeometricalMathematics
+$ make
+```
+で，`resume.pdf`が生成されます．
