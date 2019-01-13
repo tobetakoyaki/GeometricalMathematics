@@ -334,6 +334,186 @@ $\sim$による同値類を\nw{ホモロジー類}という。
   $u \sim v$ $\Longleftrightarrow$ $u$と$v$は同じ弧状連結成分に属する
 \end{hodai}
 
+\begin{teigi}[ホモロジー群]
+  \begin{align}
+    H_{n}(X) &:= \Kernel \partial_{n} / \Image \partial_{n+1} \\
+    & = \sets{[z] | z \in \Kernel \partial_{n}}
+  \end{align}
+  とすると，このホモロジー類の全体のなす集合は次の演算で群をなす。：
+  \begin{equation}
+    [z] + [z'] := [z + z']
+  \end{equation}
+  （この演算がwell-definedであることの証明は割愛する）この群を\nw{ホモロジー群}という。
+  単位元は$\Image \partial_{n+1}$の元によるホモロジー類。
+\end{teigi}
+
+\begin{center}
+  \begin{tikzpicture}
+    \draw (-4,0) circle [x radius=1, y radius=2];
+    \draw (0,0) circle [x radius=1, y radius=2];
+    \draw (0,0) circle [x radius=0.5, y radius=1];
+    \draw (0,0) circle [x radius=0.25, y radius=0.5];
+    \draw (4,0) circle [x radius=1, y radius=2];
+    \draw[dashed] (-4,2) --node[midway,above]{$\partial_{n+1}$} (0,0.5);
+    \draw[dashed] (-4,-2) -- (0,-0.5);
+    \draw[dashed] (0,1) --node[midway,above]{$\partial_{n}$} (4,0);
+    \draw[dashed] (0,-1) -- (4,0);
+    \filldraw \point{(4,0)}{right}{0};
+    \draw[<-] (0,0) to[bend left] (-2,0.3) node[above]{$\Image \partial_{n+1}$};
+    \draw[<-] (0.25,-0.5) to[bend left] (2,-1) node[below]{$\Kernel \partial_{n}$};
+    \node at (-4,-2.5) {$C_{n+1}$} node at (0,-2.5) {$C_{n}$} node at (4,-2.5) {$C_{n-1}$};
+  \end{tikzpicture}
+\end{center}
+
+\begin{prop}
+  $r$（$< \infty$）を$X$の弧状連結成分の数とする。このとき，$H_{0} \simeq \mathbb{Z}^{r}$である。
+\end{prop}
+
+\begin{proof}
+  各弧状連結成分から1つずつ頂点$v_{1},v_{2},\dots,v_{r}$をとると，
+  $H_{0}$の元は${\displaystyle \sum_{i=1}^{n} n_{i} [v_{i}]}$と一意的に記述される。
+  このことより従う。
+\end{proof}
+
+\midashi{注意.} $C_{1} \xrightarrow{\partial_{1}} C_{0} \xrightarrow{\partial_{0}} 0$であるから$\Kernel \partial_{0} = C_{0}$である。
+
+\begin{prop}
+  $X$：頂点数$n$，枝数$m$の連結なグラフとする。このとき，$H_{1} \simeq \mathbb{Z}^{m-n}$である。
+\end{prop}
+
+\sukima \midashi{\large 位相不変性・ホモトピー不変性}
+
+$X,Y$：位相空間，$\varphi \colon X \longrightarrow Y$：連続写像，
+$\sigma \colon [v_{0}, v_{1}, \dots, v_{n}] \longrightarrow X$：$X$上の$n$-単体，とする。
+このとき，$\varphi \circ \sigma \colon [v_{0}, v_{1}, \dots, v_{n}] \longrightarrow Y$は$Y$上の$n$-単体になる。
+これにより，$\varphi \colon C_{n} (X) \longrightarrow C_{n}(Y)$が誘導される。：
+\begin{equation}
+  \varphi \left( \sum_{\alpha} n_{\alpha} \sigma_{\alpha} \right) := \sum_{\alpha} n_{\alpha}\varphi (\sigma_{\alpha})
+\end{equation}
+
+よって，以下のような図式がかける。
+
+\begin{center}
+  \begin{tikzpicture}
+    \draw[->] (0,0.5) --node[midway,left]{$\varphi$} (0,-0.5);
+    \draw[->] (3,0.5) --node[midway,left]{$\varphi$} (3,-0.5);
+    \draw[->] (6,0.5) --node[midway,left]{$\varphi$} (6,-0.5);
+
+    \draw[->] (-2,1) --node[midway,above]{$\partial_{n+2}$} (-1,1);
+    \draw[->] (1,1) --node[midway,above]{$\partial_{n+1}$} (2,1);
+    \draw[->] (4,1) --node[midway,above]{$\partial_{n}$} (5,1);
+    \draw[->] (7,1) --node[midway,above]{$\partial_{n-1}$} (8,1);
+
+    \draw[->] (-2,-1) --node[midway,below]{$\partial_{n+2}$} (-1,-1);
+    \draw[->] (1,-1) --node[midway,below]{$\partial_{n+1}$} (2,-1);
+    \draw[->] (4,-1) --node[midway,below]{$\partial_{n}$} (5,-1);
+    \draw[->] (7,-1) --node[midway,below]{$\partial_{n-1}$} (8,-1);
+
+    \node at (-3,-1) {$\cdots$} node at (0,-1) {$C_{n+1}(Y)$} node at (3,-1) {$C_{n}(Y)$} node at (6,-1) {$C_{n-1}(Y)$} node at (9,-1) {$\cdots$};
+    \node at (-3,1) {$\cdots$} node at (0,1) {$C_{n+1}(X)$} node at (3,1) {$C_{n}(X)$} node at (6,1) {$C_{n-1}(X)$} node at (9,1) {$\cdots$};
+  \end{tikzpicture}
+\end{center}
+
+\begin{hodai}
+  \label{homology1.commutative}
+  $\varphi \circ \partial_{n} = \partial_{n} \circ \varphi$
+\end{hodai}
+
+\begin{proof}
+  次の式から従う。
+  \begin{equation}
+    (\varphi \circ \partial_{n}) \sigma = \varphi \left( \sum_{i=0}^{n} (-1)^{i} \restriction{\sigma}{[v_{0}, \dots, \hat{v_{i}}, \dots, v_{n}]} \right) = \sum_{i=0}^{n} (-1)^{i} \varphi \circ \restriction{\sigma}{[v_{0}, \dots, \hat{v_{i}}, \dots, v_{n}]} = \partial_{n} (\varphi \circ \sigma)
+  \end{equation}
+\end{proof}
+
+このことから，先の図式が可換になることが従う。
+
+\begin{hodai}
+  \label{homology1.cycle}
+  $z$：$X$上$n$-サイクル $\Longrightarrow$ $\varphi(z)$：$Y$上$n$-サイクル
+\end{hodai}
+
+\begin{proof}
+  先の\rref{補題}{homology1.commutative}から$\partial_{n} \varphi(z) = \varphi (\partial_{n} (z)) = 0$であって従う。
+\end{proof}
+
+\begin{teigi}
+  $\varphi \colon X \longrightarrow Y$：連続とする。写像$\varphi_{\#}$を
+  \begin{equation}
+    \varphi_{\#} \colon \mapdef{H_{n}(X)}{H_{n}(Y)}{\left[ z \right]}{\left[ \varphi(z) \right]}
+  \end{equation}
+  で定義する。
+\end{teigi}
+
+\begin{hodai}
+  $\varphi_{\#}$はwell-definedであり，準同型である。
+\end{hodai}
+
+\begin{proof}
+  \midashi{［well-definedness］}
+
+  先の\rref{補題}{homology1.cycle}より$\varphi(z)$は$Y$上$n$-サイクルである。よって，$[\varphi(z)] \in H_{n}(Y)$である。いま，
+  \renewcommand{\arraystretch}{1}
+  \begin{tabular}{l@{\,}l}
+    $z \sim z'$ & $\Longleftrightarrow$ $\exists c, \quad z - z' = \partial_{n+1} c$ \\
+    & $\longrightarrow$ $\varphi(z) - \varphi(z') = \varphi (\partial_{n+1} c) = \partial_{n+1} (\varphi(c)) \in \Image \partial_{n+1}$ \\
+    & $\longrightarrow$ $[\varphi(z)] \sim [\varphi(z')]$
+  \end{tabular}
+  \renewcommand{\arraystretch}{1.3}
+  のようになる。
+
+  \sukima \midashi{［準同型性］}
+
+  これは定義の仕方から明らか。
+\end{proof}
+
+\begin{hodai}
+  {\bf (1)} $X \xrightarrow{\varphi} Y \xrightarrow{\varphi'} Z$のとき，
+  $\varphi_{\#}' \circ \varphi_{\#} = (\varphi' \circ \varphi)_{\#}$
+
+  {\bf (2)} $\mathrm{id}_{\#} = \mathrm{id}$
+\end{hodai}
+
+\begin{proof}
+  {\bf (1)} $\left( \varphi' \circ \varphi \right)_{\#}([z]) = [(\varphi' \circ \varphi)(z)] = \varphi'_{\#} \left( [\varphi (z)] \right) = (\varphi'_{\#} \circ \varphi_{\#}) ([z])$より従う。
+
+  {\bf (2)} は明らか。
+\end{proof}
+
+\begin{teiri}
+  $X,Y$：同相 $\Longrightarrow$ $H_{n}(X) \simeq H_{n}(Y)$
+\end{teiri}
+
+\begin{proof}
+  $\varphi \colon X \longrightarrow Y$：同相写像とする。
+  このとき，$\varphi^{-1}_{\#} \circ \varphi_{\#} = \mathrm{id}$，
+  $\varphi_{\#} \circ \varphi^{-1}_{\#} = \mathrm{id}$より従う。
+\end{proof}
+
+実はさらに強く，次のことが言える。
+
+\begin{teiri}
+  $X,Y$：ホモトピー同値 $\Longrightarrow$ $H_{n}(X) \simeq H_{n}(Y)$
+\end{teiri}
+
+\begin{proof}[{\bf 証明の気分}]
+  $f \colon X \longrightarrow Y$，$g \colon Y \longrightarrow X$をホモトピー同値写像とする。
+  つまり，$g \circ f \simeq \mathrm{id}_{X}$，$f \circ g \simeq \mathrm{id}_{Y}$とする。
+  このときに，$(g \circ f)_{\#} \simeq \mathrm{id}_{H_{n}(X)}$を示せばよい。
+  
+  ここで，$f_{\#}$と$g_{\#}$は全単射であるから，$g_{\#} \circ f_{\#}$は全単射であり，$f_{\#} \circ g_{\#}$は全単射であることになる。
+
+  $g \circ f$と$\mathrm{id}_{X}$の間にはホモトピーがある。サイクル$z$はそのホモトピーによって連続的にサイクル$g \circ f (z)$になる。
+
+  サイクルの軌跡が作る「筒」はうまく単体らによって表すことができる。
+  したがって，$z \sim (g \circ f)(z)$である。
+  よって，$(g \circ f)_{\#} ([z]) = [z]$である。
+
+  一般の場合は，サイクル${\displaystyle z = \sum_{\alpha} n_{\alpha} \sigma_{\alpha}}$の各単体$\sigma_{\alpha}$に対して，プリズムを一次元上の単体に分割する。
+\end{proof}
+
+\midashi{演習.} これをきちんと証明せよ。
+
 \expandafter\ifx\csname readornot\endcsname\relax
   \end{document}
 \fi
