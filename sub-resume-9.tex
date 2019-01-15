@@ -2,6 +2,7 @@
   \documentclass[uplatex]{jsarticle}
   \usepackage{octopus}
   \usepackage{url}
+  \usetikzlibrary{calc}
 
   \renewcommand{\proofname}{\textsf{証明}}
   \renewcommand{\postpartname}{章}
@@ -11,11 +12,220 @@
 
   \newcommand{\octopuspart}[1]{\newpage\part{#1}\setcounter{section}{0}\vspace{3\baselineskip}}
 
+  \renewcommand{\restriction}[2]{\left. #1 \right|_{#2}}
   \DeclareMathOperator{\dcup}{\dot{\cup}}
+  \DeclareMathOperator{\conv}{conv}
+  \DeclareMathOperator{\Image}{Im}
+  \DeclareMathOperator{\Kernel}{Ker}
   \begin{document}
 \fi
 
 \section{ホモロジーの計算}
+
+%%%%%%%%%% 図 Δ複体構造の例 X = トーラス %%%%%%%%%%  %% 文章を入れたら消してください
+\begin{center}
+	\begin{tikzpicture}
+		% 本図
+		%% 面を塗る
+		\fill[red!20] (0,0) -- (2,2) -- (0,2) -- cycle;
+		\fill[blue!20] (0,0) -- (2,2) -- (2,0) -- cycle;
+		%% 点の名前もろもろ
+		\fill \point{(0,0)}{below left}{$v$} \point{(2,0)}{below right}{$v$} \point{(0,2)}{above left}{$v$} \point{(2,2)}{above right}{$v$};
+		\node at (1,0) [below]{$b$} node at (0,1) [left]{$a$} node at (1,2) [above]{$b$} node at (2,1) [right]{$a$} node at (1,1) [left]{$c$};
+		\node at (0.5,1.5){$U$} node at (1.5,0.5){$L$};
+		%% 矢印つき
+		\midwayarrow{(0,0)}{(0,2)} \midwayarrow{(0,0)}{(2,0)} \midwayarrow{(0,2)}{(2,2)} \midwayarrow{(2,0)}{(2,2)} \midwayarrow{(0,0)}{(2,2)}
+		% 取り巻き作り
+		%% 点
+		\fill \point{(-1.5,2.2)}{}{};
+		\draw[->] (-1.4,2.1) to[bend right] node[midway,above]{$\sigma_{v}$} (-0.1,1.9);
+		%% 辺
+		\fill \point{(3.5,1)}{}{} \point{(3.5,2)}{}{} \point{(1.25,-1.5)}{}{} \point{(2.25,-1.5)}{}{} \point{(-0.25,-1.5)}{}{} \point{(0.75,-1.5)}{}{};
+		\midwayarrow{(3.5,1)}{(3.5,2)} \midwayarrow{(1.25,-1.5)}{(2.25,-1.5)} \midwayarrow{(-0.25,-1.5)}{(0.75,-1.5)}
+		\draw[->] (3.4,1.5) to[bend left] node[midway,above]{$\sigma_{a}$} (2.1,1.5);
+		\draw[->] (1.75,-1.4) to[bend right] node[midway,right]{$\sigma_{b}$} (1.5,-0.1);
+		\draw[->] (0.25,-1.4) to[bend left] node[midway,left]{$\sigma_{c}$} (0.5,-0.1);
+		%% 面
+		\fill[red!20] (-3,-2.5) -- (-1,-0.5) -- (-3,-0.5) -- cycle;
+		\fill[blue!20] (2.5,-2) -- (4.5,0) -- (4.5,-2) -- cycle;
+		\fill \point{(-3,-2.5)}{}{} \point{(-1,-0.5)}{}{} \point{(-3,-0.5)}{}{} \point{(2.5,-2)}{}{} \point{(4.5,0)}{}{} \point{(4.5,-2)}{}{};
+		\midwayarrow{(-3,-2.5)}{(-1,-0.5)} \midwayarrow{(-3,-2.5)}{(-3,-0.5)} \midwayarrow{(-3,-0.5)}{(-1,-0.5)} \midwayarrow{(2.5,-2)}{(4.5,0)} \midwayarrow{(2.5,-2)}{(4.5,-2)} \midwayarrow{(4.5,-2)}{(4.5,0)}
+		\draw[->] (-1.5,-0.4) -- node[pos=.3, above]{$\sigma_{U}$} (0.4,0.9);
+		\draw[->] (4,-0.25) -- node[pos=.3, above]{$\sigma_{L}$} (1.8,0.5);
+	\end{tikzpicture}
+\end{center}
+%%%%%%%%%%　%% 文章を入れたら消してください
+
+%%%%%%%%%% 図 Δ複体構造の例 X = P^{2} %%%%%%%%%%  %% 文章を入れたら消してください
+\begin{center}
+	\begin{tikzpicture}
+		\fill[red!20] (0,0) -- (2,2) -- (0,2) -- cycle;
+		\fill[blue!20] (0,0) -- (2,2) -- (2,0) -- cycle;
+		\fill \point{(0,0)}{below left}{$v$} \point{(2,0)}{below right}{$w$} \point{(0,2)}{above left}{$w$} \point{(2,2)}{above right}{$v$};
+		\node at (1,0) [below]{$b$} node at (0,1) [left]{$a$} node at (1,2) [above]{$b$} node at (2,1) [right]{$a$} node at (1,1) [left]{$c$};
+		\node at (0.5,1.5){$U$} node at (1.5,0.5){$L$};
+		\midwayarrow{(0,0)}{(2,0)} \midwayarrow{(0,0)}{(0,2)} \midwayarrow{(0,0)}{(2,2)} \midwayarrow{(2,2)}{(2,0)} \midwayarrow{(2,2)}{(0,2)}
+	\end{tikzpicture}
+\end{center}
+%%%%%%%%%%　%% 文章を入れたら消してください
+
+%%%%%%%%%% 図 抽象的単体的複体 %%%%%%%%%%  %% 文章を入れたら消してください
+\begin{center}
+	\begin{tikzpicture}
+		\filldraw[fill=black!30] (0,0) -- (1.4,-1) -- (1.4,1) -- cycle;
+		\draw (1.4,1) -- (2.5,0) -- (3.5,0);
+		\draw (1.4,-1) -- (2.5,0);
+		\fill \point{(0,0)}{left}{0} \point{(1.4,-1)}{below left}{1} \point{(1.4,1)}{above left}{2} \point{(2.5,0)}{below right}{3} \point{(3.5,0)}{below}{4};
+	\end{tikzpicture}
+\end{center}
+%%%%%%%%%%　%% 文章を入れたら消してください
+
+%%%%%%%%%% 図 単体的ホモロジーの例 P^{2} %%%%%%%%%%  %% 文章を入れたら消してください
+\begin{center}
+	\begin{tikzpicture}
+		\fill[red!20] (0,0) -- (2,2) -- (0,2) -- cycle;
+		\fill[blue!20] (0,0) -- (2,2) -- (2,0) -- cycle;
+		\fill \point{(0,0)}{below left}{$v$} \point{(2,0)}{below right}{$w$} \point{(0,2)}{above left}{$w$} \point{(2,2)}{above right}{$v$};
+		\node at (1,0) [below]{$b$} node at (0,1) [left]{$a$} node at (1,2) [above]{$b$} node at (2,1) [right]{$a$} node at (1,1) [left]{$c$};
+		\node at (0.5,1.5){$U$} node at (1.5,0.5){$L$};
+		\midwayarrow{(0,0)}{(2,0)} \midwayarrow{(0,0)}{(0,2)} \midwayarrow{(0,0)}{(2,2)} \midwayarrow{(2,2)}{(2,0)} \midwayarrow{(2,2)}{(0,2)}
+	\end{tikzpicture}
+\end{center}
+
+$\Delta_{0} = \sets{n_{v} \tikz[baseline=0] \fill \point{(0,0.1)}{below}{\footnotesize $v$};
++ n_{w} \tikz[baseline=0] \fill \point{(0,0.1)}{below}{\footnotesize $w$}; | n_{v}, n_{w} \in \mathbb{Z}}$
+
+$\Delta_{1} = \sets{n_{a} \,
+\begin{tikzpicture}[baseline=-2.5]
+	\fill \point{(0,0.3)}{}{} \point{(0,-0.3)}{}{};
+	\midwayarrow{(0,0.3)}{(0,-0.3)};
+	\node at (0,0) [right]{\footnotesize $a$};
+\end{tikzpicture}
++ n_{b} \,
+\begin{tikzpicture}[baseline=-2.5]
+	\fill \point{(0,0)}{}{} \point{(0.6,0)}{}{};
+	\midwayarrow{(0,0)}{(0.6,0)};
+	\node at (0.3,0) [below]{\footnotesize $b$};
+\end{tikzpicture} | n_{a}, n_{b} \in \mathbb{Z}}$
+
+$\Delta_{2} = \sets{n_{U} \,
+\begin{tikzpicture}[baseline=-2.5]
+	\fill[red!20] (0,-0.3) -- (0.6,0.3) -- (0,0.3) -- cycle;
+	\fill \point{(0,-0.3)}{}{} \point{(0.6,0.3)}{}{} \point{(0,0.3)}{}{};
+	\midwayarrow{(0,-0.3)}{(0.6,0.3)}; \midwayarrow{(0.6,0.3)}{(0,0.3)}; \midwayarrow{(0,-0.3)}{(0,0.3)};
+	\node at (0.18,0.13){\footnotesize $U$};
+\end{tikzpicture}
++ n_{L} \,
+\begin{tikzpicture}[baseline=-2.5]
+	\fill[blue!20] (0,-0.3) -- (0.6,-0.3) -- (0.6,0.3) -- cycle;
+	\fill \point{(0,-0.3)}{}{} \point{(0.6,-0.3)}{}{} \point{(0.6,0.3)}{}{};
+	\midwayarrow{(0,-0.3)}{(0.6,-0.3)}; \midwayarrow{(0.6,0.3)}{(0.6,-0.3)}; \midwayarrow{(0,-0.3)}{(0.6,0.3)};
+	\node at (0.42,-0.13){\footnotesize $L$};
+\end{tikzpicture} | n_{U}, n_{L} \in \mathbb{Z}}$
+
+2-チェインの例：$3\, \begin{tikzpicture}[baseline=-2.5]
+	\fill[red!20] (0,-0.3) -- (0.6,0.3) -- (0,0.3) -- cycle;
+	\fill \point{(0,-0.3)}{}{} \point{(0.6,0.3)}{}{} \point{(0,0.3)}{}{};
+	\midwayarrow{(0,-0.3)}{(0.6,0.3)}; \midwayarrow{(0.6,0.3)}{(0,0.3)}; \midwayarrow{(0,-0.3)}{(0,0.3)};
+	\node at (0.18,0.13){\footnotesize $U$};
+\end{tikzpicture}
+-2 \,
+\begin{tikzpicture}[baseline=-2.5]
+	\fill[blue!20] (0,-0.3) -- (0.6,-0.3) -- (0.6,0.3) -- cycle;
+	\fill \point{(0,-0.3)}{}{} \point{(0.6,-0.3)}{}{} \point{(0.6,0.3)}{}{};
+	\midwayarrow{(0,-0.3)}{(0.6,-0.3)}; \midwayarrow{(0.6,0.3)}{(0.6,-0.3)}; \midwayarrow{(0,-0.3)}{(0.6,0.3)};
+	\node at (0.42,-0.13){\footnotesize $L$};
+\end{tikzpicture}$
+%%%%%%%%%%　%% 文章を入れたら消してください
+
+%%%%%%%%%% 図 ホモロジー群の定義の後の図式 %%%%%%%%%%  %% 文章を入れたら消してください
+\begin{center}
+	\begin{tikzpicture}
+	  \draw[->] (0,0.5) --node[midway,left]{$i:包含写像$} (0,-0.5);
+	  \draw[->] (3,0.5) --node[midway,left]{$i$} (3,-0.5);
+	  \draw[->] (6,0.5) --node[midway,left]{$i$} (6,-0.5);
+  
+	  \draw[->] (-2,1) --node[midway,above]{$\partial_{n+2}^{\Delta}$} (-1,1);
+	  \draw[->] (1,1) --node[midway,above]{$\partial_{n+1}^{\Delta}$} (2,1);
+	  \draw[->] (4,1) --node[midway,above]{$\partial_{n}^{\Delta}$} (5,1);
+	  \draw[->] (7,1) --node[midway,above]{$\partial_{n-1}^{\Delta}$} (8,1);
+  
+	  \draw[->] (-2,-1) --node[midway,below]{$\partial_{n+2}$} (-1,-1);
+	  \draw[->] (1,-1) --node[midway,below]{$\partial_{n+1}$} (2,-1);
+	  \draw[->] (4,-1) --node[midway,below]{$\partial_{n}$} (5,-1);
+	  \draw[->] (7,-1) --node[midway,below]{$\partial_{n-1}$} (8,-1);
+  
+	  \node at (-3,1) {$\cdots$} node at (0,1) {$\Delta_{n+1}$} node at (3,1) {$\Delta_{n}$} node at (6,1) {$\Delta_{n-1}$} node at (9,1) {$\cdots$};
+	  \node at (-3,-1) {$\cdots$} node at (0,-1) {$C_{n+1}$} node at (3,-1) {$C_{n}$} node at (6,-1) {$C_{n-1}$} node at (9,-1) {$\cdots$};
+	\end{tikzpicture}
+\end{center}
+%%%%%%%%%%　%% 文章を入れたら消してください
+
+%%%%%%%%%% 図 Cor. Hn(X) = 0 の後の例の図 %%%%%%%%%%  %% 文章を入れたら消してください
+\begin{tikzpicture}
+	\draw (0,0) circle [radius=1];
+	\draw[<-] (0.1,-1.1) to[bend left] (0.7,-1.7);
+	\fill \point{(0,-1)}{below}{$r$} \point{(0.8,-1.8)}{below}{$r$} \point{(2,-0.8)}{}{} \point{(2,0.8)}{}{};
+	\node at (2,0) [right]{$e$} node at (0,1) [above right]{$e$} node at (0,1){\rotatebox{90}{\footnotesize $\blacktriangle$}};
+	\midwayarrow{(2,-0.8)}{(2,0.8)};
+	\draw[<-] (1.25,0) -- (1.75,0);
+\end{tikzpicture}
+
+\begin{tikzpicture}
+  \filldraw[fill=black!20] (0,0) circle [radius=1];
+	\fill \point{(90:1)}{above}{$u$} \point{(-30:1)}{below right}{$v$} \point{(210:1)}{below left}{$w$};
+	\node at (30:1){\rotatebox{210}{\footnotesize $\blacktriangle$}} node at (270:1){\rotatebox{90}{\footnotesize $\blacktriangle$}} node at (150:1){\rotatebox{150}{\footnotesize $\blacktriangle$}};
+  \draw[<-] (1.5,0) -- (2.5,0);
+  \fill[black!20] ($(4,-0.25) + (90:1)$) -- ($(4,-0.25) + (-30:1)$) -- ($(4,-0.25) + (210:1)$) -- cycle;
+	\fill \point{($(4,-0.25) + (90:1)$)}{above}{$u$} \point{($(4,-0.25) + (-30:1)$)}{below right}{$v$} \point{($(4,-0.25) + (210:1)$)}{below left}{$w$};
+	\midwayarrow{($(4,-0.25) + (90:1)$)}{($(4,-0.25) + (-30:1)$)} \midwayarrow{($(4,-0.25) + (-30:1)$)}{($(4,-0.25) + (210:1)$)} \midwayarrow{($(4,-0.25) + (90:1)$)}{($(4,-0.25) + (210:1)$)}
+\end{tikzpicture}
+%%%%%%%%%%　%% 文章を入れたら消してください
+
+
+
+
+%%%%%%%%%% 図 Cor. Hn(X) = 0 の後の例の図 S^{2} %%%%%%%%%%  %% 文章を入れたら消してください
+\begin{tikzpicture}
+  %% 面を塗る
+  \fill[red!20] (0,0) -- (2,2) -- (0,2) -- cycle;
+  \fill[blue!20] (0,0) -- (2,2) -- (2,0) -- cycle;
+  %% 点の名前もろもろ
+  \fill \point{(0,0)}{below left}{$u$} \point{(2,0)}{below right}{$v$} \point{(0,2)}{above left}{$v$} \point{(2,2)}{above right}{$w$};
+  \node at (1,0) [below]{$b$} node at (0,1) [left]{$b$} node at (1,2) [above]{$a$} node at (2,1) [right]{$a$} node at (1,1) [left]{$c$};
+  \node at (0.5,1.5){$U$} node at (1.5,0.5){$L$};
+  %% 矢印つき
+  \midwayarrow{(0,0)}{(0,2)} \midwayarrow{(0,0)}{(2,0)} \midwayarrow{(0,2)}{(2,2)} \midwayarrow{(2,0)}{(2,2)} \midwayarrow{(0,0)}{(2,2)}
+\end{tikzpicture}
+%%%%%%%%%%　%% 文章を入れたら消してください
+
+
+
+
+%%%%%%%%%% 図 Cor. Hn(X) = 0 の後の例の図 トーラス %%%%%%%%%%  %% 文章を入れたら消してください
+\begin{tikzpicture}    
+  %% 面を塗る
+  \fill[red!20] (0,0) -- (2,2) -- (0,2) -- cycle;
+  \fill[blue!20] (0,0) -- (2,2) -- (2,0) -- cycle;
+  %% 点の名前もろもろ
+  \fill \point{(0,0)}{below left}{$v$} \point{(2,0)}{below right}{$v$} \point{(0,2)}{above left}{$v$} \point{(2,2)}{above right}{$v$};
+  \node at (1,0) [below]{$b$} node at (0,1) [left]{$a$} node at (1,2) [above]{$b$} node at (2,1) [right]{$a$} node at (1,1) [left]{$c$};
+  \node at (0.5,1.5){$U$} node at (1.5,0.5){$L$};
+  %% 矢印つき
+  \midwayarrow{(0,0)}{(0,2)} \midwayarrow{(0,0)}{(2,0)} \midwayarrow{(0,2)}{(2,2)} \midwayarrow{(2,0)}{(2,2)} \midwayarrow{(0,0)}{(2,2)}
+\end{tikzpicture}
+%%%%%%%%%%　%% 文章を入れたら消してください
+
+%%%%%%%%%% 図 X = P^{2} %%%%%%%%%%  %% 文章を入れたら消してください
+\begin{tikzpicture}
+\fill[red!20] (0,0) -- (2,2) -- (0,2) -- cycle;
+\fill[blue!20] (0,0) -- (2,2) -- (2,0) -- cycle;
+\fill \point{(0,0)}{below left}{$u$} \point{(2,0)}{below right}{$v$} \point{(0,2)}{above left}{$v$} \point{(2,2)}{above right}{$u$};
+\node at (1,0) [below]{$b$} node at (0,1) [left]{$a$} node at (1,2) [above]{$b$} node at (2,1) [right]{$a$} node at (1,1) [left]{$c$};
+\node at (0.5,1.5){$U$} node at (1.5,0.5){$L$};
+\midwayarrow{(0,0)}{(2,0)} \midwayarrow{(0,0)}{(0,2)} \midwayarrow{(0,0)}{(2,2)} \midwayarrow{(2,2)}{(2,0)} \midwayarrow{(2,2)}{(0,2)}
+\end{tikzpicture}
+%%%%%%%%%%　%% 文章を入れたら消してください
 
 \expandafter\ifx\csname readornot\endcsname\relax
   \end{document}
