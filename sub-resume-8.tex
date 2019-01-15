@@ -136,15 +136,6 @@ ${\displaystyle \sum_{i=0}^{n} \lambda_{i} v_{i}}$と表される点全体のな
 \nw{向き付けられた単体}は，頂点の順番が指定されている単体のこと。
 $[v_{0}, v_{1}, \dots, v_{n}]$は頂点に$v_{0} \to v_{1} \to \dots \to v_{n}$の順番が指定されているものとする。
 
-\newcommand{\midwayarrow}[3][black]{
-	\draw[-latex,#1] #2 -- ($#2!0.6!#3$);
-	\draw[#1] ($#2!0.41!#3$) -- #3;
-}
-
-\newcommand{\point}[3]{
-	#1 node[#2]{#3} circle [radius=0.05]
-}
-
 \begin{center}
 	\begin{tikzpicture}
 		\fill \point{(0,0)}{left}{$v_{0}$} \point{(0,2.5)}{left}{$v_{1}$};
