@@ -22,123 +22,201 @@
 
 \section{ホモロジーの計算}
 
-%%%%%%%%%% 図 Δ複体構造の例 X = トーラス %%%%%%%%%%  %% 文章を入れたら消してください
-\begin{center}
-	\begin{tikzpicture}
-		% 本図
-		%% 面を塗る
-		\fill[red!20] (0,0) -- (2,2) -- (0,2) -- cycle;
-		\fill[blue!20] (0,0) -- (2,2) -- (2,0) -- cycle;
-		%% 点の名前もろもろ
-		\fill \point{(0,0)}{below left}{$v$} \point{(2,0)}{below right}{$v$} \point{(0,2)}{above left}{$v$} \point{(2,2)}{above right}{$v$};
-		\node at (1,0) [below]{$b$} node at (0,1) [left]{$a$} node at (1,2) [above]{$b$} node at (2,1) [right]{$a$} node at (1,1) [left]{$c$};
-		\node at (0.5,1.5){$U$} node at (1.5,0.5){$L$};
-		%% 矢印つき
-		\midwayarrow{(0,0)}{(0,2)} \midwayarrow{(0,0)}{(2,0)} \midwayarrow{(0,2)}{(2,2)} \midwayarrow{(2,0)}{(2,2)} \midwayarrow{(0,0)}{(2,2)}
-		% 取り巻き作り
-		%% 点
-		\fill \point{(-1.5,2.2)}{}{};
-		\draw[->] (-1.4,2.1) to[bend right] node[midway,above]{$\sigma_{v}$} (-0.1,1.9);
-		%% 辺
-		\fill \point{(3.5,1)}{}{} \point{(3.5,2)}{}{} \point{(1.25,-1.5)}{}{} \point{(2.25,-1.5)}{}{} \point{(-0.25,-1.5)}{}{} \point{(0.75,-1.5)}{}{};
-		\midwayarrow{(3.5,1)}{(3.5,2)} \midwayarrow{(1.25,-1.5)}{(2.25,-1.5)} \midwayarrow{(-0.25,-1.5)}{(0.75,-1.5)}
-		\draw[->] (3.4,1.5) to[bend left] node[midway,above]{$\sigma_{a}$} (2.1,1.5);
-		\draw[->] (1.75,-1.4) to[bend right] node[midway,right]{$\sigma_{b}$} (1.5,-0.1);
-		\draw[->] (0.25,-1.4) to[bend left] node[midway,left]{$\sigma_{c}$} (0.5,-0.1);
-		%% 面
-		\fill[red!20] (-3,-2.5) -- (-1,-0.5) -- (-3,-0.5) -- cycle;
-		\fill[blue!20] (2.5,-2) -- (4.5,0) -- (4.5,-2) -- cycle;
-		\fill \point{(-3,-2.5)}{}{} \point{(-1,-0.5)}{}{} \point{(-3,-0.5)}{}{} \point{(2.5,-2)}{}{} \point{(4.5,0)}{}{} \point{(4.5,-2)}{}{};
-		\midwayarrow{(-3,-2.5)}{(-1,-0.5)} \midwayarrow{(-3,-2.5)}{(-3,-0.5)} \midwayarrow{(-3,-0.5)}{(-1,-0.5)} \midwayarrow{(2.5,-2)}{(4.5,0)} \midwayarrow{(2.5,-2)}{(4.5,-2)} \midwayarrow{(4.5,-2)}{(4.5,0)}
-		\draw[->] (-1.5,-0.4) -- node[pos=.3, above]{$\sigma_{U}$} (0.4,0.9);
-		\draw[->] (4,-0.25) -- node[pos=.3, above]{$\sigma_{L}$} (1.8,0.5);
+\midashi{\large 複体構造}
+
+特異チェインの集合
+${\displaystyle C_{n} = \sets{ \sum_{\alpha} \mu_{\alpha} \sigma_{\alpha} | \sigma_{\alpha} \colon \Delta^{n} \longrightarrow X, \quad \mu_{\alpha} \in \mathbb{Z}}}$
+は大きすぎて直接ホモロジー群$H_{n} = \Kernel \partial_{n} / \Image \partial_{n+1}$を計算するのは難しい。
+
+そこで計算に便利な概念を導入する。
+$X$：位相空間，とする。
+
+\begin{teigi}[$\Delta$-複体構造]
+	\label{homcalc.complex}
+	$X$の\nw{$\Delta$-複体構造（$\Delta$-complex structure）} $\defines$ 以下の(i)から(iv)を満たす（特異）$n$-単体の族$\sets{\sigma_{\alpha} \colon \Delta^{n} \longrightarrow X}_{\alpha \in \Lambda}$：
+	\begin{enumerate}
+		\vspace{-0.5\baselineskip}
+		\item[(i)] $\forall \alpha \in \Lambda, \quad \restriction{\sigma_{\alpha}}{\mathring{\Delta}^{n}}$は単射
+		\item[(ii)] $\forall x \in X, \quad \exists! \alpha \in \Lambda, \quad x \in \sigma_{\alpha} (\mathring{\Delta}^{n})$
+		\item[(iii)] $\forall \alpha \in \Lambda, \quad \forall f : \Delta^{n} = [v_{0}v_{1}\cdots v_{n}]$の面$, \quad \exists \beta \in \Lambda, \quad \restriction{\sigma_{\alpha}}{f} = \sigma_{\beta}$
+		\item[(iv)] $A \subseteq X$：開 $\Longleftrightarrow$ $\forall \alpha \in \Lambda, \quad \sigma_{\alpha}^{-1} (A)$：$\Delta^{n}$上開
+	\end{enumerate}
+\end{teigi}
+
+上の\rref{定義}{homcalc.complex}について補足する。
+(i)の条件は「$X$が単体の内部の像の非交和（disjoint union）で表される」ことを意味する。
+(ii)の条件は，もう少し正確に述べれば，
+「標準全単射$\varphi \colon f \longrightarrow \Delta^{n-1}$によって$\restriction{\sigma_{\alpha}}{f} = \sigma_{\beta} \circ \varphi$となる」ことを要請している。
+ただし，ここでの$f = [v_{0} \cdots \hat{v_{i}} \cdots v_{n}]$や$\Delta^{n-1}$には向きが付けられているものとする。
+これは「複数の単体が面でうまく貼り合わされている」ことを意味している。
+また，(iii)の条件は「位相的にも単体を貼り合わせたものである」ことを要請している。
+このことは$X$がセル複体${\displaystyle \coprod_{\alpha} \Delta_{\alpha}^{n_{\alpha}} / \sim}$とみなせることに他ならない。
+
+\begin{rei}[トーラスの場合]
+	$X = T^{2}$は以下のような$\Delta$-複体構造として捉えられる。
+	\begin{center}
+		\begin{tikzpicture}
+			% 本図
+			%% 面を塗る
+			\fill[red!20] (0,0) -- (2,2) -- (0,2) -- cycle;
+			\fill[blue!20] (0,0) -- (2,2) -- (2,0) -- cycle;
+			%% 点の名前もろもろ
+			\fill \point{(0,0)}{below left}{$v$} \point{(2,0)}{below right}{$v$} \point{(0,2)}{above left}{$v$} \point{(2,2)}{above right}{$v$};
+			\node at (1,0) [below]{$b$} node at (0,1) [left]{$a$} node at (1,2) [above]{$b$} node at (2,1) [right]{$a$} node at (1,1) [left]{$c$};
+			\node at (0.5,1.5){$U$} node at (1.5,0.5){$L$};
+			%% 矢印つき
+			\midwayarrow{(0,0)}{(0,2)} \midwayarrow{(0,0)}{(2,0)} \midwayarrow{(0,2)}{(2,2)} \midwayarrow{(2,0)}{(2,2)} \midwayarrow{(0,0)}{(2,2)}
+			% 取り巻き作り
+			%% 点
+			\fill \point{(-1.5,2.2)}{}{};
+			\draw[->] (-1.4,2.1) to[bend right] node[midway,above]{$\sigma_{v}$} (-0.1,1.9);
+			%% 辺
+			\fill \point{(3.5,1)}{}{} \point{(3.5,2)}{}{} \point{(1.25,-1.5)}{}{} \point{(2.25,-1.5)}{}{} \point{(-0.25,-1.5)}{}{} \point{(0.75,-1.5)}{}{};
+			\midwayarrow{(3.5,1)}{(3.5,2)} \midwayarrow{(1.25,-1.5)}{(2.25,-1.5)} \midwayarrow{(-0.25,-1.5)}{(0.75,-1.5)}
+			\draw[->] (3.4,1.5) to[bend left] node[midway,above]{$\sigma_{a}$} (2.1,1.5);
+			\draw[->] (1.75,-1.4) to[bend right] node[midway,right]{$\sigma_{b}$} (1.5,-0.1);
+			\draw[->] (0.25,-1.4) to[bend left] node[midway,left]{$\sigma_{c}$} (0.5,-0.1);
+			%% 面
+			\fill[red!20] (-3,-2.5) -- (-1,-0.5) -- (-3,-0.5) -- cycle;
+			\fill[blue!20] (2.5,-2) -- (4.5,0) -- (4.5,-2) -- cycle;
+			\fill \point{(-3,-2.5)}{}{} \point{(-1,-0.5)}{}{} \point{(-3,-0.5)}{}{} \point{(2.5,-2)}{}{} \point{(4.5,0)}{}{} \point{(4.5,-2)}{}{};
+			\midwayarrow{(-3,-2.5)}{(-1,-0.5)} \midwayarrow{(-3,-2.5)}{(-3,-0.5)} \midwayarrow{(-3,-0.5)}{(-1,-0.5)} \midwayarrow{(2.5,-2)}{(4.5,0)} \midwayarrow{(2.5,-2)}{(4.5,-2)} \midwayarrow{(4.5,-2)}{(4.5,0)}
+			\draw[->] (-1.5,-0.4) -- node[pos=.3, above]{$\sigma_{U}$} (0.4,0.9);
+			\draw[->] (4,-0.25) -- node[pos=.3, above]{$\sigma_{L}$} (1.8,0.5);
+		\end{tikzpicture}
+	\end{center}	
+\end{rei}
+	
+\begin{rei}[射影平面$P^{2}$]
+	$X = P^{2}$は以下のような$\Delta$-複体構造として捉えられる。
+	\begin{center}
+		\begin{tikzpicture}
+			\fill[red!20] (0,0) -- (2,2) -- (0,2) -- cycle;
+			\fill[blue!20] (0,0) -- (2,2) -- (2,0) -- cycle;
+			\fill \point{(0,0)}{below left}{$v$} \point{(2,0)}{below right}{$w$} \point{(0,2)}{above left}{$w$} \point{(2,2)}{above right}{$v$};
+			\node at (1,0) [below]{$b$} node at (0,1) [left]{$a$} node at (1,2) [above]{$b$} node at (2,1) [right]{$a$} node at (1,1) [left]{$c$};
+			\node at (0.5,1.5){$U$} node at (1.5,0.5){$L$};
+			\midwayarrow{(0,0)}{(2,0)} \midwayarrow{(0,0)}{(0,2)} \midwayarrow{(0,0)}{(2,2)} \midwayarrow{(2,2)}{(2,0)} \midwayarrow{(2,2)}{(0,2)}
+		\end{tikzpicture}
+	\end{center}	
+\end{rei}
+
+\sukima \midashi{注意.} いい加減に$\Delta$-複体構造をつくろうとすると失敗しやすいので注意が必要。
+
+\begin{teigi}[単体的複体]
+	次の条件を満たすものを\nw{単体的複体（simplicial complex）}という。
+	\begin{itemize}
+		\vspace{-0.5\baselineskip}
+		\item 各$n$-単体（の像）が$n+1$個の異なる頂点からなる。
+		\item 異なる$n$-単体（の像）が同じ頂点集合を持つことはない。
+	\end{itemize}
+\end{teigi}
+
+\sukima \midashi{注意.}
+\begin{itemize}
+	\vspace{-0.5\baselineskip}
+	\item $\Delta$-複体は細分することで単体的複体になる。
+	\item 単体的複体では，頂点に番号をつけることで，その順番によって向きを定めることができる。
+	\item 完全に組み合わせ的に扱える - - - - $>$ 抽象的単体的複体：（単体をなす頂点集合の族）
+	
+	頂点集合を$V$として$\mathcal{F} \subseteq 2^{V}$を考え，これが$X \subseteq Y \in \mathcal{F}$ $\Longrightarrow$ $X \in \mathcal{F}$を満たすものとして定める。
+	
+	例. \begin{tikzpicture}[baseline=-2.5]
+			\filldraw[fill=black!30] (0,0) -- (1.4,-1) -- (1.4,1) -- cycle;
+			\draw (1.4,1) -- (2.5,0) -- (3.5,0);
+			\draw (1.4,-1) -- (2.5,0);
+			\fill \point{(0,0)}{left}{0} \point{(1.4,-1)}{below left}{1} \point{(1.4,1)}{above left}{2} \point{(2.5,0)}{below right}{3} \point{(3.5,0)}{below}{4};
+		\end{tikzpicture}
+	\renewcommand{\arraystretch}{1}
+	$\longrightarrow$ $\mathcal{F} = \sets{\begin{array}{c} \sets{0,1,2}, \\ \sets{0,1}, \sets{1,2}, \sets{0,2}, \sets{1,3}, \sets{2,3}, \sets{3,4},\\  \sets{0}, \sets{1}, \sets{2}, \sets{3}, \sets{4},\\  \emptyset \end{array}} \subseteq 2^{\sets{0,1,2,3,4}}$
+	\renewcommand{\arraystretch}{1.3}
+\end{itemize}
+
+\sukima \midashi{\large 単体的ホモロジー}
+
+$X$：位相空間，$\Delta$-複体構造$\sets{\sigma_{\alpha} \colon \Delta^{n_{\alpha}} \longrightarrow X}_{\alpha \in \Lambda}$，
+
+$\Delta^{n}$：複体内の$n$-単体からなるチェイン$\sum_{\alpha \in \Lambda} \mu_{\alpha} \sigma_{\alpha}$の集合（$\subseteq C_{n}$：すべての$n$-単体からなるチェインの集合）
+
+\begin{rei}[射影平面]
+	$X = P^{2}$では$\Delta_{n}$では以下のようになる。
+	\begin{center}
+		\begin{tikzpicture}
+			\fill[red!20] (0,0) -- (2,2) -- (0,2) -- cycle;
+			\fill[blue!20] (0,0) -- (2,2) -- (2,0) -- cycle;
+			\fill \point{(0,0)}{below left}{$v$} \point{(2,0)}{below right}{$w$} \point{(0,2)}{above left}{$w$} \point{(2,2)}{above right}{$v$};
+			\node at (1,0) [below]{$b$} node at (0,1) [left]{$a$} node at (1,2) [above]{$b$} node at (2,1) [right]{$a$} node at (1,1) [left]{$c$};
+			\node at (0.5,1.5){$U$} node at (1.5,0.5){$L$};
+			\midwayarrow{(0,0)}{(2,0)} \midwayarrow{(0,0)}{(0,2)} \midwayarrow{(0,0)}{(2,2)} \midwayarrow{(2,2)}{(2,0)} \midwayarrow{(2,2)}{(0,2)}
+		\end{tikzpicture}
+	\end{center}
+	\begin{itemize}
+		\vspace{-0.5\baselineskip}
+		\item $\Delta_{0} = \sets{n_{v} \tikz[baseline=0] \fill \point{(0,0.1)}{below}{\footnotesize $v$};
+		+ n_{w} \tikz[baseline=0] \fill \point{(0,0.1)}{below}{\footnotesize $w$}; | n_{v}, n_{w} \in \mathbb{Z}}$
+		\item $\Delta_{1} = \sets{n_{a} \,
+		\begin{tikzpicture}[baseline=-2.5]
+			\fill \point{(0,0.3)}{}{} \point{(0,-0.3)}{}{};
+			\midwayarrow{(0,0.3)}{(0,-0.3)};
+			\node at (0,0) [right]{\footnotesize $a$};
+		\end{tikzpicture}
+		+ n_{b} \,
+		\begin{tikzpicture}[baseline=-2.5]
+			\fill \point{(0,0)}{}{} \point{(0.6,0)}{}{};
+			\midwayarrow{(0,0)}{(0.6,0)};
+			\node at (0.3,0) [below]{\footnotesize $b$};
+		\end{tikzpicture} | n_{a}, n_{b} \in \mathbb{Z}}$
+		\item $\Delta_{2} = \sets{n_{U} \,
+		\begin{tikzpicture}[baseline=-2.5]
+			\fill[red!20] (0,-0.3) -- (0.6,0.3) -- (0,0.3) -- cycle;
+			\fill \point{(0,-0.3)}{}{} \point{(0.6,0.3)}{}{} \point{(0,0.3)}{}{};
+			\midwayarrow{(0,-0.3)}{(0.6,0.3)}; \midwayarrow{(0.6,0.3)}{(0,0.3)}; \midwayarrow{(0,-0.3)}{(0,0.3)};
+			\node at (0.18,0.13){\footnotesize $U$};
+		\end{tikzpicture}
+		+ n_{L} \,
+		\begin{tikzpicture}[baseline=-2.5]
+			\fill[blue!20] (0,-0.3) -- (0.6,-0.3) -- (0.6,0.3) -- cycle;
+			\fill \point{(0,-0.3)}{}{} \point{(0.6,-0.3)}{}{} \point{(0.6,0.3)}{}{};
+			\midwayarrow{(0,-0.3)}{(0.6,-0.3)}; \midwayarrow{(0.6,0.3)}{(0.6,-0.3)}; \midwayarrow{(0,-0.3)}{(0.6,0.3)};
+			\node at (0.42,-0.13){\footnotesize $L$};
+		\end{tikzpicture} | n_{U}, n_{L} \in \mathbb{Z}}$
+		\item $\Delta_{k} = \sets{0}$（$k \ge 3$）\footnote{編註：ノートでは「$k \ge 0$」とあるが誤植を疑い「$k \ge 3$」とした}
+	\end{itemize}
+	2-チェインの例：$3\, \begin{tikzpicture}[baseline=-2.5]
+		\fill[red!20] (0,-0.3) -- (0.6,0.3) -- (0,0.3) -- cycle;
+		\fill \point{(0,-0.3)}{}{} \point{(0.6,0.3)}{}{} \point{(0,0.3)}{}{};
+		\midwayarrow{(0,-0.3)}{(0.6,0.3)}; \midwayarrow{(0.6,0.3)}{(0,0.3)}; \midwayarrow{(0,-0.3)}{(0,0.3)};
+		\node at (0.18,0.13){\footnotesize $U$};
 	\end{tikzpicture}
-\end{center}
-%%%%%%%%%%　%% 文章を入れたら消してください
+	-2 \,
+	\begin{tikzpicture}[baseline=-2.5]
+		\fill[blue!20] (0,-0.3) -- (0.6,-0.3) -- (0.6,0.3) -- cycle;
+		\fill \point{(0,-0.3)}{}{} \point{(0.6,-0.3)}{}{} \point{(0.6,0.3)}{}{};
+		\midwayarrow{(0,-0.3)}{(0.6,-0.3)}; \midwayarrow{(0.6,0.3)}{(0.6,-0.3)}; \midwayarrow{(0,-0.3)}{(0.6,0.3)};
+		\node at (0.42,-0.13){\footnotesize $L$};
+	\end{tikzpicture}$
+\end{rei}
 
-%%%%%%%%%% 図 Δ複体構造の例 X = P^{2} %%%%%%%%%%  %% 文章を入れたら消してください
-\begin{center}
-	\begin{tikzpicture}
-		\fill[red!20] (0,0) -- (2,2) -- (0,2) -- cycle;
-		\fill[blue!20] (0,0) -- (2,2) -- (2,0) -- cycle;
-		\fill \point{(0,0)}{below left}{$v$} \point{(2,0)}{below right}{$w$} \point{(0,2)}{above left}{$w$} \point{(2,2)}{above right}{$v$};
-		\node at (1,0) [below]{$b$} node at (0,1) [left]{$a$} node at (1,2) [above]{$b$} node at (2,1) [right]{$a$} node at (1,1) [left]{$c$};
-		\node at (0.5,1.5){$U$} node at (1.5,0.5){$L$};
-		\midwayarrow{(0,0)}{(2,0)} \midwayarrow{(0,0)}{(0,2)} \midwayarrow{(0,0)}{(2,2)} \midwayarrow{(2,2)}{(2,0)} \midwayarrow{(2,2)}{(0,2)}
-	\end{tikzpicture}
-\end{center}
-%%%%%%%%%%　%% 文章を入れたら消してください
+\begin{prop}
+	$\Delta_{n}$は$C_{n}$の部分群
+\end{prop}
 
-%%%%%%%%%% 図 抽象的単体的複体 %%%%%%%%%%  %% 文章を入れたら消してください
-\begin{center}
-	\begin{tikzpicture}
-		\filldraw[fill=black!30] (0,0) -- (1.4,-1) -- (1.4,1) -- cycle;
-		\draw (1.4,1) -- (2.5,0) -- (3.5,0);
-		\draw (1.4,-1) -- (2.5,0);
-		\fill \point{(0,0)}{left}{0} \point{(1.4,-1)}{below left}{1} \point{(1.4,1)}{above left}{2} \point{(2.5,0)}{below right}{3} \point{(3.5,0)}{below}{4};
-	\end{tikzpicture}
-\end{center}
-%%%%%%%%%%　%% 文章を入れたら消してください
+\begin{teigi}[境界作用素]
+	$C_{n}$に対して定義した境界作用素$\partial_{n} \colon C_{n} \longrightarrow C_{n-1}$に対して，
+	$\Delta_{n}$に対する境界作用素を$\partial_{n}^{\Delta} := \restriction{\partial_{n}}{\Delta_{n}}$で定める。
+\end{teigi}
 
-%%%%%%%%%% 図 単体的ホモロジーの例 P^{2} %%%%%%%%%%  %% 文章を入れたら消してください
-\begin{center}
-	\begin{tikzpicture}
-		\fill[red!20] (0,0) -- (2,2) -- (0,2) -- cycle;
-		\fill[blue!20] (0,0) -- (2,2) -- (2,0) -- cycle;
-		\fill \point{(0,0)}{below left}{$v$} \point{(2,0)}{below right}{$w$} \point{(0,2)}{above left}{$w$} \point{(2,2)}{above right}{$v$};
-		\node at (1,0) [below]{$b$} node at (0,1) [left]{$a$} node at (1,2) [above]{$b$} node at (2,1) [right]{$a$} node at (1,1) [left]{$c$};
-		\node at (0.5,1.5){$U$} node at (1.5,0.5){$L$};
-		\midwayarrow{(0,0)}{(2,0)} \midwayarrow{(0,0)}{(0,2)} \midwayarrow{(0,0)}{(2,2)} \midwayarrow{(2,2)}{(2,0)} \midwayarrow{(2,2)}{(0,2)}
-	\end{tikzpicture}
-\end{center}
+なお，$\Delta$内の単体の面も$\Delta$の単体として定義してあるから，$\partial_{n}^{\Delta}$は$\Delta_{n}$から$\Delta_{n-1}$への写像となる。
 
-$\Delta_{0} = \sets{n_{v} \tikz[baseline=0] \fill \point{(0,0.1)}{below}{\footnotesize $v$};
-+ n_{w} \tikz[baseline=0] \fill \point{(0,0.1)}{below}{\footnotesize $w$}; | n_{v}, n_{w} \in \mathbb{Z}}$
+\begin{hodai}
+	$\Delta_{n} \xrightarrow{\partial_{n}^{\Delta}} \Delta_{n-1} \xrightarrow{\partial_{n-1}^{\Delta}} \Delta_{n-2}$において，$\partial_{n-1}^{\Delta} \circ \partial_{n}^{\Delta} = 0$
+\end{hodai}
 
-$\Delta_{1} = \sets{n_{a} \,
-\begin{tikzpicture}[baseline=-2.5]
-	\fill \point{(0,0.3)}{}{} \point{(0,-0.3)}{}{};
-	\midwayarrow{(0,0.3)}{(0,-0.3)};
-	\node at (0,0) [right]{\footnotesize $a$};
-\end{tikzpicture}
-+ n_{b} \,
-\begin{tikzpicture}[baseline=-2.5]
-	\fill \point{(0,0)}{}{} \point{(0.6,0)}{}{};
-	\midwayarrow{(0,0)}{(0.6,0)};
-	\node at (0.3,0) [below]{\footnotesize $b$};
-\end{tikzpicture} | n_{a}, n_{b} \in \mathbb{Z}}$
+\begin{teigi}[（$\Delta$に関する）ホモロジー群]
+	$H_{n}^{\Delta} (X) := \Kernel \partial_{n}^{\Delta} / \Image \partial_{n+1}^{\Delta}$
+	を（$\Delta$に関する）ホモロジー群という。
+\end{teigi}
 
-$\Delta_{2} = \sets{n_{U} \,
-\begin{tikzpicture}[baseline=-2.5]
-	\fill[red!20] (0,-0.3) -- (0.6,0.3) -- (0,0.3) -- cycle;
-	\fill \point{(0,-0.3)}{}{} \point{(0.6,0.3)}{}{} \point{(0,0.3)}{}{};
-	\midwayarrow{(0,-0.3)}{(0.6,0.3)}; \midwayarrow{(0.6,0.3)}{(0,0.3)}; \midwayarrow{(0,-0.3)}{(0,0.3)};
-	\node at (0.18,0.13){\footnotesize $U$};
-\end{tikzpicture}
-+ n_{L} \,
-\begin{tikzpicture}[baseline=-2.5]
-	\fill[blue!20] (0,-0.3) -- (0.6,-0.3) -- (0.6,0.3) -- cycle;
-	\fill \point{(0,-0.3)}{}{} \point{(0.6,-0.3)}{}{} \point{(0.6,0.3)}{}{};
-	\midwayarrow{(0,-0.3)}{(0.6,-0.3)}; \midwayarrow{(0.6,0.3)}{(0.6,-0.3)}; \midwayarrow{(0,-0.3)}{(0.6,0.3)};
-	\node at (0.42,-0.13){\footnotesize $L$};
-\end{tikzpicture} | n_{U}, n_{L} \in \mathbb{Z}}$
-
-2-チェインの例：$3\, \begin{tikzpicture}[baseline=-2.5]
-	\fill[red!20] (0,-0.3) -- (0.6,0.3) -- (0,0.3) -- cycle;
-	\fill \point{(0,-0.3)}{}{} \point{(0.6,0.3)}{}{} \point{(0,0.3)}{}{};
-	\midwayarrow{(0,-0.3)}{(0.6,0.3)}; \midwayarrow{(0.6,0.3)}{(0,0.3)}; \midwayarrow{(0,-0.3)}{(0,0.3)};
-	\node at (0.18,0.13){\footnotesize $U$};
-\end{tikzpicture}
--2 \,
-\begin{tikzpicture}[baseline=-2.5]
-	\fill[blue!20] (0,-0.3) -- (0.6,-0.3) -- (0.6,0.3) -- cycle;
-	\fill \point{(0,-0.3)}{}{} \point{(0.6,-0.3)}{}{} \point{(0.6,0.3)}{}{};
-	\midwayarrow{(0,-0.3)}{(0.6,-0.3)}; \midwayarrow{(0.6,0.3)}{(0.6,-0.3)}; \midwayarrow{(0,-0.3)}{(0.6,0.3)};
-	\node at (0.42,-0.13){\footnotesize $L$};
-\end{tikzpicture}$
-%%%%%%%%%%　%% 文章を入れたら消してください
-
-%%%%%%%%%% 図 ホモロジー群の定義の後の図式 %%%%%%%%%%  %% 文章を入れたら消してください
 \begin{center}
 	\begin{tikzpicture}
 	  \draw[->] (0,0.5) --node[midway,left]{$i:包含写像$} (0,-0.5);
@@ -159,73 +237,212 @@ $\Delta_{2} = \sets{n_{U} \,
 	  \node at (-3,-1) {$\cdots$} node at (0,-1) {$C_{n+1}$} node at (3,-1) {$C_{n}$} node at (6,-1) {$C_{n-1}$} node at (9,-1) {$\cdots$};
 	\end{tikzpicture}
 \end{center}
-%%%%%%%%%%　%% 文章を入れたら消してください
 
-%%%%%%%%%% 図 Cor. Hn(X) = 0 の後の例の図 %%%%%%%%%%  %% 文章を入れたら消してください
-\begin{tikzpicture}
-	\draw (0,0) circle [radius=1];
-	\draw[<-] (0.1,-1.1) to[bend left] (0.7,-1.7);
-	\fill \point{(0,-1)}{below}{$r$} \point{(0.8,-1.8)}{below}{$r$} \point{(2,-0.8)}{}{} \point{(2,0.8)}{}{};
-	\node at (2,0) [right]{$e$} node at (0,1) [above right]{$e$} node at (0,1){\rotatebox{90}{\footnotesize $\blacktriangle$}};
-	\midwayarrow{(2,-0.8)}{(2,0.8)};
-	\draw[<-] (1.25,0) -- (1.75,0);
-\end{tikzpicture}
+上のような図式を考えると，
+明らかに$i \circ \partial_{n}^{\Delta} = \partial_{n} \circ i$であるので，
+ホモロジー群の間の写像$i_{\#} \colon H_{n}^{\Delta} \longrightarrow H_{n}$が誘導される。
 
-\begin{tikzpicture}
-  \filldraw[fill=black!20] (0,0) circle [radius=1];
-	\fill \point{(90:1)}{above}{$u$} \point{(-30:1)}{below right}{$v$} \point{(210:1)}{below left}{$w$};
-	\node at (30:1){\rotatebox{210}{\footnotesize $\blacktriangle$}} node at (270:1){\rotatebox{90}{\footnotesize $\blacktriangle$}} node at (150:1){\rotatebox{150}{\footnotesize $\blacktriangle$}};
-  \draw[<-] (1.5,0) -- (2.5,0);
-  \fill[black!20] ($(4,-0.25) + (90:1)$) -- ($(4,-0.25) + (-30:1)$) -- ($(4,-0.25) + (210:1)$) -- cycle;
-	\fill \point{($(4,-0.25) + (90:1)$)}{above}{$u$} \point{($(4,-0.25) + (-30:1)$)}{below right}{$v$} \point{($(4,-0.25) + (210:1)$)}{below left}{$w$};
-	\midwayarrow{($(4,-0.25) + (90:1)$)}{($(4,-0.25) + (-30:1)$)} \midwayarrow{($(4,-0.25) + (-30:1)$)}{($(4,-0.25) + (210:1)$)} \midwayarrow{($(4,-0.25) + (90:1)$)}{($(4,-0.25) + (210:1)$)}
-\end{tikzpicture}
-%%%%%%%%%%　%% 文章を入れたら消してください
+\begin{teiri}
+	$i_{\#}$は同型写像であり，$n = 0,1,2, \dots$で$H_{n}^{\Delta} \simeq H_{n}$である
+\end{teiri}
 
+\begin{proof}
+	{\bf 難しい}
+\end{proof}
 
+特に，単体ホモロジーは，複体のとり方に依存しない。
 
+\begin{corr}
+	$n$が複体の次元より大きいとき，$H_{n}(X) = 0$
+\end{corr}
 
-%%%%%%%%%% 図 Cor. Hn(X) = 0 の後の例の図 S^{2} %%%%%%%%%%  %% 文章を入れたら消してください
-\begin{tikzpicture}
-  %% 面を塗る
-  \fill[red!20] (0,0) -- (2,2) -- (0,2) -- cycle;
-  \fill[blue!20] (0,0) -- (2,2) -- (2,0) -- cycle;
-  %% 点の名前もろもろ
-  \fill \point{(0,0)}{below left}{$u$} \point{(2,0)}{below right}{$v$} \point{(0,2)}{above left}{$v$} \point{(2,2)}{above right}{$w$};
-  \node at (1,0) [below]{$b$} node at (0,1) [left]{$b$} node at (1,2) [above]{$a$} node at (2,1) [right]{$a$} node at (1,1) [left]{$c$};
-  \node at (0.5,1.5){$U$} node at (1.5,0.5){$L$};
-  %% 矢印つき
-  \midwayarrow{(0,0)}{(0,2)} \midwayarrow{(0,0)}{(2,0)} \midwayarrow{(0,2)}{(2,2)} \midwayarrow{(2,0)}{(2,2)} \midwayarrow{(0,0)}{(2,2)}
-\end{tikzpicture}
-%%%%%%%%%%　%% 文章を入れたら消してください
+\begin{proof}
+	$\Kernel \partial_{n}^{\Delta} \subseteq \Delta_{n} = 0$
+\end{proof}
 
+\sukima \midashi{\large ホモロジー群の計算}
 
+\begin{rei}[円周のホモロジー群]
+	$X = S^{1}$：円周，とする。
+	\begin{center}
+		\begin{tikzpicture}
+			\draw (0,0) circle [radius=1];
+			\draw[<-] (0.1,-1.1) to[bend left] (0.7,-1.7);
+			\fill \point{(0,-1)}{below}{$r$} \point{(0.8,-1.8)}{below}{$r$} \point{(2,-0.8)}{}{} \point{(2,0.8)}{}{};
+			\node at (2,0) [right]{$e$} node at (0,1) [above right]{$e$} node at (0,1){\rotatebox{90}{\footnotesize $\blacktriangle$}};
+			\midwayarrow{(2,-0.8)}{(2,0.8)};
+			\draw[<-] (1.25,0) -- (1.75,0);
+		\end{tikzpicture}
+	\end{center}
+	よって，
+	\begin{equation}
+		H_{n} (X) = \begin{cases}
+			\mathbb{Z}, & n = 0, 1 \\
+			0, & \text{otherwise}
+		\end{cases}
+	\end{equation}
+\end{rei}
 
+\begin{rei}[円板のホモロジー群]
+	$X = D^{2}$：円板，とする。
+	\begin{center}
+		\begin{tikzpicture}
+			\filldraw[fill=black!20] (0,0) circle [radius=1];
+			\fill \point{(90:1)}{above}{$u$} \point{(-30:1)}{below right}{$v$} \point{(210:1)}{below left}{$w$};
+			\node at (30:1){\rotatebox{210}{\footnotesize $\blacktriangle$}} node at (270:1){\rotatebox{90}{\footnotesize $\blacktriangle$}} node at (150:1){\rotatebox{150}{\footnotesize $\blacktriangle$}};
+			\draw[<-] (1.5,0) -- (2.5,0);
+			\fill[black!20] ($(4,-0.25) + (90:1)$) -- ($(4,-0.25) + (-30:1)$) -- ($(4,-0.25) + (210:1)$) -- cycle;
+			\fill \point{($(4,-0.25) + (90:1)$)}{above}{$u$} \point{($(4,-0.25) + (-30:1)$)}{below right}{$v$} \point{($(4,-0.25) + (210:1)$)}{below left}{$w$};
+			\midwayarrow{($(4,-0.25) + (90:1)$)}{($(4,-0.25) + (-30:1)$)} \midwayarrow{($(4,-0.25) + (-30:1)$)}{($(4,-0.25) + (210:1)$)} \midwayarrow{($(4,-0.25) + (90:1)$)}{($(4,-0.25) + (210:1)$)}
+		\end{tikzpicture}
+	\end{center}
+	いま，閉路チェイン$[uv] + [vw] - [uw]$は2-単体$[uvw]$の境界であるから1次ホモロジー群は自明であり，
+	2次ホモロジー群は
+	\begin{equation}
+		H_{2} = \Kernel \partial_{2} / \Image \partial_{3} = \Kernel \partial_{2} = \sets{\alpha [uvw] | \alpha \partial[uvw] = 0} = 0
+	\end{equation}
+	である。まとめると，
+	\begin{equation}
+		H_{n}(X) = \begin{cases}
+			\mathbb{Z}, & n = 0 \\
+			0, & \text{otherwise}
+		\end{cases}
+	\end{equation}
+\end{rei}
 
-%%%%%%%%%% 図 Cor. Hn(X) = 0 の後の例の図 トーラス %%%%%%%%%%  %% 文章を入れたら消してください
-\begin{tikzpicture}    
-  %% 面を塗る
-  \fill[red!20] (0,0) -- (2,2) -- (0,2) -- cycle;
-  \fill[blue!20] (0,0) -- (2,2) -- (2,0) -- cycle;
-  %% 点の名前もろもろ
-  \fill \point{(0,0)}{below left}{$v$} \point{(2,0)}{below right}{$v$} \point{(0,2)}{above left}{$v$} \point{(2,2)}{above right}{$v$};
-  \node at (1,0) [below]{$b$} node at (0,1) [left]{$a$} node at (1,2) [above]{$b$} node at (2,1) [right]{$a$} node at (1,1) [left]{$c$};
-  \node at (0.5,1.5){$U$} node at (1.5,0.5){$L$};
-  %% 矢印つき
-  \midwayarrow{(0,0)}{(0,2)} \midwayarrow{(0,0)}{(2,0)} \midwayarrow{(0,2)}{(2,2)} \midwayarrow{(2,0)}{(2,2)} \midwayarrow{(0,0)}{(2,2)}
-\end{tikzpicture}
-%%%%%%%%%%　%% 文章を入れたら消してください
+\begin{rei}[球面のホモロジー群]
+	$X = S^{2}$：球面，とする。
+	\begin{center}
+		\begin{tikzpicture}
+		%% 面を塗る
+		\fill[red!20] (0,0) -- (2,2) -- (0,2) -- cycle;
+		\fill[blue!20] (0,0) -- (2,2) -- (2,0) -- cycle;
+		%% 点の名前もろもろ
+		\fill \point{(0,0)}{below left}{$u$} \point{(2,0)}{below right}{$v$} \point{(0,2)}{above left}{$v$} \point{(2,2)}{above right}{$w$};
+		\node at (1,0) [below]{$b$} node at (0,1) [left]{$b$} node at (1,2) [above]{$a$} node at (2,1) [right]{$a$} node at (1,1) [left]{$c$};
+		\node at (0.5,1.5){$U$} node at (1.5,0.5){$L$};
+		%% 矢印つき
+		\midwayarrow{(0,0)}{(0,2)} \midwayarrow{(0,0)}{(2,0)} \midwayarrow{(0,2)}{(2,2)} \midwayarrow{(2,0)}{(2,2)} \midwayarrow{(0,0)}{(2,2)}
+		\end{tikzpicture}
+	\end{center}
+	\begin{itemize}
+		\vspace{-0.5\baselineskip}
+		\item $\Delta_{0} = \mathbb{Z} u + \mathbb{Z} v + \mathbb{Z} w$
+		\item $\Delta_{1} = \mathbb{Z} a + \mathbb{Z} b + \mathbb{Z} c$
+		\item $\Delta_{2} = \mathbb{Z} U + \mathbb{Z} L$
+	\end{itemize}
 
-%%%%%%%%%% 図 X = P^{2} %%%%%%%%%%  %% 文章を入れたら消してください
-\begin{tikzpicture}
-\fill[red!20] (0,0) -- (2,2) -- (0,2) -- cycle;
-\fill[blue!20] (0,0) -- (2,2) -- (2,0) -- cycle;
-\fill \point{(0,0)}{below left}{$u$} \point{(2,0)}{below right}{$v$} \point{(0,2)}{above left}{$v$} \point{(2,2)}{above right}{$u$};
-\node at (1,0) [below]{$b$} node at (0,1) [left]{$a$} node at (1,2) [above]{$b$} node at (2,1) [right]{$a$} node at (1,1) [left]{$c$};
-\node at (0.5,1.5){$U$} node at (1.5,0.5){$L$};
-\midwayarrow{(0,0)}{(2,0)} \midwayarrow{(0,0)}{(0,2)} \midwayarrow{(0,0)}{(2,2)} \midwayarrow{(2,2)}{(2,0)} \midwayarrow{(2,2)}{(0,2)}
-\end{tikzpicture}
-%%%%%%%%%%　%% 文章を入れたら消してください
+	0次ホモロジー群は連結成分の個数から求めれば早く，$H_{0}(X) = \mathbb{Z}$。
+
+	1次ホモロジー群$H_{1}(X) = \Kernel \partial_{1} / \Image \partial_{2}$を求める。
+	\renewcommand{\arraystretch}{1}
+	\begin{center}
+		$\begin{array}{lcl}
+			\alpha a + \beta b + \gamma c \in \Kernel \partial_{1} & \Longleftrightarrow & \alpha (w-v) + \beta (v-u) + \gamma (w-u) = 0 \\
+			& \Longleftrightarrow & \alpha = \beta = - \gamma 
+		\end{array}$
+	\end{center}
+	\renewcommand{\arraystretch}{1.3}
+	より，$\Kernel \partial_{1} = \mathbb{Z} (a+b-c)$。
+	また，$\partial U = \partial L = a+b-c$より，$\Image \partial_{2} = \mathbb{Z} (a+b-c)$。
+	よって，$H_{1}(X) = 0$（自明）\footnote{この自明は計算が自明なのではなく，この群が自明，つまり単位元しか元を持たない群であることを指していて，決してハラスメントではないことに注意されたい。}\ である。
+
+	2次ホモロジー群$H_{2}(X) = \Kernel \partial_{2} / \Image \partial_{3}$を求める。
+	\renewcommand{\arraystretch}{1}
+	\begin{center}
+		$\begin{array}{lcl}
+			\alpha U + \beta L \in \Kernel \partial_{2} & \Longleftrightarrow & \alpha (a-c+b) + \beta (a-c+b) = 0 \\
+			& \Longleftrightarrow & \alpha = - \beta
+		\end{array}$
+	\end{center}
+	\renewcommand{\arraystretch}{1.3}
+	より，$\Kernel \partial_{2} = \mathbb{Z} (U-L)$。
+	また，そんなものはないので$\Delta_{3} = 0$であり，$\Image \partial_{3} = 0$である。
+	よって，$H_{2}(X) = \mathbb{Z}$である。
+
+	まとめると，
+	\begin{equation}
+		H_{n}(X) = \begin{cases}
+			\mathbb{Z}, & n=0, 2 \\
+			0, & \text{otherwise}
+		\end{cases}
+	\end{equation}
+\end{rei}
+
+\begin{rei}[超球面のホモロジー群]
+	一般に$X = S^{n}$とすると，複体として2つの$n$-単体$U,L$の貼り合わせがとれて，
+	$H_{n} = \mathbb{Z} (U - L) \simeq \mathbb{Z}$となる。
+	さらに，他の次元のホモロジー群も計算すると，\footnote{編註：Mayer–Vietoris完全系列（cf. \url{<https://ja.wikipedia.org/wiki/マイヤー・ヴィートリス完全系列>}）を使うのが一般的？}\
+	\begin{equation}
+		H_{k} (X) = \begin{cases}
+			\mathbb{Z}, & k = 0, n \\
+			0, & \text{otherwise}
+		\end{cases}
+	\end{equation}
+	となる。
+\end{rei}
+
+\begin{rei}[トーラスのホモロジー群]
+	$X = T^{2} = S^{1} \times S^{1}$：2次元トーラス，とする。
+	\begin{center}
+		\begin{tikzpicture}    
+			%% 面を塗る
+			\fill[red!20] (0,0) -- (2,2) -- (0,2) -- cycle;
+			\fill[blue!20] (0,0) -- (2,2) -- (2,0) -- cycle;
+			%% 点の名前もろもろ
+			\fill \point{(0,0)}{below left}{$v$} \point{(2,0)}{below right}{$v$} \point{(0,2)}{above left}{$v$} \point{(2,2)}{above right}{$v$};
+			\node at (1,0) [below]{$b$} node at (0,1) [left]{$a$} node at (1,2) [above]{$b$} node at (2,1) [right]{$a$} node at (1,1) [left]{$c$};
+			\node at (0.5,1.5){$U$} node at (1.5,0.5){$L$};
+			%% 矢印つき
+			\midwayarrow{(0,0)}{(0,2)} \midwayarrow{(0,0)}{(2,0)} \midwayarrow{(0,2)}{(2,2)} \midwayarrow{(2,0)}{(2,2)} \midwayarrow{(0,0)}{(2,2)}
+		\end{tikzpicture}	
+	\end{center}
+	\begin{itemize}
+		\vspace{-0.5\baselineskip}
+		\item $\Delta_{0} = \mathbb{Z} v$
+		\item $\Delta_{1} = \mathbb{Z} a + \mathbb{Z} b + \mathbb{Z} c$
+		\item $\Delta_{2} = \mathbb{Z} U + \mathbb{Z} L$
+	\end{itemize}
+	まとめると，\footnote{ここの行間はあとで埋める}
+	\begin{equation}
+		H_{n}(X) = \begin{cases}
+			\mathbb{Z}, & n=0 \\
+			\mathbb{Z}^{2}, & n=1 \\
+			\mathbb{Z}, & n=2 \\
+			0, & n \ge 3
+		\end{cases}
+	\end{equation}
+\end{rei}
+
+\begin{rei}[射影平面のホモロジー群]
+	$X = P^{2}$：2次元射影空間（射影平面），とする。
+	\begin{center}
+		\begin{tikzpicture}
+			\fill[red!20] (0,0) -- (2,2) -- (0,2) -- cycle;
+			\fill[blue!20] (0,0) -- (2,2) -- (2,0) -- cycle;
+			\fill \point{(0,0)}{below left}{$u$} \point{(2,0)}{below right}{$v$} \point{(0,2)}{above left}{$v$} \point{(2,2)}{above right}{$u$};
+			\node at (1,0) [below]{$b$} node at (0,1) [left]{$a$} node at (1,2) [above]{$b$} node at (2,1) [right]{$a$} node at (1,1) [left]{$c$};
+			\node at (0.5,1.5){$U$} node at (1.5,0.5){$L$};
+			\midwayarrow{(0,0)}{(2,0)} \midwayarrow{(0,0)}{(0,2)} \midwayarrow{(0,0)}{(2,2)} \midwayarrow{(2,2)}{(2,0)} \midwayarrow{(2,2)}{(0,2)}
+		\end{tikzpicture}
+	\end{center}
+	\begin{itemize}
+		\vspace{-0.5\baselineskip}
+		\item $\Delta_{0} = \mathbb{Z} u + \mathbb{Z} v$
+		\item $\Delta_{1} = \mathbb{Z} a + \mathbb{Z} b + \mathbb{Z} c$
+		\item $\Delta_{2} = \mathbb{Z} U + \mathbb{Z} L$
+	\end{itemize}
+	まとめると，\footnote{ここの行間はあとで埋める}
+	\begin{equation}
+		H_{n}(X) = \begin{cases}
+			\mathbb{Z}, & n=0 \\
+			\mathbb{Z} / 2 \mathbb{Z}, & n=1 \\
+			0, & \text{otherwise}
+		\end{cases}
+	\end{equation}
+\end{rei}
+
+	
 
 \expandafter\ifx\csname readornot\endcsname\relax
   \end{document}
