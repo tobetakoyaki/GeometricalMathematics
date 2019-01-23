@@ -11,11 +11,15 @@
 
   \newcommand{\octopuspart}[1]{\newpage\part{#1}\setcounter{section}{0}\vspace{3\baselineskip}}
 
+  \renewcommand{\restriction}[2]{\left. #1 \right|_{#2}}
   \DeclareMathOperator{\dcup}{\dot{\cup}}
+  \DeclareMathOperator{\conv}{conv}
+  \DeclareMathOperator{\Image}{Im}
+  \DeclareMathOperator{\Kernel}{Ker}
   \begin{document}
 \fi
 
-\section{反変性・共変性・スカラー・混合テンソル}
+\section{テンソル解析 2}
 
 \expandafter\ifx\csname readornot\endcsname\relax
   \end{document}
