@@ -372,7 +372,7 @@ $\Delta^{n}$：複体内の$n$-単体からなるチェイン$\sum_{\alpha \in \
 \begin{rei}[超球面のホモロジー群]
 	一般に$X = S^{n}$とすると，複体として2つの$n$-単体$U,L$の貼り合わせがとれて，
 	$H_{n} = \mathbb{Z} (U - L) \simeq \mathbb{Z}$となる。
-	さらに，他の次元のホモロジー群も計算すると，\footnote{編註：Mayer–Vietoris完全系列（cf. \url{<https://ja.wikipedia.org/wiki/マイヤー・ヴィートリス完全系列>}）を使うのが一般的？}\
+	さらに，他の次元のホモロジー群も計算すると，\footnote{編註：Mayer-Vietoris完全系列（cf. \url{<https://ja.wikipedia.org/wiki/マイヤー・ヴィートリス完全系列>}）を使うのが一般的？}\
 	\begin{equation}
 		H_{k} (X) = \begin{cases}
 			\mathbb{Z}, & k = 0, n \\
@@ -403,13 +403,35 @@ $\Delta^{n}$：複体内の$n$-単体からなるチェイン$\sum_{\alpha \in \
 		\item $\Delta_{1} = \mathbb{Z} a + \mathbb{Z} b + \mathbb{Z} c$
 		\item $\Delta_{2} = \mathbb{Z} U + \mathbb{Z} L$
 	\end{itemize}
-	まとめると，\footnote{ここの行間はあとで埋める}
+
+	0次ホモロジー群$H_{0}(X) = \Kernel \partial_{0} / \Image \partial_{1}$は連結成分の個数から求めれば早く，$H_{0}(X) = \mathbb{Z}$。
+
+	1次ホモロジー群$H_{1}(X) = \Kernel \partial_{1} / \Image \partial_{2}$を求める。
+	\begin{equation}
+		\partial_{1} a = \partial_{1} b = \partial_{1} c = v - v = 0
+	\end{equation}
+	であるから，$\Kernel \partial_{1} = \Delta_{1} = \mathbb{Z} a + \mathbb{Z} b + \mathbb{Z} c$である。
+	また，$\Image \partial_{2} = \mathbb{Z} (a-c+b) + \mathbb{Z} (b-c+a) = \mathbb{Z} (a+b-c)$である。
+	$c$は$a+b$にホモローグであるので，$[a]$や$[b]$をホモロジー類として
+	\begin{equation}
+		H_{1}(X) = \mathbb{Z} [a] + \mathbb{Z} [b] \simeq \mathbb{Z}^{2}
+	\end{equation}
+	である。（これはトーラスに1次元の穴が2つあることを示唆している）
+
+	2次ホモロジー群$H_{2}(X) = \Kernel \partial_{2} / \Image \partial_{3}$を求める。
+	計算により，$\Kernel \partial_{2} = \mathbb{Z} (U-L)$，$\Image \partial_{3} = 0$と分かるから，
+	\begin{equation}
+		H_{2}(X) = \mathbb{Z} (U-L) \simeq \mathbb{Z}^{1}
+	\end{equation}
+	である。（これはトーラスに2次元の穴が1つあることを示唆している）
+
+	まとめると，
 	\begin{equation}
 		H_{n}(X) = \begin{cases}
 			\mathbb{Z}, & n=0 \\
 			\mathbb{Z}^{2}, & n=1 \\
 			\mathbb{Z}, & n=2 \\
-			0, & n \ge 3
+			0 & n \ge 3
 		\end{cases}
 	\end{equation}
 \end{rei}
@@ -432,7 +454,32 @@ $\Delta^{n}$：複体内の$n$-単体からなるチェイン$\sum_{\alpha \in \
 		\item $\Delta_{1} = \mathbb{Z} a + \mathbb{Z} b + \mathbb{Z} c$
 		\item $\Delta_{2} = \mathbb{Z} U + \mathbb{Z} L$
 	\end{itemize}
-	まとめると，\footnote{ここの行間はあとで埋める}
+
+	0次ホモロジー群$H_{0}(X) = \Kernel \partial_{0} / \Image \partial_{1}$は，同値関係を$x \sim -x$で定義したときに$P^{2} \simeq S^{2} / \sim$と表されることから，連結成分の個数から求めれば$H_{0}(X) = \mathbb{Z}$。
+
+	1次ホモロジー群$H_{1}(X) = \Kernel \partial_{1} / \Image \partial_{2}$を求める。
+	\renewcommand{\arraystretch}{1}
+	\begin{center}
+		$\begin{array}{lcl}
+			\alpha a + \beta b + \gamma c \in \Kernel \partial_{1} & \Longleftrightarrow & \alpha (v-u) + \beta (v-u) + \gamma (u-u) = 0 \\
+			& \Longleftrightarrow & \alpha = - \beta
+		\end{array}$
+	\end{center}
+	より，$\Kernel \partial_{1} = \mathbb{Z} (a-b) + \mathbb{Z} c = \mathbb{Z} (a-b+c) + \mathbb{Z} c$である。
+	また，$\Image \partial_{2} = \mathbb{Z} (b-a+c) + \mathbb{Z} (a-b+c) = \mathbb{Z} (a-b+c) + \mathbb{Z} \cdot 2c$である。
+	よって，$H_{1}(X) = \mathbb{Z} / 2 \mathbb{Z}$である。（これはねじれ部分があることを示唆している）
+
+	2次ホモロジー群$H_{2}(X) = \Kernel \partial_{2} / \Image \partial_{3}$を求める。
+	\begin{center}
+		$\begin{array}{lcl}
+			\alpha (b-a+c) + \beta (a-b+c) = 0 & \Longleftrightarrow & \alpha = \beta = 0
+		\end{array}$
+	\end{center}
+	\renewcommand{\arraystretch}{1.3}
+	より，$\Kernel \partial_{2} = 0$である。また，3次元単体は含まれないので$\Image \partial_{3} = 0$である。
+	よって，$H_{2} (X) = 0$である。
+
+	まとめると，
 	\begin{equation}
 		H_{n}(X) = \begin{cases}
 			\mathbb{Z}, & n=0 \\
