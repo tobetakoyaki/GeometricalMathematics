@@ -16,10 +16,160 @@
   \DeclareMathOperator{\conv}{conv}
   \DeclareMathOperator{\Image}{Im}
   \DeclareMathOperator{\Kernel}{Ker}
+  \DeclareMathOperator{\diag}{diag}
   \begin{document}
-\fi
+  \fi
 
 \section{ホモロジーの計算 2}
+
+\begin{teigi}[自由$\mathbb{Z}$加群]
+  $G$が\nw{自由$\mathbb{Z}$加群}であるとは，$\mathbb{Z}$上の加群$G$が，
+  $G \simeq \mathbb{Z}^{r}$であり，かつ$r$個の元$e_{1}, e_{2}, \dots, e_{r}$によって$g \in G$が一意に
+  ${\displaystyle g = \sum_{i=1}^{r} n_{i} e_{i}}$とかけるものとする。
+\end{teigi}
+
+この$e_{1}, e_{2}, \dots, e_{r}$を$\mathbb{Z}$基底といい，$r$をランクと呼ぶ。
+
+\begin{teigi}[ユニモジュラ行列]
+  $Q$：$r$次正方整数行列とする。
+
+  $Q$：\nw{ユニモジュラ（unimodular）} $\defines$ $\det Q = \pm 1$
+\end{teigi}
+
+ユニモジュラ行列の定義について次のことが成り立つ。
+\renewcommand{\arraystretch}{1}
+\begin{center}
+  \begin{tabular}{lcl}
+    $Q$：ユニモジュラ & $\defines$ & $\det Q = \pm 1$ \\
+    & $\Longleftrightarrow$ & $e_{1}, e_{2}, \dots, e_{r}$が$\mathbb{Z}$基底ならば
+    ${\displaystyle e_{i}' = \sum_{j=1}^{r} Q_{ij} e_{j}}$（$i = 1, \dots, r$）も$\mathbb{Z}$基底である 
+  \end{tabular}
+\end{center}
+
+このことから，ユニモジュラ行列は，自由$\mathbb{Z}$加群の基底の変換行列であることが従う。
+なお，$Q$は定義から正則行列であるが，逆行列$Q^{-1}$を余因子行列で書けば分かるように，$Q^{-1}$も整数行列であってユニモジュラ行列である。
+したがって，${\displaystyle g = \sum_{i=1}^{n} n_{i} e_{i}}$ならば
+\begin{equation}
+  g = \sum_{j=1}^{r} \sum_{i=1}^{r} n_{i} (Q^{-1})_{ji} \, e_{j}'
+\end{equation}
+と新たな基底の下での表現を得ることができる。
+
+\begin{teiri}[Smith標準形（単因子標準形）]
+  （正方とは限らない）整数行列$A$は，あるユニモジュラ行列$P,Q$を用いて
+  \begin{equation}
+    \newcommand{\BigZero}{\kern3pt \hbox{\huge \strut 0}}
+    PAQ = \left( \begin{array}{cccc|c}
+      \alpha_{1} &            &        &            & \multirow{4}{*}{\BigZero} \\
+                 & \alpha_{2} &        &            & \\
+                 &            & \ddots &            & \\
+                 &            &        & \alpha_{k} & \\ \hline
+      \multicolumn{4}{c|}{\BigZero} & \BigZero
+    \end{array} \right)
+  \end{equation}
+  の形にできる。ここで，$\alpha_{1} | \alpha_{2} | \dots | \alpha_{k}$（$\alpha_{i} > 0$）である。
+  また，$\alpha_{1}, \dots, \alpha_{k}$は一意に定まり，これを$A$の\nw{単因子}と呼ぶ。
+\end{teiri}
+
+\begin{proof}
+  以下に示すような基本変形を繰り返せば右辺のような形になる。：
+  \begin{itemize}
+    \vspace{-0.5\baselineskip}
+    \item[(1)] $i$行（列）を$-1$倍する。
+    \begin{equation}
+      \begin{pmatrix}
+        1 & \\
+          & \ddots \\
+          &        & -1 \\
+          &        &    & \ddots \\ 
+          &        &    &        & 1
+      \end{pmatrix}
+    \end{equation}
+    \item[(2)] 行（列）の入れ替え
+    \begin{equation}
+      \left( \begin{array}{ccccccccccc}
+        1 \\
+          & \ddots \\
+          &        & 1 \\
+          &        &   & 0      & \hdots & \hdots & \hdots & 1      \\ 
+          &        &   & \vdots & 1      &        &        & \vdots \\
+          &        &   & \vdots &        & \ddots &        & \vdots \\
+          &        &   & \vdots &        &        & 1      & \vdots \\
+          &        &   & 1      & \hdots & \hdots & \hdots & 0      \\
+          &        &   &        &        &        &        &        & 1 \\
+          &        &   &        &        &        &        &        &   & \ddots \\
+          &        &   &        &        &        &        &        &   &        & 1 
+      \end{array} \right)
+    \end{equation}
+    \item[(3)] $i$行（列）を$c$倍して$j$行（列）に足す
+    \begin{equation}
+      \begin{pmatrix}
+        1 & \\
+          & \ddots \\
+          &        & 1      \\
+          &        & \vdots & \ddots \\
+          &        & c      & \hdots & 1 \\ 
+          &        &        &        &   & \ddots \\
+          &        &        &        &   &        & 1
+      \end{pmatrix}
+    \end{equation}
+  \end{itemize}
+  これらの変形は直下に示したユニモジュラ行列による変換として表現できるので定理が従う。
+\end{proof}
+
+\begin{rei}
+  \begin{center}
+    $\begin{array}{ccc}
+      \begin{pmatrix}
+        -3 & 4 & 4 \\ -2 & 2 & -4 \\ 4 & -4 & 4
+      \end{pmatrix} & \xrightarrow[\text{絶対値最小の非零要素を$(1,1)$成分へ}]{(1),(2)}
+      & \begin{pmatrix}
+        2 & -2 & 4 \\ -3 & 4 & 4 \\ 4 & -4 & 4
+      \end{pmatrix} \\ & \xrightarrow[\text{1行，1列に$a_{11}$で割り切れないものがあればそれを「割った余り」にする}]{(3); 2 \text{行目} + 2 \times 1 \text{行目}}
+      & \begin{pmatrix}
+        2 & -2 & 4 \\ 1 & 0 & 12 \\ 4 & -4 & 4
+      \end{pmatrix} \\ & \xrightarrow[\text{絶対値最小の非零要素を$(1,1)$成分へ}]{(1)}
+      & \begin{pmatrix}
+        1 & 0 & 12 \\ 2 & -2 & 4 \\ 4 & -4 & 4
+      \end{pmatrix} \\ & \xrightarrow[\text{1行，1列がすべて$a_{11}$で割り切れる場合は割って0にする}]{(3)}
+      & \begin{pmatrix}
+        1 & 0 & 0 \\ 0 & -2 & -20 \\ 0 & -4 & -44
+      \end{pmatrix} \\ & \xrightarrow[\text{右下の$2 \times 2$の小行列に対して同じアルゴリズムを適用}]{(1),(3)}
+      & \begin{pmatrix}
+        1 & 0 & 0 \\ 0 & 2 & -20 \\ 0 & 0 & -4
+      \end{pmatrix} \\ & \xrightarrow{(1),(3)}
+      & \begin{pmatrix}
+        1 & 0 & 0 \\ 0 & 2 & 0 \\ 0 & 0 & 4
+      \end{pmatrix}
+    \end{array}$
+  \end{center}
+  辿り着いた行列がSmith標準形である。
+\end{rei}
+
+すなわち，
+\begin{itemize}
+  \item 一番左の行と列に左上の要素で割り切れない要素があるときには，
+  $a_{11}$で割った余りになるように変形した上でその要素を左上に移動する。
+  \item 一番左の行と列に左上の要素で割り切れない要素がないときには，
+  その行と列を1にするように変形し，サイズが一回り小さい行列に対して更に変形を続けていく。
+\end{itemize}
+の手順を踏むことでSmith標準形に辿り着く。
+
+\begin{hodai}
+  $BA = O$とし，$A$の単因子を$\alpha_{1} | \alpha_{2} | \dots | \alpha_{k}$，$B$の単因子を$\beta_{1} | \beta_{2} | \dots | \beta_{\ell}$とする。
+  このとき，あるユニモジュラ行列$P,Q,R$が存在して，
+  \begin{equation}
+    R^{-1} B P = \begin{pmatrix}
+      O & O \\ O & \diag (\beta_{1}, \dots, \beta_{\ell})
+    \end{pmatrix}, \quad
+    P^{-1} A Q = \begin{pmatrix}
+      \diag (\alpha_{1}, \dots, \alpha_{k}) & O \\ O & O
+    \end{pmatrix}
+  \end{equation}
+\end{hodai}
+
+\begin{proof}
+  まず，$A$をSmith標準形にする。\footnote{あとはがんばる}
+\end{proof}
 
 \expandafter\ifx\csname readornot\endcsname\relax
   \end{document}
