@@ -2,6 +2,7 @@
   \documentclass[uplatex]{jsarticle}
   \usepackage{octopus}
   \usepackage{url}
+  \usetikzlibrary{calc}
 
   \renewcommand{\proofname}{\textsf{証明}}
   \renewcommand{\postpartname}{章}
@@ -117,6 +118,7 @@
 \end{proof}
 
 \begin{rei}
+  実際にSmith標準形を求めてみる。
   \begin{center}
     $\begin{array}{ccc}
       \begin{pmatrix}
@@ -159,17 +161,172 @@
   このとき，あるユニモジュラ行列$P,Q,R$が存在して，
   \begin{equation}
     R^{-1} B P = \begin{pmatrix}
-      O & O \\ O & \diag (\beta_{1}, \dots, \beta_{\ell})
+      O_{k' \times k'} & O_{k' \times \ell} \\ O_{\ell \times k'} & \diag (\beta_{1}, \dots, \beta_{\ell})
     \end{pmatrix}, \quad
     P^{-1} A Q = \begin{pmatrix}
       \diag (\alpha_{1}, \dots, \alpha_{k}) & O \\ O & O
     \end{pmatrix}
   \end{equation}
+  となる。ただし，$O_{m \times n}$で$m \times n$の大きさの零行列を表すとし，$k' \ge k$とする。
 \end{hodai}
 
 \begin{proof}
-  まず，$A$をSmith標準形にする。\footnote{あとはがんばる}
+  まず，$A$をSmith標準形にする。$\tilde{P},Q$をユニモジュラ行列として，
+  \begin{equation}
+    \newcommand{\BigZero}{\kern3pt \hbox{\huge \strut 0}}
+    \tilde{P}^{-1}AQ = \left( \begin{array}{cccc|c}
+      \alpha_{1} &            &        &            & \multirow{4}{*}{\BigZero} \\
+                 & \alpha_{2} &        &            & \\
+                 &            & \ddots &            & \\
+                 &            &        & \alpha_{k} & \\ \hline
+      \multicolumn{4}{c|}{\BigZero} & \BigZero
+    \end{array} \right)
+  \end{equation}
+  $BAQ = B\tilde{P} \tilde{P}^{-1} AQ = O$より，$B \tilde{P}$の形状は第1行から第$k$行までが零行列となっている。
+  そこで，$B \tilde{P}$の第$k+1$行目以降の小行列に対して，Smith標準形をつくる。
+  すると，$R,S$をユニモジュラ行列として次のようになる。
+  \begin{equation}
+    \newcommand{\BigZero}{\kern3pt \hbox{\huge \strut 0}}
+    R B \tilde{P} \begin{pmatrix}
+      I_{k} & O \\ O & S
+    \end{pmatrix} = 
+    \begin{array}{l}
+      \hspace{1em}\overbrace{}^{k} \\
+      \left( \begin{array}{c|c|c}
+                &          & \multirow{4}{*}{\BigZero} \\
+                &          &                           \\
+                &          &                           \\
+        \BigZero & \BigZero &                           \\ \cline{3-3}
+                &          & \begin{array}{ccc} \beta_{1} & & \\ & \ddots & \\ & & \beta_{\ell} \end{array} \\
+      \end{array} \right) \\
+      \hspace{1em}\underbrace{\hspace{4em}}_{k'}
+  \end{array}
+  \end{equation}
+  いま，
+  \begin{equation*}
+    P = \tilde{P} \begin{pmatrix}
+      I_{k} & O \\ O & S
+    \end{pmatrix}
+  \end{equation*}
+  とおけば，
+  \begin{equation}
+    \newcommand{\BigZero}{\kern3pt \hbox{\huge \strut 0}}
+    P^{-1} A Q = \begin{pmatrix}
+      I_{k} & O \\ O & S^{-1}
+    \end{pmatrix}
+    \tilde{P}^{-1} A Q =
+    \left( \begin{array}{cccc|c}
+      \alpha_{1} &            &        &            & \multirow{4}{*}{\BigZero} \\
+                 & \alpha_{2} &        &            & \\
+                 &            & \ddots &            & \\
+                 &            &        & \alpha_{k} & \\ \hline
+      \multicolumn{4}{c|}{\BigZero} & \BigZero
+    \end{array} \right) 
+  \end{equation}
+  であり，
+  \begin{equation}
+    \newcommand{\BigZero}{\kern3pt \hbox{\huge \strut 0}}
+    R^{-1} B P = \begin{array}{l}
+      \hspace{1em}\overbrace{\hspace{4em}}^{k'} \\
+      \left( \begin{array}{c|c|c}
+                &          & \multirow{4}{*}{\BigZero} \\
+                &          &                           \\
+                &          &                           \\
+        \BigZero & \BigZero &                           \\ \cline{3-3}
+                &          & \begin{array}{ccc} \beta_{1} & & \\ & \ddots & \\ & & \beta_{\ell} \end{array} \\
+      \end{array} \right)
+    \end{array}
+  \end{equation}
+  である。
 \end{proof}
+
+\sukima \midashi{\large ホモロジーの計算}
+
+$X$：位相空間，$\Delta$-複体構造，$c_{n}$：$n$-単体の個数（有限とする），とする。
+このとき，
+\begin{center}
+  \begin{tabular}{l@{\,}c@{\,}l}
+    $\Delta_{n}$ & $:=$ & $n$-チェイン全体（$n$-単体の整数結合） \\
+    & $\sim$ & ランク$c_{n}$の自由$\mathbb{Z}$加群，特に$n$-単体$\sigma_{1},\sigma_{2}, \dots, \sigma_{c_{n}}$は$\Delta_{n}$の$\mathbb{Z}$基底 \\
+    & $\simeq$ & $\mathbb{Z}^{c_{n}}$
+  \end{tabular}
+\end{center}
+である。よって，境界作用素$\partial_{n} \colon \Delta_{n} \longrightarrow \Delta_{n-1}$は$\mathbb{Z}^{c_{n}} \longrightarrow \mathbb{Z}^{c_{n-1}}$と見なすことができ，
+これを行列によって表示できる。
+\begin{align}
+  & \partial_{n} \colon \mapdef{\Delta_{n}}{\Delta_{n-1}}{\displaystyle \sum_{i=1}^{c_{n}} t_{i} \sigma_{i}}{\displaystyle \sum_{i=1}^{c_{n}} t_{i} \partial \sigma_{i}} \\
+  & \partial_{n}^{*} \colon \mapdef{\mathbb{Z}^{c_{n}}}{\mathbb{Z}^{c_{n-1}}}{
+    \begin{pmatrix}
+      \sigma_{1} & \sigma_{2} & \cdots & \sigma_{c_{n}}
+    \end{pmatrix}
+    \begin{pmatrix}
+      t_{1} \\ t_{2} \\ \vdots \\ t_{c_{n}}
+    \end{pmatrix}
+  }{
+    \begin{pmatrix}
+      \pi_{1} & \pi_{2} & \cdots & \pi_{c_{n-1}}
+    \end{pmatrix} A
+    \begin{pmatrix}
+      t_{1} \\ t_{2} \\ \vdots \\ t_{c_{n}}
+    \end{pmatrix}
+  }
+\end{align}
+ここで，$c_{n-1} \times c_{n}$次行列$A$は$\partial_{n}$の行列表示であり，
+$\partial \sigma_{j}$における$\pi_{i}$の係数を$(i,j)$成分にもつものとする。
+
+\begin{rei}[射影平面の場合]
+  $X = P^{2}$：2次元射影空間（射影平面）とする。
+  \begin{center}
+		\begin{tikzpicture}
+			\fill[red!20] (0,0) -- (2,2) -- (0,2) -- cycle;
+			\fill[blue!20] (0,0) -- (2,2) -- (2,0) -- cycle;
+			\fill \point{(0,0)}{below left}{$u$} \point{(2,0)}{below right}{$v$} \point{(0,2)}{above left}{$v$} \point{(2,2)}{above right}{$u$};
+			\node at (1,0) [below]{$b$} node at (0,1) [left]{$a$} node at (1,2) [above]{$b$} node at (2,1) [right]{$a$} node at (1,1) [left]{$c$};
+			\node at (0.5,1.5){$U$} node at (1.5,0.5){$L$};
+			\midwayarrow{(0,0)}{(2,0)} \midwayarrow{(0,0)}{(0,2)} \midwayarrow{(0,0)}{(2,2)} \midwayarrow{(2,2)}{(2,0)} \midwayarrow{(2,2)}{(0,2)}
+		\end{tikzpicture}
+  \end{center}
+  \begin{itemize}
+    \item $\Delta_{2} \simeq \sets{\begin{pmatrix}
+      t_{U} & t_{L} 
+    \end{pmatrix}^{\top} | t_{U}, t_{L} \in \mathbb{Z}} = \mathbb{Z}^{2}$
+    \item $\Delta_{1} \simeq \sets{\begin{pmatrix}
+      t_{a} & t_{b} & t_{c} 
+    \end{pmatrix}^{\top} | t_{a}, t_{b}, t_{c} \in \mathbb{Z}} = \mathbb{Z}^{3}$
+    \item $\Delta_{0} \simeq \sets{\begin{pmatrix}
+      t_{u} & t_{v} 
+    \end{pmatrix}^{\top} | t_{u}, t_{v} \in \mathbb{Z}} = \mathbb{Z}^{2}$
+  \end{itemize}
+  このとき，境界作用素の行列表示はそれぞれ，
+  \begin{equation}
+    A_{\partial_{1}} = \begin{array}{c@{\,}c}
+      & \begin{array}{ccc}
+        a & b & c
+      \end{array} \\
+      \begin{array}{c}
+        u \\ v
+      \end{array} & 
+      \begin{pmatrix}
+        -1 & 1 & 0 \\
+        -1 & 1 & 0
+      \end{pmatrix}  
+    \end{array}
+    , \quad 
+    A_{\partial_{2}} = \begin{array}{c@{\,}c}
+      & \begin{array}{cc}
+        U & L
+      \end{array} \\
+      \begin{array}{c}
+        a \\ b \\ c
+      \end{array} &
+      \begin{pmatrix}
+      -1 & 1 \\
+      1 & -1 \\
+      1 & 1
+    \end{pmatrix}
+  \end{array}
+  \end{equation}
+\end{rei}
 
 \expandafter\ifx\csname readornot\endcsname\relax
   \end{document}
