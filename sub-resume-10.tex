@@ -18,10 +18,12 @@
   \DeclareMathOperator{\Image}{Im}
   \DeclareMathOperator{\Kernel}{Ker}
   \DeclareMathOperator{\diag}{diag}
+  \DeclareMathOperator{\rank}{rank}
   \begin{document}
   \fi
 
 \section{ホモロジーの計算 2}
+\newcommand{\BigZero}{\kern3pt \hbox{\huge \strut 0}}
 
 \begin{teigi}[自由$\mathbb{Z}$加群]
   $G$が\nw{自由$\mathbb{Z}$加群}であるとは，$\mathbb{Z}$上の加群$G$が，
@@ -58,7 +60,6 @@
 \begin{teiri}[Smith標準形（単因子標準形）]
   （正方とは限らない）整数行列$A$は，あるユニモジュラ行列$P,Q$を用いて
   \begin{equation}
-    \newcommand{\BigZero}{\kern3pt \hbox{\huge \strut 0}}
     PAQ = \left( \begin{array}{cccc|c}
       \alpha_{1} &            &        &            & \multirow{4}{*}{\BigZero} \\
                  & \alpha_{2} &        &            & \\
@@ -157,6 +158,7 @@
 の手順を踏むことでSmith標準形に辿り着く。
 
 \begin{hodai}
+  \label{hodai:homology3.unimod}
   $BA = O$とし，$A$の単因子を$\alpha_{1} | \alpha_{2} | \dots | \alpha_{k}$，$B$の単因子を$\beta_{1} | \beta_{2} | \dots | \beta_{\ell}$とする。
   このとき，あるユニモジュラ行列$P,Q,R$が存在して，
   \begin{equation}
@@ -173,7 +175,6 @@
 \begin{proof}
   まず，$A$をSmith標準形にする。$\tilde{P},Q$をユニモジュラ行列として，
   \begin{equation}
-    \newcommand{\BigZero}{\kern3pt \hbox{\huge \strut 0}}
     \tilde{P}^{-1}AQ = \left( \begin{array}{cccc|c}
       \alpha_{1} &            &        &            & \multirow{4}{*}{\BigZero} \\
                  & \alpha_{2} &        &            & \\
@@ -186,7 +187,6 @@
   そこで，$B \tilde{P}$の第$k+1$行目以降の小行列に対して，Smith標準形をつくる。
   すると，$R,S$をユニモジュラ行列として次のようになる。
   \begin{equation}
-    \newcommand{\BigZero}{\kern3pt \hbox{\huge \strut 0}}
     R B \tilde{P} \begin{pmatrix}
       I_{k} & O \\ O & S
     \end{pmatrix} = 
@@ -210,7 +210,6 @@
   \end{equation*}
   とおけば，
   \begin{equation}
-    \newcommand{\BigZero}{\kern3pt \hbox{\huge \strut 0}}
     P^{-1} A Q = \begin{pmatrix}
       I_{k} & O \\ O & S^{-1}
     \end{pmatrix}
@@ -225,7 +224,6 @@
   \end{equation}
   であり，
   \begin{equation}
-    \newcommand{\BigZero}{\kern3pt \hbox{\huge \strut 0}}
     R^{-1} B P = \begin{array}{l}
       \hspace{1em}\overbrace{\hspace{4em}}^{k'} \\
       \left( \begin{array}{c|c|c}
@@ -325,6 +323,272 @@ $\partial \sigma_{j}$における$\pi_{i}$の係数を$(i,j)$成分にもつも�
       1 & 1
     \end{pmatrix}
   \end{array}
+  \end{equation}
+  である。
+\end{rei}
+
+以上を踏まえて$H_{n} = \Kernel \partial_{n} / \Image \partial_{n+1}$を計算する流れについて述べる。
+
+\sukima\midashi{注意する事実}
+\begin{itemize}
+  \item $\Delta_{n+1} \xrightarrow{\partial_{n+1}} \Delta_{n} \xrightarrow{\partial_{n}} \Delta_{n-1}$について$\partial_{n} \circ \partial_{n+1} = 0$である。
+  \item 行列表示で言えば，$\partial_{n}$の行列表示を$A_{n}$として，
+  \begin{equation}
+    A_{n} A_{n+1} = O
+  \end{equation}
+  \item \rref{補題}{hodai:homology3.unimod}より，あるユニモジュラ行列$P,Q,R$が存在して
+  \begin{align}
+    P^{-1} A_{n+1} Q &=
+    \left( \begin{array}{ccc|c}
+      \alpha_{1} &        &                  & \multirow{3}{*}{\BigZero} \\
+                 & \ddots &                  & \\
+                 &        & \alpha_{k_{n+1}} & \\ \hline
+      \multicolumn{3}{c|}{\BigZero} & \BigZero
+    \end{array} \right), \\
+    \label{eq:homology3.calc}
+    R^{-1} A_{n} P &=
+    \left( \begin{array}{c|ccc}
+      \BigZero                  & \multicolumn{3}{c}{\BigZero} \\ \hline
+      \multirow{3}{*}{\BigZero} & \beta_{1} &        & \\
+                                &           & \ddots & \\
+                                &           &        & \beta_{k_{n}} \\
+    \end{array} \right)
+  \end{align}
+  とできる。なお，式\eqref{eq:homology3.calc}において上2つの零行列の縦のサイズは$c_{n} - k_{n}$である。
+\end{itemize}
+
+これを使って計算していく。
+
+\begin{equation}
+  \begin{array}{c@{\:}c@{\:}c@{\:}c@{\:}c}
+    \begin{pmatrix}
+      \rho_{1} & \cdots & \rho_{c_{n+1}}
+    \end{pmatrix}
+    \begin{pmatrix}
+      s_{1} \\ \vdots \\ s_{c_{n+1}}
+    \end{pmatrix}
+    & \longmapsto &
+    \begin{pmatrix}
+      \sigma_{1} & \cdots & \sigma_{c_{n}}
+    \end{pmatrix}
+    A_{n+1}
+    \begin{pmatrix}
+      s_{1} \\ \vdots \\ s_{c_{n+1}}
+    \end{pmatrix} \\
+    \rotatebox{270}{$\in$} & & \rotatebox{270}{$\in$} \\
+    \Delta_{n+1} & \xrightarrow{\partial_{n+1}} & \Delta_{n} & \xrightarrow{\partial_{n}} & \Delta_{n-1} \\
+    & & \vin & & \vin \\
+    & & \begin{pmatrix}
+      \sigma_{1} & \cdots & \sigma_{c_{n}}
+    \end{pmatrix}
+    \begin{pmatrix}
+      t_{1} \\ \vdots \\ t_{c_{n}}
+    \end{pmatrix}
+    & \longmapsto &
+    \begin{pmatrix}
+      \pi_{1} & \cdots & \pi_{c_{n-1}}
+    \end{pmatrix}
+    A_{n}
+    \begin{pmatrix}
+      t_{1} \\ \vdots \\ t_{c_{n}}
+    \end{pmatrix} \\
+  \end{array}
+\end{equation}
+において，先の\textbf{注意する事実}で述べた行列$P,Q,R$を用いて
+\begin{equation}
+  \left\{ \begin{split}
+    \bm{\rho}' &= Q^{\top} \bm{\rho}, \\
+    \bm{\sigma}' &= P^{\top} \bm{\sigma}, \\
+    \bm{\pi}' &= R^{\top} \bm{\pi}, \\
+    \bm{s}' &= Q^{-1} \bm{s}, \\
+    \bm{t}' &= P^{-1} \bm{t}
+  \end{split} \right.
+\end{equation}
+と変換すると
+\begin{equation}
+  \begin{array}{c@{\:}c@{\:}c@{\:}c@{\:}c}
+    \begin{pmatrix}
+      \rho'_{1} & \cdots & \rho'_{c_{n+1}}
+    \end{pmatrix}
+    \begin{pmatrix}
+      s'_{1} \\ \vdots \\ s'_{c_{n+1}}
+    \end{pmatrix}
+    & \longmapsto &
+    \begin{pmatrix}
+      \sigma'_{1} & \cdots & \sigma'_{c_{n}}
+    \end{pmatrix}
+    P^{-1}A_{n+1}Q
+    \begin{pmatrix}
+      s'_{1} \\ \vdots \\ s'_{c_{n+1}}
+    \end{pmatrix} \\
+    \rotatebox{270}{$\in$} & & \rotatebox{270}{$\in$} \\
+    \Delta_{n+1} & \xrightarrow{\partial_{n+1}} & \Delta_{n} & \xrightarrow{\partial_{n}} & \Delta_{n-1} \\
+    & & \vin & & \vin \\
+    & & \begin{pmatrix}
+      \sigma'_{1} & \cdots & \sigma'_{c_{n}}
+    \end{pmatrix}
+    \begin{pmatrix}
+      t'_{1} \\ \vdots \\ t'_{c_{n}}
+    \end{pmatrix}
+    & \longmapsto &
+    \begin{pmatrix}
+      \pi'_{1} & \cdots & \pi'_{c_{n-1}}
+    \end{pmatrix}
+    R^{-1}A_{n}P
+    \begin{pmatrix}
+      t'_{1} \\ \vdots \\ t'_{c_{n}}
+    \end{pmatrix} \\
+  \end{array}
+\end{equation}
+となって，ここに
+\begin{align}
+  P^{-1} A_{n+1} Q &=
+    \left( \begin{array}{ccc|c}
+      \alpha_{1} &        &                  & \multirow{3}{*}{\BigZero} \\
+                 & \ddots &                  & \\
+                 &        & \alpha_{k_{n+1}} & \\ \hline
+      \multicolumn{3}{c|}{\BigZero} & \BigZero
+    \end{array} \right), \\
+    R^{-1} A_{n} P &=
+    \left( \begin{array}{c|ccc}
+      \BigZero                  & \multicolumn{3}{c}{\BigZero} \\ \hline
+      \multirow{3}{*}{\BigZero} & \beta_{1} &        & \\
+                                &           & \ddots & \\
+                                &           &        & \beta_{k_{n}} \\
+    \end{array} \right)
+\end{align}
+である。
+すると，これより直ちに
+\begin{equation}
+  \Image \partial_{n+1} = \begin{pmatrix}
+    \mathbb{Z} \alpha_{1} \\ \vdots \\ \mathbb{Z} \alpha_{k_{n+1}} \\ 0 \\ \vdots \\ 0
+  \end{pmatrix}, \quad 
+  \Kernel \partial_{n} = \begin{pmatrix}
+    \mathbb{Z} \\ \vdots \\ \mathbb{Z} \\ 0 \\ \vdots \\ 0
+  \end{pmatrix}
+\end{equation}
+と計算される。ここに，$\Kernel \partial_{n}$の$\mathbb{Z}$の数は$c_{n} - k_{n}$であることに注意。
+いま，さらに
+\begin{equation}
+  \alpha_{1} = \alpha_{2} = \dots = \alpha_{\ell-1} = 1
+\end{equation}
+の関係が成り立っているとすると，$\mathbb{Z} / \mathbb{Z} = 0$に注意すれば
+\begin{equation}
+  H_{n} = \Kernel \partial_{n} / \Image \partial_{n+1}
+  = \begin{pmatrix}
+    \mathbb{Z} / \alpha_{1} \mathbb{Z} \\ \vdots \\ \mathbb{Z} / \alpha_{k_{n+1}} \mathbb{Z} \\ \mathbb{Z} \\ \vdots \\ \mathbb{Z} \\ 0 \\ \vdots \\ 0
+  \end{pmatrix}
+  = \mathbb{Z} / \alpha_{\ell} \mathbb{Z} \oplus \dots \oplus \mathbb{Z} / \alpha_{k_{n+1}} \mathbb{Z} \oplus \mathbb{Z}^{c_{n} - k_{n+1} - k_{n}}
+\end{equation}
+となる。
+このうち，
+
+\begin{equation}
+  \mathbb{Z} / \alpha_{\ell} \mathbb{Z} \oplus \dots \oplus \mathbb{Z} / \alpha_{k_{n+1}} \mathbb{Z}
+\end{equation}
+の部分を\nw{ねじれ成分}と呼ぶ。
+また，$H_{n}$の\nw{ランク}，$\rank H_{n}$を
+\begin{equation}
+  \rank H_{n} := c_{n} - k_{n} - k_{n+1}
+\end{equation}
+で定める。つまり，境界作用素のSmith標準形を求めていけば，ホモロジー群$H_{n}$を決定することができる。
+
+\sukima \midashi{\large Euler標数}
+
+\begin{teigi}
+  次の式\eqref{eq:homology3.Euler}で定まる量$\chi (X)$を$X$の\nw{Euler標数（Euler characteristic）}という。
+  \begin{equation}
+    \label{eq:homology3.Euler}
+    \chi (X) := \sum_{n=0}^{\dim X} (-1)^{n} c_{n}
+  \end{equation}
+  ただし，$c_{n}$は$X$に含まれる$n$-単体の個数である。
+\end{teigi}
+
+\begin{prop}
+  ${\displaystyle \chi (X) = \sum_{n=0}^{\dim X} (-1)^{n} \rank H_{n} (X)}$
+\end{prop}
+
+\begin{proof}
+  定義から$\rank H_{n} (X) = c_{n} - k_{n} - k_{n+1}$であったので，
+  \begin{equation}
+    \sum_{n=0}^{\dim X} (-1)^{n} \rank H_{n} (X) = \sum_{n=0}^{\dim X} (-1)^{n} (c_{n} - k_{n} - k_{n+1}) = \sum_{n=0}^{\dim X} (-1)^{n} c_{n} = \chi (X)
+  \end{equation}
+\end{proof}
+
+\midashi{注意.} ホモロジー群は\textbf{位相不変量}であり，複体構造に依存しない。
+したがって，Euler標数も複体構造に依存せずに決まる。
+
+\begin{rei}[射影平面の例]
+  $\Delta_{3} \xrightarrow{\partial_{3}} \Delta_{2} \xrightarrow{\partial_{2}} \Delta_{1} \xrightarrow{\partial_{1}} \Delta_{0}$において，境界作用素の行列表示とSmith標準形はそれぞれ，
+  \begin{align}
+    A_{\partial_{2}} = \begin{array}{c@{\,}c}
+      & \begin{array}{ccc}
+        a & b & c
+      \end{array} \\
+      \begin{array}{c}
+        U \\ L
+      \end{array} & 
+      \begin{pmatrix}
+        -1 & 1 & 1 \\
+        1 & -1 & 1
+      \end{pmatrix}  
+    \end{array}
+    , \quad 
+    A_{\partial_{1}} = \begin{array}{c@{\,}c}
+      & \begin{array}{cc}
+        u & v
+      \end{array} \\
+      \begin{array}{c}
+        a \\ b \\ c
+      \end{array} &
+      \begin{pmatrix}
+      -1 & 1 \\
+      -1 & 1 \\
+      0 & 0
+    \end{pmatrix}
+  \end{array}, \\
+  \mathrm{Smith}(A_{\partial_{2}}) = \begin{pmatrix}
+    1 & 0 & 0 \\ 0 & 2 & 0
+  \end{pmatrix}, \quad
+  \mathrm{Smith}(A_{\partial_{1}}) = \begin{pmatrix}
+    0 & 0 \\
+    0 & 0 \\
+    1 & 0
+  \end{pmatrix}
+  \end{align}
+  となる。これより，
+  \begin{equation}
+    H_{2}(P^{2}) = 0, \quad H_{1}(P^{2}) = \mathbb{Z} / 2 \mathbb{Z}, \quad H_{0}(P^{2}) = \mathbb{Z}
+  \end{equation}
+  であり，Euler標数は
+  \begin{equation}
+    \chi (P^{2}) = 1
+  \end{equation}
+  と計算される。
+\end{rei}
+
+\begin{rei}[2次元球面の例]
+  複体構造の図は
+  \begin{center}
+		\begin{tikzpicture}
+		%% 面を塗る
+		\fill[red!20] (0,0) -- (2,2) -- (0,2) -- cycle;
+		\fill[blue!20] (0,0) -- (2,2) -- (2,0) -- cycle;
+		%% 点の名前もろもろ
+		\fill \point{(0,0)}{below left}{$u$} \point{(2,0)}{below right}{$v$} \point{(0,2)}{above left}{$v$} \point{(2,2)}{above right}{$w$};
+		\node at (1,0) [below]{$b$} node at (0,1) [left]{$b$} node at (1,2) [above]{$a$} node at (2,1) [right]{$a$} node at (1,1) [left]{$c$};
+		\node at (0.5,1.5){$U$} node at (1.5,0.5){$L$};
+		%% 矢印つき
+		\midwayarrow{(0,0)}{(0,2)} \midwayarrow{(0,0)}{(2,0)} \midwayarrow{(0,2)}{(2,2)} \midwayarrow{(2,0)}{(2,2)} \midwayarrow{(0,0)}{(2,2)}
+		\end{tikzpicture}
+  \end{center}
+  であるから，
+  \begin{equation}
+    \chi (S^{2}) = c_{0} - c_{1} + c_{2} = 3 - 3 + 2 = 2
+  \end{equation}
+  と求まる。因みに
+  \begin{equation}
+    H_{0}(S^{2}) = \mathbb{Z}, \quad H_{1}(S^{2}) = 0, \quad H_{2}(S^{2}) = \mathbb{Z}
   \end{equation}
 \end{rei}
 
