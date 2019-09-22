@@ -20,6 +20,52 @@
 \fi
 
 \section{テンソルの定義}
+\midashi{ベクトル空間}
+\begin{teigi}[ベクトル空間]
+  略.
+\end{teigi}
+
+\begin{rei}
+  $\mathbb{R}^{n}$は$\mathbb{R}$上のベクトル空間。
+\end{rei}
+
+\midashi{注意.}環においてベクトル空間に対応する概念は\nw{加群 (module)}という。
+
+\begin{teigi}[基底]
+  $B \subseteq V$が\nw{基底} $\iff$ 任意の$v \in V$を${\displaystyle v = \sum_{u \in B: \text{有限和}} \alpha_{u} u}$と一意的に表される。
+\end{teigi}
+
+$B \subseteq V$が基底であることは，任意の$v \in V$が${\displaystyle v = \sum_{u \in B: \text{有限和}} \alpha_{u} u}$と表すことができて，任意の有限部分集合$B^{\prime}$が一次独立であることと同値。
+
+\begin{hodai}
+  ベクトル空間には基底が存在する\footnote{証明にはZornの補題を用いるがここでは省略する。}。
+\end{hodai}
+
+ベクトル空間の基底が有限個の元からなるとき，その個数は基底の取り方によらずに等しいので，次のように次元を定義することができる。
+\begin{teigi}
+  ベクトル空間$V$が$n$次元 $\iff$ $n$個の元からなる基底が存在\par
+  ベクトル空間$V$が無限次元 $\iff$ 任意の$n \in \mathbb{N}$に対してベクトル空間$V$が$n$次元でない
+\end{teigi}
+ベクトル空間$V$の次元が$n$であることを$\dim V = n$と書く。$V$が無限次元であることは$\dim V = \infty$と書く。
+
+\begin{rei}
+  $\mathbb{R}^{n}$は$n$次元。
+\end{rei}
+
+\begin{rei}
+  $\mathbb{R}[x]$を実係数1変数多項式全体の集合とする。これは$\mathbb{R}$ベクトル空間になる。このときの基底は$B = \sets{1, x, x^{2}, \dots}$であり，したがって$\mathbb{R}[x]$は$\mathbb{R}$上の無限次元ベクトル空間である。
+\end{rei}
+
+\midashi{注意.} $L^{2}[0,1]$を$[0,1]$上で2乗可積分な関数全体の集合とすると，これは$\mathbb{R}$ベクトル空間である。このとき，任意の$f \in L^{2}[0,1]$は
+\begin{align}
+  f(x) = \sum_{k=1}^{\infty} \alpha_{k} \sin (2 \pi k x) + \sum_{k=0}^{\infty} \beta_{k} \cos (2 \pi k x)
+\end{align}
+と一意的に書けるが，$\sets{\sin (2 \pi k x) | k \in \mathbb{N}_{>0}} \cup \sets{\cos (2 \pi k x) | k \in \mathbb{N}}$は上の意味での「基底」ではないことに注意。この基底のことは「\textbf{代数基底}」や「\textbf{Hamel基底}」と呼んで区別する\footnote{\url{https://ja.wikipedia.org/wiki/基底_(線型代数学)}}。
+
+以降は$V$を$n$次元ベクトル空間とする。
+
+\sukima\midashi{双対空間}
+
 \begin{teigi}[線形汎関数]
   $f\colon V\to K$が線形汎関数 $\defines$ 任意の$\alpha,\beta \in K, u,v \in V$に対して
   \begin{align*}
@@ -73,6 +119,9 @@
   \end{align*}
   より$v$は$V^\ast$上の線形汎関数．したがって$V\subseteq V^{\ast \ast}$．また$\dim V = \dim V^\ast = \dim V^{\ast \ast}$より，$V \simeq V^{\ast \ast}$．
 \end{proof}
+
+\sukima\midashi{テンソル}
+
 以下では$U,V$を体$K$上の有限次元ベクトル空間とする．
 \begin{teigi}[双線形写像]
   $\Phi\colon U\times V\to K$が任意の$\alpha,\alpha',\beta,\beta'\in K,u,u'\in U ,v,v'\in V$に対して
@@ -100,6 +149,8 @@
 \begin{teigi}[多重線形写像]
   $V_i\ (i=1,\cdot,k)$を体$K$上の線形空間とする．$\Phi\colon V_1\times \cdots V_k \to K$で各$i\  ( i=1,\cdots,k)$で線形な写像を多重線形写像という．
 \end{teigi}
+
+\sukima\midashi{テンソル積の定義(I)}
 \begin{teigi}[テンソル積]
   $U$と$V$のテンソル積$U\otimes V$を
   \begin{align*}
@@ -146,18 +197,18 @@
 \begin{corr}
   $\dim U\otimes V = \dim U \times \dim V$
 \end{corr}
-\begin{midashi}{テンソル積の定義(II)}
-  \begin{align*}
-    U\otimes V := \left\{ \sum_{\mbox{有限和}} \alpha_i u_i \otimes v_i \relmiddle| u_i \in U, v_i \in V, \alpha_i \in K \right\} \mathbin{/} \sim
-  \end{align*}
-  ただし$\sim$は
-  \begin{align*}
-    (u+u')\otimes v & \sim u \otimes v + u'\otimes v \\
-    u\otimes (v+v') & \sim u\otimes v + u\otimes v' \\
-    \alpha(u\otimes v) & \sim (\alpha u)\otimes v \sim u \otimes (\alpha v)
-  \end{align*}
-  を満たす同値関係．
-\end{midashi}
+
+\sukima\midashi{テンソル積の定義(II)}
+\begin{align*}
+  U\otimes V := \left\{ \sum_{\mbox{有限和}} \alpha_i u_i \otimes v_i \relmiddle| u_i \in U, v_i \in V, \alpha_i \in K \right\} \mathbin{/} \sim
+\end{align*}
+ただし$\sim$は
+\begin{align*}
+  (u+u')\otimes v & \sim u \otimes v + u'\otimes v \\
+  u\otimes (v+v') & \sim u\otimes v + u\otimes v' \\
+  \alpha(u\otimes v) & \sim (\alpha u)\otimes v \sim u \otimes (\alpha v)
+\end{align*}
+を満たす同値関係．
 
 \expandafter\ifx\csname readornot\endcsname\relax
   \end{document}
