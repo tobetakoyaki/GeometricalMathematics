@@ -396,13 +396,13 @@ $\partial \sigma_{j}$における$\pi_{i}$の係数を$(i,j)$成分にもつも�
 \end{equation}
 において，先の\textbf{注意する事実}で述べた行列$P,Q,R$を用いて
 \begin{equation}
-  \left\{ \begin{split}
+  \left\{ \begin{aligned}
     \bm{\rho}' &= Q^{\top} \bm{\rho}, \\
     \bm{\sigma}' &= P^{\top} \bm{\sigma}, \\
     \bm{\pi}' &= R^{\top} \bm{\pi}, \\
     \bm{s}' &= Q^{-1} \bm{s}, \\
     \bm{t}' &= P^{-1} \bm{t}
-  \end{split} \right.
+  \end{aligned} \right.
 \end{equation}
 と変換すると
 \begin{equation}
@@ -588,9 +588,86 @@ $\partial \sigma_{j}$における$\pi_{i}$の係数を$(i,j)$成分にもつも�
   \end{equation}
   と求まる。因みに
   \begin{equation}
-    H_{0}(S^{2}) = \mathbb{Z}, \quad H_{1}(S^{2}) = 0, \quad H_{2}(S^{2}) = \mathbb{Z}
+    H_{0}(S^{2}) = \mathbb{Z}, \quad H_{1}(S^{2}) = 0, \quad H_{2}(S^{2}) = \mathbb{Z}.
   \end{equation}
 \end{rei}
+
+\begin{teiri}[Eulerの多面体定理]
+  $X$: 多面体，$F$: 面の個数，$E$: 辺の個数，$V$: 点の個数とすると，
+  \begin{align}
+    F - E + V = 2.
+  \end{align}
+\end{teiri}
+
+\begin{teiri}[平面グラフに関するEuler標数]
+  $X$: 平面グラフ\footnote{平面グラフとは平面上で枝が交差しないように描くことのできるグラフを指す。}，$F$: 有界面の個数，$E$: 枝の個数，$V$: 点の個数とすると，
+  \begin{align}
+    F - E + V = 1.
+  \end{align}
+\end{teiri}
+
+\sukima\midashi{有限生成Abel群の構造定理}\par
+$G$をAbel群\footnote{可換群に同じ。}\,とする。Abel群の演算を$+$で表し，元$g \in G$の$n$個の和$\underbrace{g + \dots + g}_{n\text{個}}$を$ng$と表す。
+
+\begin{teigi}[有限生成]
+  Abel群$G$が\nw{有限生成}であるとは，有限個の元$g_{1}, \dots, g_{m} \in G$が存在して，任意の元$g \in G$を整数$n_{1}, \dots, n_{m}$を用いて
+  \begin{align}
+    g = \sum_{i=1}^{m} n_{i} g_{i}
+  \end{align}
+  と表すことのできることをいう。なお，このときの$n_{i}$の組は一意でなくても構わない。
+\end{teigi}
+
+この節では次の定理を示すことが目標である。
+
+\begin{teiri}[有限生成Abel群の構造定理]
+  有限生成Abel群$G$について次の同型が成立する。
+  \begin{align}
+    G \simeq \mathbb{Z}^{r} \oplus \mathbb{Z}_{\alpha_{1}} \oplus \mathbb{Z}_{\alpha_{2}} \oplus \dots \oplus \mathbb{Z}_{\alpha_{k}}.
+  \end{align}
+  ここに，$\alpha_{1} | \alpha_{2} | \dots | \alpha_{k}$が成り立つ。また，このとき$r, \alpha_{1}, \dots, \alpha_{k}$は一意に定まる。この$r$は$G$の階数に等しい。
+\end{teiri}
+
+\begin{hodai}
+  \label{lem:10-1}
+  自由$\mathbb{Z}$-加群の部分加群は自由$\mathbb{Z}$-加群である。
+\end{hodai}
+
+\begin{proof}
+  $M$を自由加群とすると，$e_{1}, \dots, e_{n}$を$\mathbb{Z}$-基底として，$M = \mathbb{Z} e_{1} \oplus \mathbb{Z} e_{2} \oplus \dots \oplus \mathbb{Z} e_{n}$となる。$N \subseteq M$を部分加群とする。$M$の階数$n$に関する帰納法によって$N$が自由加群であることを示す。
+
+  $n=1$のとき，$N$は$\mathbb{Z}e_{1}$の部分群であるから，ある$\alpha \in \mathbb{Z}$が存在して$N = \mathbb{Z} \alpha e_{1}$となる。したがって$N$は自由$\mathbb{Z}$-加群。
+
+  $M^{\prime} := \mathbb{Z} e_{1} \oplus \dots \oplus \mathbb{Z} e_{n-1}$とし，$N^{\prime} := N \cap M^{\prime}$とするとこれは$M^{\prime}$の部分群である。また，帰納法の仮定から$N^{\prime}$は自由$\mathbb{Z}$-加群である。
+  $U := \sets{x \in \mathbb{Z} | \exists u \in N^{\prime}, \quad x e_{n} + u \in N}$とすると，$U$は$\mathbb{Z}$の部分群である。なぜならば$x, y \in U$とするとある$u, v \in N^{\prime}$が存在して$(x - y)e_{n} + (u - v) \in N$となって$x - y \in U$となるから。したがって，ある$\alpha \in \mathbb{Z}$を用いて$U = \mathbb{Z} \alpha$と書ける。特に，ある$u \in N^{\prime}$が存在して$\alpha e_{n} + u \in N$である。以下で$N = \mathbb{Z}(\alpha e_{n} + u) \oplus N^{\prime}$と書けて$N$が自由加群になることを示す。
+
+  $\alpha e_{n} + u \in N$と$N^{\prime} \subseteq N$より$N \supseteq \mathbb{Z}(\alpha e_{n} + u) \oplus N^{\prime}$は成立する。$w \in N$とすれば$w = x_{1}e_{1} + \dots + x_{n-1}e_{n-1} + x_{n}e_{n}$と表すことができる。$x_{1}e_{1} + \dots + x_{n-1}e_{n-1} \in N^{\prime}$であるから$x_{n} \in U = \mathbb{Z} \alpha$であり，したがって$x_{n} = k \alpha$（$k \in \mathbb{Z}$）のように書ける。このとき
+  \begin{align}
+    w = x_{1}e_{1} + \dots + x_{n-1}e_{n-1} + x_{n}e_{n} = k (\alpha e_{n} + u) + x_{1}e_{1} + \dots + x_{n-1}e_{n-1} - ku.
+  \end{align}
+  また，$x_{1}e_{1} + \dots + x_{n-1}e_{n-1} - ku \in N^{\prime}$である。さらに$\mathbb{Z}(\alpha e_{n} + u) \cap N^{\prime} = \sets{0}$であるから$k(\alpha e_{n} + u) + v = k^{\prime} (\alpha e_{n} + u) + v^{\prime}$ならば$k = k^{\prime}$かつ$v = v^{\prime}$である。これより，$w \in \mathbb{Z}(\alpha e_{n} + u) \oplus N^{\prime}$である。すなわち$N \subseteq \mathbb{Z}(\alpha e_{n} + u) \oplus N^{\prime}$であって，$N = \mathbb{Z}(\alpha e_{n} + u) \oplus N^{\prime}$が成り立つ。
+\end{proof}
+
+構造定理を証明する。
+
+\begin{proof}[\textbf{構造定理の証明}]
+  $e_{1}, \dots, e_{m}$を$G$の生成系とする。写像$\varphi \colon \mathbb{Z}^{m} \longrightarrow G$を
+  \begin{align}
+    \varphi \colon \mapdef{\mathbb{Z}^{m}}{G}{\bm{z}}{\displaystyle \sum_{i=1}^{m} z_{i} e_{i}}
+  \end{align}
+  で定義すると$\varphi$は全射準同型である。また，\textbf{補題\ref{lem:10-1}}より$\Kernel \varphi$は自由$\mathbb{Z}$-加群である。$\sigma \colon \mathbb{Z}^{n} \longrightarrow \mathbb{Z}^{m}$であって$\sigma$が$\mathbb{Z}^{n}$から$\Kernel \varphi$への同型写像であるものが存在する。このとき，
+  \begin{align}
+    0 \longrightarrow \mathbb{Z}^{n} \stackrel{\sigma}{\longrightarrow} \mathbb{Z}^{m} \stackrel{\varphi}{\longrightarrow} G \longrightarrow 0
+  \end{align}
+  は完全系列である。すなわち，$\Image \sigma = \Kernel \varphi$であり，$\sigma$は単射，$\varphi$は全射である。準同型定理から$G = \Image \varphi \simeq \mathbb{Z}^{m} / \Kernel \varphi = \mathbb{Z}^{m} / \Image \sigma$である。
+  ここで，基底変換によって$\sigma$をSmith標準形にすると，
+  $\Image \sigma \simeq \mathbb{Z} \alpha_{1} \oplus \mathbb{Z} \alpha_{2} \oplus \dots \oplus \mathbb{Z} \alpha_{k}$であるから，結局，
+  \begin{align}
+    G \simeq \mathbb{Z}/\alpha_{1}\mathbb{Z} \oplus \mathbb{Z}/\alpha_{2}\mathbb{Z} \oplus \dots \oplus \mathbb{Z}/\alpha_{k}\mathbb{Z} \oplus \underbrace{\mathbb{Z}/\mathbb{Z} \oplus \dots \oplus \mathbb{Z}/\mathbb{Z}}_{\ell -k\text{個}} \oplus \mathbb{Z}^{m - \ell}.
+  \end{align}
+  ここで，$r = m -\ell$である。Smith標準形の定義から整除関係や一意性も含めて主張は従う。
+\end{proof}
+
+\midashi{注意.} 構造定理は「$\mathbb{Z}$-加群」の部分を単項イデアル整域$R$による「$R$-加群」に一般化することができる。
 
 \expandafter\ifx\csname readornot\endcsname\relax
   \end{document}
