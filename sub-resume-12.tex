@@ -27,7 +27,115 @@ $V$を$\mathbb{R}$上の$n$次元ベクトル空間とし，基底を$\sets{e_{1
   \nw{座標系} $\defines$ 基底の組$(e_{\kappa} \,|\, \kappa = 1,\dots, n)$
 \end{teigi}
 
-$v \in V$に対して座標系$(e_{\kappa} \,|\, \kappa = 1,\dots, n)$による表示を$v^{\kappa}$，座標系$(e_{\kappa^{\prime}} \,|\, \kappa^{\prime} = 1^{\prime},\dots, n^{\prime})$による表示を$v^{\kappa^{\prime}}$とする。
+$v \in V$に対して座標系$(e_{\kappa} \,|\, \kappa = 1,\dots, n)$による表示を$v^{\kappa}$，座標系$(e_{\kappa^{\prime}} \,|\, \kappa^{\prime} = 1^{\prime},\dots, n^{\prime})$による表示を$v^{\kappa^{\prime}}$と表すことにする。
+
+\begin{hodai}[変換則]
+  \label{lem:12-1-2}
+  ${\displaystyle e_{\kappa} = \sum_{\kappa^{\prime} = 1^{\prime}}^{n^{\prime}} A_{\kappa}^{\kappa^{\prime}} e_{\kappa^{\prime}}}$なら，
+  \begin{align}
+    v^{\kappa^{\prime}} = \sum_{\kappa=1}^{n} A_{\kappa}^{\kappa^{\prime}} v^{\kappa} =: A_{\kappa}^{\kappa^{\prime}} v^{\kappa}.
+  \end{align}
+\end{hodai}
+最後の和の記号$\sum$を省略する書き方を「\nw{Einsteinの縮約記法}」といい，上と下に同じ添字が出てきた場合，その文字については和をとることにする。
+\begin{proof}
+  $v = v^{\kappa}e_{\kappa} = v^{\kappa^{\prime}}e_{\kappa^{\prime}}$と2通りの表示を考えると，$v^{\kappa} e_{\kappa} = v^{\kappa} A_{\kappa}^{\kappa^{\prime}} e_{\kappa^{\prime}}.
+  $である。これより$v^{\kappa^{\prime}} = A_{\kappa}^{\kappa^{\prime}}v^{\kappa}$を得る。
+\end{proof}
+
+\begin{teigi}
+  座標系から$\mathbb{R}^{n}$への対応を\nw{（一般化された）ベクトル}という。特に，\textbf{補題\ref{lem:12-1-2}}に示された変換則に従うベクトルを\nw{反変ベクトル}という。
+\end{teigi}
+
+$V^{*}$を$V$の双対空間，つまり，$V^{*} := \sets{f \colon V \longrightarrow \mathbb{R} | f \text{は線形写像}}$とする。$V$の座標系を$(e_{\kappa})$，その双対基底を$(e^{\kappa})$とする\footnote{すなわち，$e^{\kappa}(e_{\lambda}) = \delta^{\kappa}_{\lambda}$が成り立つ。}。このとき，$f \in V^{*}$は双対基底によって${\displaystyle f = \sum_{\kappa} f_{\kappa} e^{\kappa}}$と書き表すことができる。
+
+\begin{hodai}[変換則]
+  \label{lem:12-1-4}
+  $V$の座標系$(e_{\kappa})$と$(e_{\kappa^{\prime}})$について，${\displaystyle f = \sum_{\kappa} f_{\kappa} e^{\kappa} = \sum_{\kappa^{\prime}} f_{\kappa^{\prime}} e^{\kappa^{\prime}}}$を考える。$e_{\kappa^{\prime}} = A_{\kappa^{\prime}}^{\kappa} e_{\kappa}$であるとき，
+  \begin{align}
+    f_{\kappa^{\prime}} = A_{\kappa^{\prime}}^{\kappa} f_{\kappa}.
+  \end{align}
+\end{hodai}
+
+\begin{proof}
+  $f_{\kappa^{\prime}} = f(e_{\kappa^{\prime}}) = f(A_{\kappa^{\prime}}^{\kappa}e_{\kappa}) = A_{\kappa^{\prime}}^{\kappa} f(e_{\kappa}) = A_{\kappa^{\prime}}^{\kappa} f_{\kappa}$である。$f$が線形写像であることに注意。
+\end{proof}
+
+\begin{teigi}
+  \textbf{補題\ref{lem:12-1-4}}に示された変換則に従うベクトルを\nw{共変ベクトル}という。
+\end{teigi}
+
+\begin{remark}
+  $V$は反変ベクトル空間であり，$V^{*}$は共変ベクトル空間である。
+\end{remark}
+
+\begin{teigi}
+  座標系に$\mathbb{R}$の元を対応させる写像であって，いかなる座標系においても同じ値に写すものを\nw{スカラー}という。
+\end{teigi}
+
+\begin{hodai}
+  $v^{\kappa}$を反変ベクトル，$f_{\kappa}$を共変ベクトルとする。このとき，$f_{\kappa} v^{\kappa}$はスカラー。
+\end{hodai}
+
+\begin{proof}
+  基底が$e_{\kappa} = A_{\kappa}^{\kappa^{\prime}} e_{\kappa^{\prime}}$と変換されるとする。このとき，
+  \begin{align}
+    f_{\kappa} v^{\kappa} = f_{\kappa} A^{\kappa}_{\kappa^{\prime}} v^{\kappa^{\prime}} = f_{\kappa^{\prime}} v^{\kappa^{\prime}}.
+  \end{align}
+  よって，$f_{\kappa} v^{\kappa}$は座標系によらず不変である。
+\end{proof}
+
+\sukima \midashi{物理的イメージ}\par
+\noindent\textbullet\; 反変ベクトルの例\par
+\qquad  
+\begin{minipage}[t]{0.15\columnwidth}
+  位置ベクトル，
+  \begin{align*}
+    x = \vect{\mathrm{OP}}
+  \end{align*}
+\end{minipage}
+\vspace{0.05\baselineskip}
+\begin{minipage}[t]{0.15\columnwidth}
+  速度ベクトル，
+  \begin{align*}
+    \odif{x}{t}
+  \end{align*}
+\end{minipage}
+\vspace{0.05\baselineskip}
+\begin{minipage}[t]{0.15\columnwidth}
+  加速度ベクトル
+  \begin{align*}
+    \odif{^{2}x}{t^{2}}
+  \end{align*} 
+\end{minipage}
+
+\sukima\noindent\textbullet\; 共変ベクトルの例\par
+\qquad  
+\begin{minipage}[t]{0.3\columnwidth}
+  超平面の法線ベクトル$a_{\kappa}$，
+  \begin{align*}
+    a_{\kappa} x^{\kappa} = 0.
+  \end{align*}
+\end{minipage}
+\vspace{0.05\baselineskip}
+\begin{minipage}[t]{0.3\columnwidth}
+  勾配ベクトル，
+  \begin{align*}
+    \left( \pdif{U}{x^{\kappa}} \right)
+  \end{align*}
+  {\footnotesize
+  \begin{align*}
+    \pdif{U}{x^{\kappa^{\prime}}} = \pdif{x^{\kappa}}{x^{\kappa^{\prime}}} \pdif{U}{x^{\kappa}} = A_{\kappa^{\prime}}^{\kappa} \pdif{U}{x^{\kappa}}
+  \end{align*}
+  による。
+  }
+\end{minipage}
+\vspace{0.05\baselineskip}
+\begin{minipage}[t]{0.3\columnwidth}
+  力\par
+  {\footnotesize
+  力が位置エネルギー$U$の勾配であること，力と変位の内積である仕事がスカラー量になることから力は共変ベクトルとみなすのが自然。
+  }
+\end{minipage}
 
 \expandafter\ifx\csname readornot\endcsname\relax
   \end{document}
