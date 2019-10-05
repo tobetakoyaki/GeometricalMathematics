@@ -46,11 +46,11 @@ $v \in V$に対して座標系$(e_{\kappa} \,|\, \kappa = 1,\dots, n)$による�
   座標系から$\mathbb{R}^{n}$への対応を\nw{（一般化された）ベクトル}という。特に，\textbf{補題\ref{lem:12-1-2}}に示された変換則に従うベクトルを\nw{反変ベクトル}という。
 \end{teigi}
 
-$V^{*}$を$V$の双対空間，つまり，$V^{*} := \sets{f \colon V \longrightarrow \mathbb{R} | f \text{は線形写像}}$とする。$V$の座標系を$(e_{\kappa})$，その双対基底を$(e^{\kappa})$とする\footnote{すなわち，$e^{\kappa}(e_{\lambda}) = \delta^{\kappa}_{\lambda}$が成り立つ。}。このとき，$f \in V^{*}$は双対基底によって${\displaystyle f = \sum_{\kappa} f_{\kappa} e^{\kappa}}$と書き表すことができる。
+$V^{*}$を$V$の双対空間，つまり，$V^{*} := \sets{f \colon V \longrightarrow \mathbb{R} | f \text{は線形写像}}$とする。$V$の座標系を$(e_{\kappa})$，その双対基底を$(e^{\kappa})$とする\footnote{すなわち，$e^{\kappa}(e_{\lambda}) = \delta^{\kappa}_{\lambda}$が成り立つ。}。このとき，$f \in V^{*}$は双対基底によって$f = f_{\kappa} e^{\kappa}$と書き表すことができる。
 
 \begin{hodai}[変換則]
   \label{lem:12-1-4}
-  $V$の座標系$(e_{\kappa})$と$(e_{\kappa^{\prime}})$について，${\displaystyle f = \sum_{\kappa} f_{\kappa} e^{\kappa} = \sum_{\kappa^{\prime}} f_{\kappa^{\prime}} e^{\kappa^{\prime}}}$を考える。$e_{\kappa^{\prime}} = A_{\kappa^{\prime}}^{\kappa} e_{\kappa}$であるとき，
+  $V$の座標系$(e_{\kappa})$と$(e_{\kappa^{\prime}})$について，$f = f_{\kappa}e^{\kappa} = f_{\kappa^{\prime}} e^{\kappa^{\prime}}$を考える。$e_{\kappa^{\prime}} = A_{\kappa^{\prime}}^{\kappa} e_{\kappa}$であるとき，
   \begin{align}
     f_{\kappa^{\prime}} = A_{\kappa^{\prime}}^{\kappa} f_{\kappa}.
   \end{align}
@@ -137,6 +137,210 @@ $V^{*}$を$V$の双対空間，つまり，$V^{*} := \sets{f \colon V \longright
   }
 \end{minipage}
 
+\sukima\midashi{テンソル空間}\par
+\noindent\textbf{復習}
+\begin{align}
+  U \otimes V &= \sets{\Phi \colon U^{*} \times V^{*} \longrightarrow \mathbb{R} | \Phi \text{は双線形写像}} \\
+  &= \sets{ \sum_{\alpha} u_{\alpha} \otimes v_{\alpha} | u_{\alpha} \in U, v_{\alpha} \in V} / \sim
+\end{align}
+ただし$\sim$で定めた同値関係は
+\begin{align*}
+  (u+u')\otimes v & \sim u \otimes v + u'\otimes v \\
+  u\otimes (v+v') & \sim u\otimes v + u\otimes v' \\
+  \alpha(u\otimes v) & \sim (\alpha u)\otimes v \sim u \otimes (\alpha v).
+\end{align*}
+
+これを拡張して$\underbrace{V \otimes \dots \otimes V}_{p\text{個}}$を考える。これを\nw{$p$階反変テンソル空間}という。
+$(e_{\kappa})$を$V$の座標系としたとき，$(e_{\kappa_{1}} \otimes e_{\kappa_{2}} \otimes \dots \otimes e_{\kappa_{p}} \,|\, \kappa_{1}, \dots, \kappa_{p} \in \sets{1,\dots, n})$は$\underbrace{V \otimes \dots \otimes V}_{p\text{個}}$の基底をなす。
+このことから，$T \in \underbrace{V \otimes \dots \otimes V}_{p\text{個}}$は$T = T^{\kappa_{1}\kappa_{2} \dots \kappa_{p}}e_{\kappa_{1}} \otimes e_{\kappa_{2}} \otimes \dots \otimes e_{\kappa_{p}}$という表示をもつ。
+
+\begin{hodai}[変換則]
+  $(e_{\kappa}),(e_{\kappa^{\prime}})$を$V$の座標系とする。$e_{\kappa} = A_{\kappa}^{\kappa^{\prime}}e_{\kappa^{\prime}}$であるとき，
+  \begin{align}
+    T^{\kappa^{\prime}_{1} \kappa^{\prime}_{2} \dots \kappa^{\prime}_{p}} = A_{\kappa_{1}}^{\kappa^{\prime}_{1}} A_{\kappa_{2}}^{\kappa^{\prime}_{2}} \dots A_{\kappa_{p}}^{\kappa^{\prime}_{p}} T^{\kappa_{1}\kappa_{2}\dots\kappa_{p}}.
+  \end{align}
+\end{hodai}
+
+\begin{proof}
+  2つの座標系によって表すと，
+  \begin{align*}
+    T &= T^{\kappa_{1}\kappa_{2}\dots\kappa_{p}} e_{\kappa_{1}} \otimes e_{\kappa_{2}} \otimes \dots \otimes e_{\kappa_{p}} \\
+    &= T^{\kappa_{1}\kappa_{2}\dots\kappa_{p}} A_{\kappa_{1}}^{\kappa^{\prime}_{1}} e_{\kappa^{\prime}_{1}} \otimes A_{\kappa_{2}}^{\kappa^{\prime}_{2}} e_{\kappa^{\prime}_{2}} \otimes A_{\kappa_{p}}^{\kappa^{\prime}_{p}} e_{\kappa^{\prime}_{p}} \\
+    &= A_{\kappa_{1}}^{\kappa^{\prime}_{1}} A_{\kappa_{2}}^{\kappa^{\prime}_{2}} \dots A_{\kappa_{p}}^{\kappa^{\prime}_{p}} T^{\kappa_{1}\kappa_{2}\dots\kappa_{p}} e_{\kappa^{\prime}_{1}} \otimes e_{\kappa^{\prime}_{2}} \otimes \dots \otimes e_{\kappa^{\prime}_{p}}
+  \end{align*}
+  となることから従う。
+\end{proof}
+
+同様に$\underbrace{V^{*} \otimes \dots \otimes V^{*}}_{q\text{個}}$を考える。これを\nw{$q$階共変テンソル空間}という。
+$V$の座標系$(e_{\kappa})$の双対座標系を$(e^{\lambda})$としたとき，$(e^{\lambda_{1}} \otimes e_{\lambda_{2}} \otimes \dots \otimes e_{\lambda_{q}} \,|\, \lambda_{1}, \dots, \lambda_{q} \in \sets{1,\dots, n})$は$\underbrace{V^{*} \otimes \dots \otimes V^{*}}_{q\text{個}}$の基底をなす。
+このことから，$T \in \underbrace{V^{*} \otimes \dots \otimes V^{*}}_{q\text{個}}$も$T = T_{\lambda_{1}\lambda_{2} \dots \lambda_{q}}e^{\lambda_{1}} \otimes e^{\lambda_{2}} \otimes \dots \otimes e^{\lambda_{q}}$という表示をもつ。
+
+また，$\underbrace{V \otimes \dots \otimes V}_{p\text{個}} \otimes \underbrace{V^{*} \otimes \dots \otimes V^{*}}_{q\text{個}}$を考える。$r = p+q$とするとき，これを\nw{$r$階混合テンソル空間}という。より詳しく，\nw{反変$p$価 共変$q$価}の混合テンソル空間ともいう。
+やはり混合テンソル空間においても$T \in \underbrace{V \otimes \dots \otimes V}_{p\text{個}} \otimes \underbrace{V^{*} \otimes \dots \otimes V^{*}}_{q\text{個}}$は$T = T^{\kappa_{1}\kappa_{2}\dots\kappa_{p}}_{\lambda_{1}\lambda_{2} \dots \lambda_{q}} e_{\kappa_{1}} \otimes \dots \otimes e_{\kappa_{p}} \otimes e^{\lambda_{1}} \otimes \dots \otimes e^{\lambda_{q}}$という表示をもつ。
+
+証明は反変テンソル空間のそれと同様なので省略するが，次の補題が成立する。
+\begin{hodai}[変換則]
+  \begin{align}
+    T^{\kappa^{\prime}_{1}\kappa^{\prime}_{2}\dots\kappa^{\prime}_{p}}_{\lambda^{\prime}_{1}\lambda^{\prime}_{2} \dots \lambda^{\prime}_{q}} = A_{\kappa_{1}}^{\kappa^{\prime}_{1}} \dots A_{\kappa_{p}}^{\kappa^{\prime}_{p}} A^{\lambda_{1}}_{\lambda^{\prime}_{1}} \dots A^{\lambda_{q}}_{\lambda^{\prime}_{q}} T^{\kappa_{1}\kappa_{2}\dots\kappa_{p}}_{\lambda_{1}\lambda_{2} \dots \lambda_{q}}.
+  \end{align}
+\end{hodai}
+
+以下，特に明示しないときでも座標変換の仕方は$e_{\kappa} = A^{\kappa^{\prime}}_{\kappa} e_{\kappa^{\prime}}$，$e^{\lambda} = A^{\lambda}_{\lambda^{\prime}}e^{\lambda^{\prime}}$のようになっているものとする。
+
+\begin{hodai}
+  $T^{\mu\lambda}$を2階反変テンソル，$U_{\mu\lambda}$を2階共変テンソルとすると，$T^{\kappa\mu}U_{\mu\lambda}$は反変1価，共変1価の混合テンソルである。
+\end{hodai}
+\begin{proof}
+  変換後と比較する。
+  \begin{align*}
+    T^{\kappa^{\prime} \mu^{\prime}} U_{\mu^{\prime} \lambda^{\prime}} &= A_{\kappa}^{\kappa^{\prime}} A_{\mu}^{\mu^{\prime}} T^{\kappa \mu} A_{\mu^{\prime}}^{\sigma} A_{\lambda^{\prime}}^{\lambda} U_{\sigma\lambda} \\
+    &= A_{\kappa}^{\kappa^{\prime}} \left( A_{\mu}^{\mu^{\prime}} A_{\mu^{\prime}}^{\sigma} \right) A_{\lambda^{\prime}}^{\lambda} T^{\kappa \mu} U_{\sigma\lambda} \\
+    &= A_{\kappa}^{\kappa^{\prime}} \delta_{\mu}^{\sigma} A_{\lambda^{\prime}}^{\lambda} T^{\kappa \mu} U_{\sigma\lambda} \\
+    &= A_{\kappa}^{\kappa^{\prime}} A_{\lambda^{\prime}}^{\lambda} T^{\kappa \mu} U_{\mu\lambda}
+  \end{align*}
+  この変換則に従うものは反変1価，共変1価の混合テンソルであった。
+\end{proof}
+
+\sukima\midashi{Newtonの運動方程式}\par
+Newtonの運動方程式
+\begin{align}
+  m \odif{^{2}\bm{x}}{t^{2}} = \bm{f}
+\end{align}
+において，$\bm{x}$を反変ベクトル$x^{\kappa}$，$\bm{f}$を共変ベクトル$f_{\kappa}$とモデリングする\footnote{このようにモデリングすることの妥当性に関しては先の「物理的イメージ」の部分を参照。}。
+\begin{align}
+  m \odif{^{2}x^{\kappa}}{t^{2}} = f_{\kappa} \label{eq:12-1-8}
+\end{align}
+このモデルの下で座標系の変換を行ってみる。
+
+いま，元の座標系は$(e_{\kappa})$であったとして，次に座標系を$(e_{\kappa^{\prime}})$に変換させたとする\footnote{このことは観測者を変えることに対応する。}。このとき$x^{\kappa} = A_{\kappa^{\prime}}^{\kappa} x^{\kappa^{\prime}}$，$f_{\kappa^{\prime}} = A_{\kappa^{\prime}}^{\kappa} f_{\kappa}$と変換するから，Newtonの運動方程式は
+\begin{align*}
+  m A_{\kappa^{\prime}}^{\kappa} \odif{^{2}x^{\kappa^{\prime}}}{t^{2}} = f_{\kappa}
+\end{align*}
+となり両辺に$A_{\lambda^{\prime}}^{\kappa}$を乗じて（和をとって）
+\begin{align*}
+  m \sum_{\kappa=1}^{3} A_{\lambda^{\prime}}^{\kappa} A_{\kappa^{\prime}}^{\kappa} \odif{^{2}x^{\kappa^{\prime}}}{t^{2}} = f_{\lambda^{\prime}}
+\end{align*}
+となる。 これはNewtonの運動方程式の形式\eqref{eq:12-1-8}と異なってしまう。しかしながら，物理法則を表す式は「可能な」座標変換の下では不変であるべきだと考えられる。
+
+これに対して，2つの解決方法を提示する。まず1つ目の解決方法として，「可能な」座標変換を制限する方法がある。つまり，
+\begin{align*}
+  \sum_{\kappa=1}^{3} A_{\lambda^{\prime}}^{\kappa} A_{\kappa^{\prime}}^{\kappa} = \begin{cases}
+    1, & \lambda^{\prime} = \kappa^{\prime}, \\
+    0, & \text{otherwise}.
+  \end{cases}
+\end{align*}
+なる変換だけを考える。この変換はよくみると直交変換になっていて，結局，この解決方法は物理的に自然な座標系どうしの変換のみを考えることにすぎない。
+
+もう1つの解決方法として，質量$m$をただのスカラーとしてみるのではなく，2階の共変テンソル$m_{\kappa\lambda}$とみなす方法がある。つまり，モデリングの仕方から変えてしまう。このときNewtonの運動方程式は\eqref{eq:12-1-8}から\eqref{eq:12-1-10}に変化する。
+\begin{align}
+  m_{\kappa\lambda} \odif{^{2}x^{\lambda}}{t^{2}} = f_{\kappa}. \label{eq:12-1-10}
+\end{align}
+すると，別の座標系$(e_{\kappa^{\prime}})$でみたとき，
+\begin{align}
+  m_{\kappa \lambda} A^{\lambda}_{\lambda^{\prime}} A^{\kappa}_{\kappa^{\prime}} \odif{^{2} x^{\lambda^{\prime}}}{t^{2}} = f_{\kappa^{\prime}}
+\end{align}
+を得て，$m_{\kappa \lambda} = A_{\kappa}^{\kappa^{\prime}} A_{\lambda}^{\lambda^{\prime}} m_{\kappa^{\prime} \lambda^{\prime}}$であることから
+\begin{align}
+  m_{\kappa^{\prime}\lambda^{\prime}} \odif{^{2}x^{\lambda^{\prime}}}{t^{2}} = f_{\kappa^{\prime}}
+\end{align}
+と書き直される。これでNewtonの運動方程式が座標系によらずに同じ形式で記述されるようになった。
+
+\sukima\midashi{問題.} その他の物理法則の不変な形について調べよ。例えば，Maxwell方程式や特殊相対論，一般相対論の式を俎上にあげてみよ。
+
+
+\sukima\midashi{対称テンソル}\par
+$\underbrace{V^{*} \otimes \dots \otimes V^{*}}_{q\text{個}}$を共変$q$価テンソル空間とする。
+
+\begin{teigi}
+  $T \in \underbrace{V^{*} \otimes \dots \otimes V^{*}}_{q\text{個}}$と置換$\sigma \in \mathfrak{S}_{q}$に対し，$\sigma T \in \underbrace{V^{*} \otimes \dots \otimes V^{*}}_{q\text{個}}$を
+  \begin{align*}
+    \sigma T (v_{1}, \dots, v_{q}) := T(v_{\sigma(1)}, \dots, v_{\sigma(q)})
+  \end{align*}
+  で定める。
+\end{teigi}
+
+\begin{teigi}[対称テンソル]
+  $T \in \underbrace{V^{*} \otimes \dots \otimes V^{*}}_{q\text{個}}$が\nw{対称}であるとは，任意の置換$\sigma \in \mathfrak{S}_{q}$に対して，$\sigma T = T$であることと定義する。
+\end{teigi}
+
+対称テンソルの意味をもう少し詳しく見る。テンソル$T$を座標系$(e_{\kappa})$を通してみると，$T = T_{\kappa_{1} \dots \kappa_{q}} e^{\kappa_{1}} \otimes \dots \otimes e^{\kappa_{q}}$であったことから$T_{\kappa_{1} \dots \kappa_{q}} = T(e_{\kappa_{1}}, \dots, e_{\kappa_{q}})$である。これが$\sigma T (e_{\kappa_{1}}, \dots, e_{\kappa_{q}})$に等しいということが対称であることの定義なので，結局，$T_{\kappa_{1} \dots \kappa_{q}} = T_{\kappa_{\sigma(1)}\dots \kappa_{\sigma(q)}}$が成立する。つまり，
+\begin{center}
+  $T_{\kappa_{1}\dots\kappa_{q}}$が対称テンソル $\iff$ テンソルの成分を入れ替えに関して不変
+\end{center}
+ということ。
+
+\begin{rei}
+  $q = 2$のとき$T \in V^{*} \otimes V^{*}$が対称であるとは$T_{ij} = T_{ji}$が成立することに等しい。これは$T$が対称行列であることと同じとみなすことができる。また，対応する多重線形写像が2次形式になる。
+\end{rei}
+
+
+\sukima\midashi{計量テンソル}\par
+\begin{teigi}[計量テンソル]
+  次の3つの条件を満たすテンソル$g_{\kappa\lambda}$を\nw{計量テンソル}という。
+  \begin{enumerate}
+    \item 共変2価
+    \item 対称
+    \item 正定値，すなわち，$\forall v \neq 0, \quad g_{\kappa\lambda}v^{\kappa}v^{\lambda} > 0.$
+  \end{enumerate}
+\end{teigi}
+
+\begin{teigi}
+  計量テンソル$g_{\kappa\lambda}$の逆行列を$g^{\kappa\lambda}$で表す。
+\end{teigi}
+
+\begin{remark}
+  計量には反変量と共変量を結びつける働きがある。
+  \begin{align}
+    v_{\lambda} &= g_{\kappa \lambda} v^{\kappa}, \\
+    v^{\lambda} &= g^{\kappa \lambda} v_{\kappa}.
+  \end{align}
+\end{remark}
+
+\sukima\midashi{反変ベクトル対の内積}\par
+\begin{teigi}
+  \begin{enumerate}
+    \item[(1)] $u,v$を反変ベクトル空間$V$の元とする。このとき，\begin{align}
+      \langle u,v \rangle := g_{\kappa\lambda} u^{\kappa} v^{\lambda}
+    \end{align}
+    で定まるスカラー量を$u$と$v$の\nw{内積}と定める。
+    \item[(2)] 反変ベクトル$v$の\nw{長さ}$\left\| v \right\|$を
+    \begin{align}
+      \left\| v \right\| := \sqrt{\langle v, v \rangle} = \sqrt{g_{\kappa\lambda} v^{\kappa} v^{\lambda}}
+    \end{align}
+    で定める。
+    \item[(3)] 2つの反変ベクトル$u,v \in V$の間の\nw{角度}$\theta$を
+    \begin{align}
+      \theta := \arccos \frac{\langle u,v \rangle}{\left\| u \right\| \left\| v \right\|} = \arccos \frac{g_{\kappa\lambda} u^{\kappa}v^{\lambda}}{\sqrt{g_{\kappa\lambda} u^{\kappa}u^{\lambda}}\sqrt{g_{\kappa\lambda} v^{\kappa}v^{\lambda}}}
+    \end{align}
+    で定める。
+  \end{enumerate}
+\end{teigi}
+
+
+\sukima\midashi{最適化アルゴリズムの不変性}\par
+ここでは目的関数$f \colon \mathbb{R}^{n} \longrightarrow \mathbb{R}$の最小化を行うアルゴリズムである最急降下法とNewton法についてテンソルの観点からそれぞれの手法の善し悪しを評する。
+
+最急降下法のステップはパラメータ$\lambda$を用いて
+\begin{align}
+  \bm{x} \longleftarrow \bm{x} + \lambda \begin{pmatrix}
+    \pdif{f}{x^{1}} \\ \pdif{f}{x^{2}} \\ \vdots \\ \pdif{f}{x^{n}}
+  \end{pmatrix}
+\end{align}
+と表される。これをテンソルで書き直すと
+\begin{align}
+  x^{\kappa} \longleftarrow x^{\kappa} + \lambda \pdif{f}{x^{\kappa}} \label{eq:12-1-19}
+\end{align}
+である。$x^{\kappa}$は反変量であるが，$\pdif{f}{x^{\kappa}}$は共変量であるため，更新式の右辺は座標変換に関して不変ではない。
+
+一方，式\eqref{eq:12-1-19}の$\lambda$を反変計量テンソル$g^{\kappa\lambda}$に変えて更新式を
+\begin{align}
+  x^{\kappa} \longleftarrow x^{\kappa} + g^{\kappa\lambda} \pdif{f}{x^{\lambda}} \label{eq:12-1-20}
+\end{align}
+とすれば，右辺は全体として反変1価となり座標変換に関して不変になる。
+この$g^{\kappa\lambda}$として具体的に$\left( \pdif{f}{x^{\kappa}x^{\lambda}}\right)^{-1}$にしたのがNewton法であり，したがって，Newton法は座標変換に関して不変であることが分かる。
+
+\sukima\midashi{問題.} その他の最適化アルゴリズムの不変性について調べなさい。例えば，共役勾配法，内点法，準Newton法などを考えよ。
+  
 \expandafter\ifx\csname readornot\endcsname\relax
   \end{document}
 \fi
