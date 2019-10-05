@@ -16,10 +16,107 @@
   \DeclareMathOperator{\conv}{conv}
   \DeclareMathOperator{\Image}{Im}
   \DeclareMathOperator{\Kernel}{Ker}
+  \DeclareMathOperator{\sgn}{sgn}
   \begin{document}
 \fi
 
 \section{テンソル解析 2}
+\midashi{交代テンソル}\par
+$\underbrace{V^{*} \otimes \dots \otimes V^{*}}_{q\text{個}}$を共変$q$価テンソル空間とする。
+$T \in \underbrace{V^{*} \otimes \dots \otimes V^{*}}_{q\text{個}}$と写像$\sigma \colon \sets{1,\dots,n} \longrightarrow \sets{1,\dots,n}$に対し，$\sigma T \in \underbrace{V^{*} \otimes \dots \otimes V^{*}}_{q\text{個}}$を$\sigma T (v_{1}, \dots, v_{q}) := T(v_{\sigma(1)},\dots, v_{\sigma(q)})$で定めた。
+
+\begin{teigi}[交代テンソル]
+  $T \in \underbrace{V^{*} \otimes \dots \otimes V^{*}}_{q\text{個}}$が\nw{交代的}であるとは，任意の写像$\sigma \colon \sets{1,\dots,n} \longrightarrow \sets{1,\dots,n}$に対して，$\sigma T = \sgn (\sigma) T$であることと定義する。
+\end{teigi}
+
+対称テンソルのときと同様に交代テンソルの意味するところを座標系を通してみてみる。$T = T_{\kappa_{1} \dots \kappa_{q}} e^{\kappa_{1}} \otimes \dots \otimes e^{\kappa_{q}}$であったことから$T_{\kappa_{1} \dots \kappa_{q}} = T(e_{\kappa_{1}}, \dots, e_{\kappa_{q}})$である。これが$\sgn (\sigma) \sigma T (e_{\kappa_{1}}, \dots, e_{\kappa_{q}})$に等しいということが交代的であることの定義なので，結局，$T_{\kappa_{1} \dots \kappa_{q}} = \sgn(\sigma) T_{\kappa_{\sigma(1)}\dots \kappa_{\sigma(q)}}$が成立する。つまり，
+\begin{center}
+  $T_{\kappa_{1}\dots\kappa_{q}}$が交代テンソル $\iff$ テンソルの成分は互換した回数だけ符号が反転
+\end{center}
+ということ。
+
+\begin{rei}
+  $q = 2$のとき$T \in V^{*} \otimes V^{*}$が交代的であるとは$T_{ij} = -T_{ji}$が成立することに等しい。これは$T$が反対称行列であることと同じとみなすことができる。
+\end{rei}
+
+\begin{remark}
+  相異なる$i,j$が存在して，$\kappa_{i} = \kappa_{j}$となるとき，$T_{\kappa_{1}\dots\kappa_{q}} = 0$である。
+\end{remark}
+
+\begin{hodai}
+  $u \wedge v := \dfrac{u \otimes v - v \otimes u}{2}$は交代2価共変テンソルである。
+  一般に
+  \begin{align}
+    u^{(1)} \wedge u^{(2)} \wedge \cdots \wedge u^{(p)}:=\dfrac{1}{p!} \sum_{\sigma} \sgn (\sigma) u^{(\sigma(1))} \otimes u^{(\sigma(2))} \otimes \cdots \otimes u^{(\sigma(p))}
+  \end{align}
+  は交代$p$価共変テンソルである。
+\end{hodai}
+\begin{proof}
+  $p = 2$のときだけ示す。
+  \begin{align*}
+    (u \wedge v)(x,y) &= \frac{u \otimes v (x,y) - v \otimes u (x,y)}{2} \\
+    &= \frac{u(x)v(y) - v(x)u(y)}{2} \\
+    &= \frac{-u \otimes v (y,x) + v \otimes u (y,x)}{2} \\
+    &= - (u \wedge v)(y,x).
+  \end{align*}
+\end{proof}
+
+座標系で見ると，$(u \wedge v)_{\kappa\lambda} = \dfrac{u_{\kappa}v_{\lambda} - u_{\lambda}v_{\kappa}}{2}$となる。
+
+\begin{hodai}
+  $u,v,u^{\prime}, v^{\prime} \in V^{*}$，$\alpha, \beta \in \mathbb{R}$とする。このとき，次の4つが成立する。
+  \begin{enumerate}
+    \item[(1)] $u \wedge v = - v \wedge u$.
+    \item[(2)] $u \wedge u = 0$.
+    \item[(3)] $u \wedge (\alpha v + \beta v^{\prime}) = \alpha u \wedge v + \beta u \wedge v^{\prime}$.
+    \item[(4)] $(\alpha u + \beta u^{\prime}) \wedge v = \alpha u \wedge v + \beta u^{\prime} \wedge v$.   
+  \end{enumerate}
+\end{hodai}
+\begin{proof}
+  (1)については定義$u \wedge v := \dfrac{u \otimes v - v \otimes u}{2}$より明らか。
+  (2)については(1)の$v$を$u$に置き換えれば得られる。
+  (3)と(4)は$\otimes$が線型性を保つことから従う。
+\end{proof}
+
+\begin{teigi}[外冪]
+  交代$p$価共変テンソルからなる空間を
+  \begin{align}
+    \wedge^{p} V^{*} := \underbrace{V^{*} \wedge \dots \wedge V^{*}}_{p\text{個}}
+  \end{align}
+  と書く。この空間の元を\nw{共変$p$-ベクトル}という。
+\end{teigi}
+
+\begin{prop}
+  $\sets{e^{i} | i = 1,\dots, n}$を$V^{*}$の基底とする。このとき，$\sets{e^{i_{1}} \wedge e^{i_{2}} \wedge \dots \wedge e^{i_{p}} | 1 \le i_{1} < i_{2} < \dots < i_{p} \le n}$は$\wedge^{p} V^{*}$の基底をなす。したがって，$\dim \wedge^{p} V^{*} = \binom{n}{p}$である。
+\end{prop}
+\begin{proof}
+  あとで
+\end{proof}
+
+\begin{hodai}
+  $u^{(1)} \wedge u^{(2)} \wedge \dots \wedge u^{(n)} = \det [u_{k}^{(i)}] e^{1} \wedge e^{2} \wedge \dots \wedge e^{n}$.
+\end{hodai}
+\begin{proof}
+  あとで
+\end{proof}
+
+\begin{rei}
+  $n = 3$とすると
+  \begin{align*}
+    u \wedge v &= (u_{1} e^{1} + u_{2} e^{2} + u_{3} e^{3}) \wedge (v_{1} e^{1} + v_{2} e^{2} + v_{3} e^{3}) \\
+    &= (u_{2}v_{3} - u_{3}v_{2}) e^{2} \wedge e^{3} + (u_{3}v_{1} - u_{1}v_{3}) e^{3} \wedge e^{1} + (u_{1}v_{2} - u_{2}v_{1}) e^{1} \wedge e^{2}.
+  \end{align*}
+\end{rei}
+
+\sukima\midashi{テンソル密度，擬テンソル密度}\par
+これまで扱ってきたテンソルは，$V^{*} \otimes V$など，$V$や$V^{*}$から構成される空間の元であった。これらは座標表示しなくても議論ができる。
+しかしながら，既に$V$や$V^{*}$からは構成されない「ベクトル」を扱っている。例えば3次元ベクトルの外積や$3 \times 3$行列の行列式など。
+
+
+
+
+
+
 
 \expandafter\ifx\csname readornot\endcsname\relax
   \end{document}
