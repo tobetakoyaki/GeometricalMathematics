@@ -1,7 +1,5 @@
 %%%% コマンド定義専用のtexファイル
-\renewcommand{\postpartname}{章}
 \renewcommand{\thepart}{\arabic{part}}
-\renewcommand{\thesection}{\thepart.\arabic{section}}
 \makeatletter\renewcommand{\theequation}{\thesection.\arabic{equation}}\@addtoreset{equation}{section}\makeatother
 \newcommand{\octopuspart}[1]{\newpage\part{#1}\setcounter{section}{0}\vspace{3\baselineskip}}
 \renewcommand{\restriction}[2]{\left. #1 \right|_{#2}}
