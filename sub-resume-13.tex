@@ -1,22 +1,9 @@
 \expandafter\ifx\csname readornot\endcsname\relax
-  \documentclass[uplatex]{jsarticle}
+  \documentclass[uplatex]{jsarticle}    
   \usepackage{octopus}
   \usepackage{url}
-
-  \renewcommand{\proofname}{\textsf{証明}}
-  \renewcommand{\postpartname}{章}
-  \renewcommand{\thesection}{\thepart.\arabic{section}}
-  \renewcommand{\thepart}{\arabic{part}}
-  \makeatletter\renewcommand{\theequation}{\thesection.\arabic{equation}}\@addtoreset{equation}{section}\makeatother
-
-  \newcommand{\octopuspart}[1]{\newpage\part{#1}\setcounter{section}{0}\vspace{3\baselineskip}}
-
-  \renewcommand{\restriction}[2]{\left. #1 \right|_{#2}}
-  \DeclareMathOperator{\dcup}{\dot{\cup}}
-  \DeclareMathOperator{\conv}{conv}
-  \DeclareMathOperator{\Image}{Im}
-  \DeclareMathOperator{\Kernel}{Ker}
-  \DeclareMathOperator{\sgn}{sgn}
+  \input{newcommand}
+  \usetikzlibrary{calc}
   \begin{document}
 \fi
 
@@ -47,7 +34,7 @@ $T \in \underbrace{V^{*} \otimes \dots \otimes V^{*}}_{q\text{個}}$と写像$\s
   $u \wedge v := \dfrac{u \otimes v - v \otimes u}{2}$は交代2価共変テンソルである。
   一般に
   \begin{align}
-    u^{(1)} \wedge u^{(2)} \wedge \cdots \wedge u^{(p)}:=\dfrac{1}{p!} \sum_{\sigma} \sgn (\sigma) u^{(\sigma(1))} \otimes u^{(\sigma(2))} \otimes \cdots \otimes u^{(\sigma(p))}
+    u_{1} \wedge u_{2} \wedge \cdots \wedge u_p := \dfrac{1}{p!} \sum_{\sigma} \sgn (\sigma) \, u_{\sigma(1)} \otimes u_{\sigma(2)} \otimes \cdots \otimes u_{\sigma(p)}
   \end{align}
   は交代$p$価共変テンソルである。
 \end{hodai}
@@ -81,26 +68,41 @@ $T \in \underbrace{V^{*} \otimes \dots \otimes V^{*}}_{q\text{個}}$と写像$\s
 \begin{teigi}[外冪]
   交代$p$価共変テンソルからなる空間を
   \begin{align}
-    \wedge^{p} V^{*} := \underbrace{V^{*} \wedge \dots \wedge V^{*}}_{p\text{個}}
+    \bigwedge^{p} V^{*} := \underbrace{V^{*} \wedge \dots \wedge V^{*}}_{p\text{個}}
   \end{align}
   と書く。この空間の元を\nw{共変$p$-ベクトル}という。
 \end{teigi}
 
 \begin{prop}
-  $\sets{e^{i} | i = 1,\dots, n}$を$V^{*}$の基底とする。このとき，$\sets{e^{i_{1}} \wedge e^{i_{2}} \wedge \dots \wedge e^{i_{p}} | 1 \le i_{1} < i_{2} < \dots < i_{p} \le n}$は$\wedge^{p} V^{*}$の基底をなす。したがって，$\dim \wedge^{p} V^{*} = \binom{n}{p}$である。
+  $\sets{e^{i} | i = 1,\dots, n}$を$V^{*}$の基底とする。このとき，$\sets{e^{i_{1}} \wedge e^{i_{2}} \wedge \dots \wedge e^{i_{p}} | 1 \le i_{1} < i_{2} < \dots < i_{p} \le n}$は${\displaystyle \bigwedge^{p} V^{*}}$の基底をなす。したがって，${\displaystyle \dim \bigwedge^{p} V^{*} = \binom{n}{p}}$である。
 \end{prop}
 \begin{proof}
-  あとで
+  $T \in \bigwedge^{p} V^{*}$とする。$T$は$p$価共変テンソルなので
+  \begin{align*}
+    T = T_{\kappa_{1} \dots \kappa_{p}} e^{\kappa_{1}} \otimes \dots \otimes e^{\kappa_{p}}
+  \end{align*}
+  という表示をもつが，このうち，$\kappa_{i} = \kappa_{j}$なる$i \neq j$が存在するようなときには外積代数の定義からそれは$0$となるので，結局，
+  \begin{align*}
+    T = \sum_{1 \le \kappa_{1} < \dots \kappa_{n} \le n} (p!) \, T_{\kappa_{1} \dots \kappa_{p}} e^{\kappa_{1}} \wedge \dots \wedge e^{\kappa_{p}}
+  \end{align*}
+  となる。
 \end{proof}
 
+特に，$\displaystyle \bigwedge^{p} V^{*}$は$\overset{1}{u} \wedge \dots \wedge \overset{p}{u}$という元たちから生成される。
+
 \begin{hodai}
-  $u^{(1)} \wedge u^{(2)} \wedge \dots \wedge u^{(n)} = \det [u_{k}^{(i)}] e^{1} \wedge e^{2} \wedge \dots \wedge e^{n}$.
+  $\overset{1}{u} \wedge \overset{2}{u} \wedge \dots \wedge \overset{n}{u} = \det [\overset{i}{u}_{k}] \, e^{1} \wedge e^{2} \wedge \dots \wedge e^{n}$.
 \end{hodai}
 \begin{proof}
-  あとで
+  \begin{align*}
+    \bigwedge_{i=1}^{n} \left( \overset{i}{u}_{1} e_{1} + \dots + \overset{i}{u}_{n} e_{n} \right) &= \sum_{\sigma} \left( \prod_{i=1}^{n} \overset{i}{u}_{\sigma(i)} \right) e^{\sigma(1)} \wedge \dots \wedge e^{\sigma(n)} \\
+    &= \sum_{\sigma} \left( \prod_{i=1}^{n} \overset{i}{u}_{\sigma(i)} \right) \sgn (\sigma) \, e^{1} \wedge \dots \wedge e^{n} \\
+    &= \det [\overset{i}{u}_{k}] \, e^{1} \wedge e^{2} \wedge \dots \wedge e^{n}.
+  \end{align*}
 \end{proof}
 
 \begin{rei}
+  \label{eg:wedge}
   $n = 3$とすると
   \begin{align*}
     u \wedge v &= (u_{1} e^{1} + u_{2} e^{2} + u_{3} e^{3}) \wedge (v_{1} e^{1} + v_{2} e^{2} + v_{3} e^{3}) \\
@@ -112,11 +114,177 @@ $T \in \underbrace{V^{*} \otimes \dots \otimes V^{*}}_{q\text{個}}$と写像$\s
 これまで扱ってきたテンソルは，$V^{*} \otimes V$など，$V$や$V^{*}$から構成される空間の元であった。これらは座標表示しなくても議論ができる。
 しかしながら，既に$V$や$V^{*}$からは構成されない「ベクトル」を扱っている。例えば3次元ベクトルの外積や$3 \times 3$行列の行列式など。
 
+特に明記しない場合，座標変換は$e_{\kappa} = A_{\kappa}^{\kappa^{\prime}}e_{\kappa^{\prime}}$で行うとする。
 
+\begin{teigi}[テンソル密度]
+  $P^{\kappa_{1}\dots\kappa_{p}}_{\lambda_{1}\dots\lambda_{q}} \in \mathbb{R}^{n^{p+q}}$が\nw{重み$t$，反変$p$価，共変$q$価のテンソル密度}であるとは，これが座標変換によって
+  \begin{align}
+    P^{\kappa^{\prime}_{1}\dots\kappa^{\prime}_{p}}_{\lambda^{\prime}_{1}\dots\lambda^{\prime}_{q}} = \frac{1}{\left|\Delta\right|^{t}} A^{\kappa^{\prime}_{1}}_{\kappa_{1}} \dots A^{\kappa^{\prime}_{p}}_{\kappa_{p}} A_{\lambda^{\prime}_{1}}^{\lambda_{1}} \dots A_{\lambda^{\prime}_{q}}^{\lambda_{q}} P^{\kappa_{1}\dots\kappa_{p}}_{\lambda_{1}\dots\lambda_{q}}
+  \end{align}
+  となることをいう。ただし，$\left|\Delta\right| := \det (A^{\kappa^{\prime}}_{\kappa})$とする。
+  特に，$p+q=1$となるときは\nw{ベクトル密度}，$p+q=0$となるときは\nw{スカラー密度}と呼ぶ。
+\end{teigi}
 
+\begin{rei}
+  $\left| \det \begin{pmatrix} u^{\kappa} & v^{\kappa} & w^{\kappa} \end{pmatrix} \right|$は重み$-1$のスカラー密度である。なぜならば，変換によって
+  \begin{align*}
+    \left| \det \begin{pmatrix} u^{\kappa^{\prime}} & v^{\kappa^{\prime}} & w^{\kappa^{\prime}} \end{pmatrix} \right| &= \left| \det \begin{pmatrix} A_{\kappa}^{\kappa^{\prime}} u^{\kappa} & A_{\kappa}^{\kappa^{\prime}} v^{\kappa} & A_{\kappa}^{\kappa^{\prime}} w^{\kappa} \end{pmatrix} \right| \\
+    &= \left| \det (A_{\kappa}^{\kappa^{\prime}}) \right| \left| \det \begin{pmatrix} u^{\kappa} & v^{\kappa} & w^{\kappa} \end{pmatrix} \right| \\
+    &= \frac{1}{\left| \Delta \right|^{-1}} \left| \det \begin{pmatrix} u^{\kappa} & v^{\kappa} & w^{\kappa} \end{pmatrix} \right|
+  \end{align*}
+  となるからである。
+\end{rei}
 
+$\left| \det \begin{pmatrix} u^{\kappa} & v^{\kappa} & w^{\kappa} \end{pmatrix} \right|$は$u^{\kappa}, v^{\kappa}, w^{\kappa}$が張る平行六面体の体積にあたる量\footnote{ただし，$e_{1},e_{2},e_{3}$がつくる立方体の体積を1としたときの値であることに注意。}\,である。このことから，座標変換を行ったあとの値と比較することで，それぞれの基底ベクトルがつくる立方体の体積の比が分かる。
 
+\begin{teigi}[擬テンソル]
+  $P^{\kappa_{1}\dots\kappa_{p}}_{\lambda_{1}\dots\lambda_{q}} \in \mathbb{R}^{n^{p+q}}$が\nw{反変$p$価，共変$q$価の擬テンソル}であるとは，これが座標変換によって
+  \begin{align}
+    P^{\kappa^{\prime}_{1}\dots\kappa^{\prime}_{p}}_{\lambda^{\prime}_{1}\dots\lambda^{\prime}_{q}} = \frac{\Delta}{\left| \Delta \right|} A^{\kappa^{\prime}_{1}}_{\kappa_{1}} \dots A^{\kappa^{\prime}_{p}}_{\kappa_{p}} A_{\lambda^{\prime}_{1}}^{\lambda_{1}} \dots A_{\lambda^{\prime}_{q}}^{\lambda_{q}} P^{\kappa_{1}\dots\kappa_{p}}_{\lambda_{1}\dots\lambda_{q}}
+  \end{align}
+  となることをいう。ただし，$\left|\Delta\right| := \det (A^{\kappa^{\prime}}_{\kappa})$とする。特に，$p+q=1$となるときは\nw{擬ベクトル}，$p+q=0$となるときは\nw{擬スカラー}と呼ぶ。
+\end{teigi}
 
+擬テンソルや擬ベクトルのことを\nw{軸性テンソル}や\nw{軸性ベクトル}と呼ぶことがある。また，そのときには通常のテンソルやベクトルのことは\nw{極性テンソル}や\nw{極性ベクトル}ということもある。
+
+\begin{teigi}[擬テンソル密度]
+  $P^{\kappa_{1}\dots\kappa_{p}}_{\lambda_{1}\dots\lambda_{q}} \in \mathbb{R}^{n^{p+q}}$が\nw{重み$t$，反変$p$価，共変$q$価の擬テンソル密度}であるとは，これが座標変換によって
+  \begin{align}
+    P^{\kappa^{\prime}_{1}\dots\kappa^{\prime}_{p}}_{\lambda^{\prime}_{1}\dots\lambda^{\prime}_{q}} = \frac{\Delta}{\left| \Delta \right|} \frac{1}{\left|\Delta\right|^{t}} A^{\kappa^{\prime}_{1}}_{\kappa_{1}} \dots A^{\kappa^{\prime}_{p}}_{\kappa_{p}} A_{\lambda^{\prime}_{1}}^{\lambda_{1}} \dots A_{\lambda^{\prime}_{q}}^{\lambda_{q}} P^{\kappa_{1}\dots\kappa_{p}}_{\lambda_{1}\dots\lambda_{q}}
+  \end{align}
+  となることをいう。ただし，$\left|\Delta\right| := \det (A^{\kappa^{\prime}}_{\kappa})$とする。
+  特に，$p+q=1$となるときは\nw{擬ベクトル密度}，$p+q=0$となるときは\nw{擬スカラー密度}と呼ぶ。
+\end{teigi}
+
+\begin{rei}
+  $\det \begin{pmatrix} u^{\kappa} & v^{\kappa} & w^{\kappa} \end{pmatrix}$は重み$-1$の擬スカラー密度である。なぜならば，
+  \begin{align*}
+  \det \begin{pmatrix} u^{\kappa^{\prime}} & v^{\kappa^{\prime}} & w^{\kappa^{\prime}} \end{pmatrix} =
+  \frac{\Delta}{\left| \Delta \right|} \frac{1}{\left| \Delta \right|^{-1}} \det \begin{pmatrix} u^{\kappa} & v^{\kappa} & w^{\kappa} \end{pmatrix}
+  \end{align*}
+  であるから。
+\end{rei}
+
+\begin{rei}
+  $u^{\kappa} \times v^{\kappa}$は重み$-1$の共変擬ベクトル密度であり，$u_{\kappa} \times v_{\kappa}$は重み$-1$の反変擬ベクトル密度である。この量は回転の軸方向とその強さを表す量としてしばしば用いられる。
+\end{rei}
+
+\begin{rei}
+  空間に質量が分布しているとする。ある点を含む体積が$\Delta V$である平行六面体を考え，その領域の質量を$\Delta m$とする。このとき，この点における質量密度$m$は
+  \begin{align}
+    m := \lim_{\Delta V \to 0} \frac{\Delta m}{\Delta V}
+  \end{align}
+  で定義される。この量は$\Delta m$がスカラー，$\Delta V$が重み$-1$のスカラー密度\footnote{行列式の例を思い出す。}\,であるから，結局，重み$1$のスカラー密度となる。
+\end{rei}
+
+\begin{rei}
+  流体に関する物理量について，次のような対応がある。
+  \begin{center}
+    \begin{tabular}{lc@{\quad}c@{}c@{}c} \hline
+      ある点の速度$v^{\kappa}$ & & 反変 & ベクトル & \\
+      ある点での質量密度$m$ & 重み$-1$ & & スカラー & 密度 \\
+      質量速度ベクトル$mv^{\kappa}$ & 重み$+1$ & 反変 & ベクトル & 密度 \\
+      面積要素$f_{\kappa}$ & 重み$-1$ & 共変 & ベクトル & 密度 \\
+      面積要素を通過する流体の量$mf_{\kappa}v^{\kappa}$ & & & スカラー & \\ \hline 
+    \end{tabular}
+  \end{center}
+\end{rei}
+
+\begin{teigi}[Eddingtonのイプシロン]
+  \label{def:Edtep}
+  以下で定義される量を\nw{Eddingtonのイプシロン}\footnote{綴りはこちらが正しいと思われる。}\,という。
+  \begin{align}
+    \tilde{\varepsilon}_{\kappa_{1} \dots \kappa_{n}} := \begin{cases}
+      1, & (\kappa_{1}, \dots, \kappa_{n})\text{が}(1,\dots,n)\text{の偶置換,} \\
+      -1, & (\kappa_{1}, \dots, \kappa_{n})\text{が}(1,\dots,n)\text{の奇置換,} \\
+      0, & \text{otherwise.}
+    \end{cases}
+  \end{align}
+\end{teigi}
+
+\begin{prop}
+  Eddingtonのイプシロンは重み$-1$，共変$n$価の擬テンソル密度。
+\end{prop}
+\begin{proof}
+  置換による行列式の定義から
+  \begin{align*}
+    A_{1^{\prime}}^{\kappa_{1}} A_{2^{\prime}}^{\kappa_{2}} \cdots A_{n^{\prime}}^{\kappa_{n}} \tilde{\varepsilon}_{\kappa_{1} \ldots \kappa_{n}} = \det \left(A_{\kappa^{\prime}}^{\kappa} \right).
+  \end{align*}
+  これより
+  \begin{align*}
+    A_{\kappa^{\prime}_{1}}^{\kappa_{1}} \cdots A_{\kappa^{\prime}_{n}}^{\kappa_{n}} \tilde{\varepsilon}_{\kappa_{1} \ldots \kappa_{n}} = \det \left(A_{\kappa^{\prime}}^{\kappa} \right) \tilde{\varepsilon}_{\kappa^{\prime}_{1} \dots \kappa^{\prime}_{n}}.
+  \end{align*}
+\end{proof}
+
+実は\textbf{定義\ref{def:Edtep}}と同じ定義式で$\tilde{\varepsilon}^{\kappa_{1}\dots\kappa_{n}}$も定義される。この量は先の命題と同様の証明にて重み$1$，反変$n$価の擬テンソル密度であることが分かる。
+
+\begin{rei}
+  $\bm{u},\bm{v} \in \mathbb{R}^{3}$として
+  \begin{align*}
+    (\bm{u} \times \bm{v})_{kappa} = \varepsilon_{\kappa \lambda \mu} u^{\lambda} v^{\mu} = \begin{pmatrix}
+      u^{2} v^{3} - u^{3} v^{2} \\
+      u^{3} v^{1} - u^{1} v^{3} \\
+      u^{1} v^{2} - u^{2} v^{1}
+    \end{pmatrix}.
+  \end{align*}
+  よってベクトル積は重み$-1$の共変擬ベクトル密度。
+
+  別の見方として，\textbf{例\ref{eg:wedge}}の
+  \begin{align*}
+    (u_{2}v_{3} - u_{3}v_{2}) e^{2} \wedge e^{3} + (u_{3}v_{1} - u_{1}v_{3}) e^{3} \wedge e^{1} + (u_{1}v_{2} - u_{2}v_{1}) e^{1} \wedge e^{2}
+  \end{align*}
+  において，それぞれ
+  \begin{align*}
+    e^{1} \wedge e^{2} &\to e^{3}, \\
+    e^{2} \wedge e^{3} &\to e^{1}, \\
+    e^{3} \wedge e^{1} &\to e^{2}.
+  \end{align*}
+  と対応させたとも考えられる。
+\end{rei}
+
+\begin{rei}
+  $\det(\bm{u}, \bm{v}, \bm{w}) = \tilde{\varepsilon}_{\kappa\lambda\mu}u^{\kappa}v^{\lambda}w^{\mu}$である。
+\end{rei}
+
+%(ちょっとここは解読できなかった)
+
+\sukima\midashi{剛体の運動}\par
+$\bm{\omega}$を角速度ベクトルとする。点$\bm{x}$における速度$\odif{\bm{x}}{t}$は
+\begin{align}
+  \label{eq:13-rotate}
+  \odif{\bm{x}}{t} = \bm{\omega} \times \bm{x}
+\end{align}
+で表される。
+
+これをテンソルの形式で書き直す。
+\begin{center}
+  \begin{tabular}{c@{$\longrightarrow$}c@{; }l}
+    $\odif{\bm{x}}{t}$ & $\odif{x^{\kappa}}{t}$ & 反変 \\
+    $\bm{x}$ & $x^{\kappa}$ & 反変 \\
+    $\bm{\omega}$ & $\tilde{\omega}^{\kappa}$ & 反変擬ベクトル密度（重み$+1$）
+  \end{tabular}
+\end{center}
+すると，ベクトル積$\bm{\omega} \times \bm{x}$はEddingtonのイプシロンを用いて共変ベクトル$\tilde{\varepsilon}_{\kappa\lambda\mu}\tilde{\omega}^{\lambda}x^{\mu}$としてテンソルに直される。ここで，$g^{\kappa\lambda}$を反変計量とすると，式\eqref{eq:13-rotate}は
+\begin{align*}
+  \odif{x^{\kappa}}{t} = g^{\kappa\lambda} \tilde{\varepsilon}_{\lambda\mu\sigma}\tilde{\omega}^{\mu}x^{\sigma}
+\end{align*}
+と書き表される。
+
+\sukima\midashi{Maxwell方程式の一部}\par
+時間によって変化しない場合について考える。Maxwell方程式に
+\begin{align}
+  \label{eq:13-Maxwell}
+  \rot \bm{H} = \bm{j}
+\end{align}
+という式がある。ここで$\bm{H}$は磁場，$\bm{j}$は電流密度。
+この式をテンソル式に書き直す。
+
+電流密度は，電荷密度と速度の積であった。電荷密度は重み$+1$のスカラー密度，速度は反変ベクトルである。したがって，電流密度は重み$+1$の反変ベクトル密度として定式化される。一方で磁場ベクトルは共変擬ベクトルである。これより，式\eqref{eq:13-Maxwell}は
+\begin{align*}
+  \tilde{\varepsilon}^{\kappa\mu\lambda} \partial_{\mu} \tilde{H}_{\lambda} = j^{\kappa}
+\end{align*}
+とテンソル形式に書き改められる。
+共変擬ベクトルは反変テンソル密度としても書き表されることから，別のテンソル形式を得ることもできる。
 
 \expandafter\ifx\csname readornot\endcsname\relax
   \end{document}

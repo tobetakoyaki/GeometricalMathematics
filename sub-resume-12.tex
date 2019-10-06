@@ -1,21 +1,9 @@
 \expandafter\ifx\csname readornot\endcsname\relax
-  \documentclass[uplatex]{jsarticle}
+  \documentclass[uplatex]{jsarticle}    
   \usepackage{octopus}
   \usepackage{url}
-
-  \renewcommand{\proofname}{\textsf{証明}}
-  \renewcommand{\postpartname}{章}
-  \renewcommand{\thesection}{\thepart.\arabic{section}}
-  \renewcommand{\thepart}{\arabic{part}}
-  \makeatletter\renewcommand{\theequation}{\thesection.\arabic{equation}}\@addtoreset{equation}{section}\makeatother
-
-  \newcommand{\octopuspart}[1]{\newpage\part{#1}\setcounter{section}{0}\vspace{3\baselineskip}}
-
-  \renewcommand{\restriction}[2]{\left. #1 \right|_{#2}}
-  \DeclareMathOperator{\dcup}{\dot{\cup}}
-  \DeclareMathOperator{\conv}{conv}
-  \DeclareMathOperator{\Image}{Im}
-  \DeclareMathOperator{\Kernel}{Ker}
+  \input{newcommand}
+  \usetikzlibrary{calc}
   \begin{document}
 \fi
 

@@ -1,19 +1,9 @@
 \expandafter\ifx\csname readornot\endcsname\relax
-  \documentclass[uplatex]{jsarticle}
+  \documentclass[uplatex]{jsarticle}    
   \usepackage{octopus}
   \usepackage{url}
-
-  \renewcommand{\proofname}{\textsf{証明}}
-  \renewcommand{\postpartname}{章}
-  \renewcommand{\thesection}{\thepart.\arabic{section}}
-  \renewcommand{\thepart}{\arabic{part}}
-  \renewcommand{\restriction}[2]{\left. #1 \right|_{#2}}
-  \makeatletter\renewcommand{\theequation}{\thesection.\arabic{equation}}\@addtoreset{equation}{section}\makeatother
-
-  \newcommand{\octopuspart}[1]{\newpage\part{#1}\setcounter{section}{0}\vspace{3\baselineskip}}
-
-  \DeclareMathOperator{\dcup}{\dot{\cup}}
-  % sub-resume-7.tex
+  \input{newcommand}
+  \usetikzlibrary{calc}
   \begin{document}
 \fi
 

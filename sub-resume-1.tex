@@ -1,78 +1,68 @@
 \expandafter\ifx\csname readornot\endcsname\relax
-  \documentclass[uplatex]{jsarticle}
-  \usepackage{octopus}
-  \usepackage{url}
-  \usepackage{tikz}
-
-  \renewcommand{\proofname}{\textsf{証明}}
-  \renewcommand{\postpartname}{章}
-  \renewcommand{\thesection}{\thepart.\arabic{section}}
-  \renewcommand{\thepart}{\arabic{part}}
-  \makeatletter\renewcommand{\theequation}{\thesection.\arabic{equation}}\@addtoreset{equation}{section}\makeatother
-
-  \newcommand{\octopuspart}[1]{\newpage\part{#1}\setcounter{section}{0}\vspace{3\baselineskip}}
-
-  \DeclareMathOperator{\dcup}{\dot{\cup}}
-  \begin{document}
+    \documentclass[uplatex]{jsarticle}    
+    \usepackage{octopus}
+    \usepackage{url}
+    \input{newcommand}
+    \usetikzlibrary{calc}
+    \begin{document}
 \fi
 
 \section{距離空間}
 
 \begin{teigi}[距離空間]
-    $X$を非空な集合，$d: \, X \times X \to \mathbb{R}$を実数値関数とする。次の三つの条件{\bf D1}，{\bf D2}，{\bf D3}を考える。
+    $X$を非空な集合，$d \colon X \times X \to \mathbb{R}$を実数値関数とする．次の3つの条件\textbf{D1}，\textbf{D2}，\textbf{D3}を考える．
     
-    \midashi{D1. } $\forall x, y \in X, \quad d(x,y) \ge 0$，\qquad $d(x,y) = 0 \quad \Longleftrightarrow \quad x = y$
+    \textbf{D1. } $\forall x, y \in X, \quad d(x,y) \ge 0$，\qquad $d(x,y) = 0 \iff x = y$\par
+    \textbf{D2. } $\forall x, y \in X, \quad d(x,y) = d(y,x)$\par
+    \textbf{D3. } $\forall x, y \in X, \quad d(x,y) + d(y,z) \ge d(x,z)$
     
-    \midashi{D2. } $\forall x, y \in X, \quad d(x,y) = d(y,x)$
-    
-    \midashi{D3. } $\forall x, y \in X, \quad d(x,y) + d(y,z) \ge d(x,z)$
-    
-    $d$が{\bf D1}，{\bf D2}，{\bf D3}の条件を満たすとき，$d$を$X$上の\nw{距離関数}という。
-
-    また，$X$あるいは$(X,d)$を\nw{距離空間（metric space）}という。
+    $d$が\textbf{D1}，\textbf{D2}，\textbf{D3}の条件を満たすとき，$d$を$X$上の\nw{距離関数}という．また，$X$あるいは$(X,d)$を\nw{距離空間（metric space）}という．
 \end{teigi}
 
-{\bf D2.}は対称性を表し，{\bf D3.}は三角不等式と呼ばれる。
-
-{\bf D1.}，{\bf D2.}，{\bf D3.}を満たさないような関数として，例えば${d_{2}}^{2}$（2乗距離）がある。
-これは三角不等式を満たさない。
+\begin{remark}~\par
+    \begin{itemize}
+        \item \textbf{D2.}は対称性を表し，\textbf{D3.}は三角不等式と呼ばれる．
+        \item \textbf{D1.}，\textbf{D2.}，\textbf{D3.}を満たさないような関数として，例えば${d_{2}}^{2}$（2乗距離）がある．
+        これは三角不等式を満たさない．
+    \end{itemize}
+\end{remark}
 
 \begin{rei}
-    $X = \mathbb{R}^{n}$とする。
+    $X = \mathbb{R}^{n}$とする．
     \begin{align}
         d_{2} (x,y) &:= \sqrt{\sum_{i=1}^{n} (x_{i} - y_{i})^{2}}, \\
         d_{1} (x,y) &:= \sum_{i=1}^{n} |x_{i} - y_{i}|, \\
         d_{\infty} (x,y) &:= \max_{i} |x_{i} - y_{i}|
     \end{align}
-    とすると，これらはどれも$X$上の距離関数である。なお，$(\mathbb{R}^{n}, d_{2})$を\nw{$n$次元Euclid空間}と呼ぶ。
+    とすると，これらはどれも$X$上の距離関数である．なお，$(\mathbb{R}^{n}, d_{2})$を\nw{$n$次元Euclid空間}と呼ぶ．
 \end{rei}
 \begin{proof}
-    ここでは$d_{2}$が{\bf D3.}の三角不等式を満たすことのみを示す。
-    \begin{align}
+    ここでは$d_{2}$が\textbf{D3.}の三角不等式を満たすことのみを示す．
+    \begin{align*}
         {d_{2}}^{2}(x,z)
         &= \sum_{i=1}^{n} (x_{i} - z_{i})^{2} = \sum_{i=1}^{n} (x_{i} - y_{i} + y_{i} - z_{i})^{2} \notag \\
         &= \sum_{i=1}^{n} \left( x_{i} - y_{i} \right)^{2} + \sum_{i=1}^{n} \left( y_{i} - z_{i} \right)^{2} + 2 \sum_{i=1}^{n} \left( x_{i} - y_{i} \right) \left( y_{i} - z_{i} \right) \notag \\
-      &\le \sum_{i=1}^{n} \left( x_{i} - y_{i} \right)^{2} + \sum_{i=1}^{n} \left( y_{i} - z_{i} \right)^{2} + 2 \sqrt{\left( \sum_{i=1}^{n} \left( x_{i} - y_{i} \right)^{2} \right) \left( \sum_{i=1}^{n} \left( y_{i} - z_{i} \right)^{2} \right)} \label{eq:1.1:Cauchy}\\
+      &\le \sum_{i=1}^{n} \left( x_{i} - y_{i} \right)^{2} + \sum_{i=1}^{n} \left( y_{i} - z_{i} \right)^{2} + 2 \sqrt{\left( \sum_{i=1}^{n} \left( x_{i} - y_{i} \right)^{2} \right) \left( \sum_{i=1}^{n} \left( y_{i} - z_{i} \right)^{2} \right)} \\
         &= \left\{ \sqrt{\sum_{i=1}^{n} \left( x_{i} - y_{i} \right)^{2}} + \sqrt{\sum_{i=1}^{n} \left( y_{i} - z_{i} \right)^{2}} \right\}^{2}
          = \left( d_{2}(x,y) + d_{2} (y,z) \right)^{2}
-    \end{align}
-    である。ここで，式\eqref{eq:1.1:Cauchy}に至る変形にはCauchy-Schwarzの不等式が用いられている。
+    \end{align*}
+    である．ここで，不等号はCauchy-Schwarzの不等式による．
 \end{proof}
 
 \begin{rei}
-    $X = \mathcal{C} [a,b]$を区間$[a,b] \subseteq \mathbb{R}$上の連続関数全体の集合とする。
+    $X = \mathcal{C} [a,b]$を区間$[a,b] \subseteq \mathbb{R}$上の連続関数全体の集合とする．
     \begin{align}
         d_{2} (f,g) &:= \sqrt{ \int_{a}^{b} | f(t) - g(t) | ^{2} \dx{t}}, \\
         d_{\infty} (f,g) &:= \sup \sets{ \left| f(t) - g(t) \right| | t \in [a,b]}, \\
         d_{1} (f,g) &:= \int_{a}^{b} \left| f(t) - g(t) \right| \dx{t}
     \end{align}
-    とすると，これらはどれも$X$上の距離関数である。
+    とすると，これらはどれも$X$上の距離関数である．
 \end{rei}
 
 \begin{proof}
-    ここでは$d_{1}$が{\bf D3.}の三角不等式を満たすことと{\bf D1.}の零点が対角集合に限られることのみを示す。
+    ここでは$d_{1}$が\textbf{D3.}の三角不等式を満たすことと\textbf{D1.}の零点が対角集合に限られることのみを示す．
 
-    \midashi{{\bf D3.}について}
+    \midashi{\textbullet\;D3.について}
     \begin{align*}
         d_{1} (f,h)
         &= \int_{a}^{b} \left| f(t) - h(t) \right| \dx{t} \\
@@ -80,65 +70,65 @@
       &\le \int_{a}^{b} \left| f(t) - g(t) \right| \dx{t} +  \int_{a}^{b} \left| g(t) - h(t) \right| \dx{t} \\
         &= d_{1} (f,g) + d_{1} (g,h)
     \end{align*}
-    で従う。
+    で従う．
 
-    \midashi{零点が対角集合に限られることについて}
+    \midashi{\textbullet\;零点が対角集合に限られることについて}
 
-    $f = g$ならば$d_{1} (f,g) = 0$は明らかであるので，問題はその逆である。
+    $f = g$ならば$d_{1} (f,g) = 0$は明らかであるので，問題はその逆である．
 
     もし，$f(x) \neq g(x)$ならばある$x_{0} \in [a,b]$で$\left| f(x_{0}) - g(x_{0}) \right|> 0$であり，
     $f-g$の連続性からある$\varepsilon > 0$が存在して，$y \in [x_{0} - \varepsilon, x_{0} + \varepsilon]$に対して
-    $\left| f(y) - g(y) \right| > 0$である。
+    $\left| f(y) - g(y) \right| > 0$である．
     したがって，
     \begin{equation*}
         \int_{a}^{b} \left| f(x) - g(x) \right| \dx{x} \ge \varepsilon \min_{x_{0} - \varepsilon \le y \le x_{0} + \varepsilon} \left| f(y) - g(y) \right| > 0
     \end{equation*}
-    である。
+    である．
 \end{proof}
 
 \begin{rei}
-    $X = \sets{0,1}^{n}$とする。
+    $X = \sets{0,1}^{n}$とする．
     \begin{equation}
         d_{H}(x,y) = \# \sets{i | x_{i} \neq y_{i}}
     \end{equation}
-    で定めると，これは$X$上の距離関数である。この距離関数は\nw{Hamming距離}と呼ばれる。
+    で定めると，これは$X$上の距離関数である．この距離関数は\nw{Hamming距離}と呼ばれる．
 \end{rei}
 
 \begin{rei}
-    $G = (X,E)$を無向グラフとする。
+    $G = (X,E)$を無向グラフとする．
     $d_{G}(x,y)$を$x$から$y$への最短路の長さとして定義すると，
-    これは$G$上の距離関数である。
+    これは$G$上の距離関数である．
 \end{rei}
 
-以下，$(X,d)$を距離空間とする。
+以下，$(X,d)$を距離空間とする．
 
-\begin{teigi}[内点・外点・境界点・触点]
-    \midashi{1. } $a \in X$，$\varepsilon > 0$とする。集合$N(a,\varepsilon) := \sets{x \in X | d(a,x) < \varepsilon}$を，$a$の\nw{$\varepsilon$-近傍}という。
+\begin{teigi}[内点・外点・境界点・触点]~\par
+    \midashi{1. } $a \in X$，$\varepsilon > 0$とする．集合$N(a,\varepsilon) := \sets{x \in X | d(a,x) < \varepsilon}$を，$a$の\nw{$\varepsilon$-近傍}という．
 
     \midashi{2. } $A \subseteq X$の\nw{内点}とは，次の条件を満たす点$x \in X$のこと：
     \begin{equation}
         \exists \varepsilon > 0, \quad N(x,\varepsilon) \subseteq A
     \end{equation}
-    また，$A$の内点全体の集合$A^{\circ} = \sets{x \in X | N(x, \varepsilon) \subseteq A}$のことを$A$の\nw{内部}という。
+    また，$A$の内点全体の集合$A^{\circ} = \sets{x \in X | N(x, \varepsilon) \subseteq A}$のことを$A$の\nw{内部}という．
 
     \midashi{3. } $A \subseteq X$の\nw{外点}とは，次の条件を満たす点$x \in X$のこと：
     \begin{equation}
         \exists \varepsilon > 0, \quad N(x , \varepsilon ) \cap A = \emptyset
     \end{equation}
-    言い換えると，$A$の補集合の内点のこと。
-    また，$A$の外点全体の集合$(X \setminus A)^{\circ}$を$A$の\nw{外部}という。
+    言い換えると，$A$の補集合の内点のこと．
+    また，$A$の外点全体の集合$(X \setminus A)^{\circ}$を$A$の\nw{外部}という．
 
     \midashi{4. } $A \subseteq X$の\nw{境界点}とは，次の条件を満たす点$x \in X$のこと：
     \begin{equation}
         \forall \varepsilon > 0, \quad N(x, \varepsilon) \cap A \neq \emptyset, \, N(x,\varepsilon) \cap (X \setminus A) \neq \emptyset
     \end{equation}
-    また，$A$の境界点全体の集合のことを$A$の\nw{境界}といい，記号$\partial A$で表す。
+    また，$A$の境界点全体の集合のことを$A$の\nw{境界}といい，記号$\partial A$で表す．
 
-    \midashi{5.} $A \subseteq X$の\nw{触点}とは，次の条件を満たす点$x \in X$のこと：
+    \midashi{5. } $A \subseteq X$の\nw{触点}とは，次の条件を満たす点$x \in X$のこと：
     \begin{equation}
         \forall \varepsilon > 0, \quad N (x,\varepsilon) \cap A \neq \emptyset
     \end{equation}
-    また，$A$の触点全体の集合のことを$A$の\nw{閉包}といい，記号$\overline{A}$で表す。
+    また，$A$の触点全体の集合のことを$A$の\nw{閉包}といい，記号$\overline{A}$で表す．
 \end{teigi}
 
 \begin{figure}[htbp]
@@ -182,9 +172,9 @@
         \draw[dashed] (-30:2) arc (-30:210:2);
         \fill [black!20] (0,0) circle [x radius=1.97, y radius=1.97];
         \draw[thick] (210:2) arc (210:330:2);
-        \draw[<-] (-50:2.1) -- (-50:2.4) node[right] {\bf 外点};
-        \draw (20:0.5) node {\bf 内点};
-        \draw[<-] (160:2.1) -- (160:2.6) node[left] {\bf 境界点};
+        \draw[<-] (-50:2.1) -- (-50:2.4) node[right]{\textbf{外点}};
+        \draw (20:0.5) node{\textbf{内点}};
+        \draw[<-] (160:2.1) -- (160:2.6) node[left]{\textbf{境界点}};
         \draw (45:2.5) node {$A$};
     \end{tikzpicture}
     \caption{$A \subseteq X$の内部，外部，境界}
@@ -195,11 +185,11 @@
 \begin{equation}
     X = A^{\circ} \dcup \partial A \dcup (X \setminus A)^{\circ}
 \end{equation}
-と互いに非交な集合に分解できる。
-また，閉包について，次の二つが成り立つ。
+と互いに非交な集合に分解できる．
+また，閉包について，次の二つが成り立つ．
 \begin{align}
-    & A ^ { \circ } \subseteq A \subseteq \overline { A } \\
-    & \overline { A } = A ^ { \circ } \cup \partial A
+    & A ^ { \circ } \subseteq A \subseteq \overline{A}, \\
+    & \overline { A } = A ^ { \circ } \cup \partial A.
 \end{align}
 
 \begin{teigi}[開集合・閉集合]
@@ -212,16 +202,16 @@
 \end{teigi}
 
 \begin{hodai}
-    $N(x,\varepsilon)$は開集合。特に，$N(x,\varepsilon) = N(x,\varepsilon)^{\circ}$。
+    $N(x,\varepsilon)$は開集合．特に，$N(x,\varepsilon) = N(x,\varepsilon)^{\circ}$．
 \end{hodai}
 
 \begin{proof}
-    $y \in N ( x, \varepsilon)$をとる。$\delta := \varepsilon - d ( x , y ) > 0$とすると，
+    $y \in N ( x, \varepsilon)$をとる．$\delta := \varepsilon - d ( x , y ) > 0$とすると，
     $z \in N(y, \varepsilon)$に対して，三角不等式より
     \begin{equation}
         d(x,z) \le d(x,y) + d(y,z) < \varepsilon
     \end{equation}
-である。よって，$N(y,\delta) \subseteq N(x,\varepsilon)$となる。
+である．よって，$N(y,\delta) \subseteq N(x,\varepsilon)$となる．
 \end{proof}
 
 \begin{prop}
@@ -229,24 +219,24 @@
 \end{prop}
 
 \begin{proof}
-    $\left( A^{\circ} \right)^{\circ} \subseteq A^{\circ}$より，$\supseteq$向きを示す。
-    $x \in A^{\circ}$とする。
+    $\left( A^{\circ} \right)^{\circ} \subseteq A^{\circ}$より，$\supseteq$向きを示す．
+    $x \in A^{\circ}$とする．
     \begin{equation}
        \exists \varepsilon > 0, \quad N(x, \varepsilon) \subseteq A
     \end{equation}
-    である。$N(x, \varepsilon) = N(x, \varepsilon)^{\circ} \subseteq A^{\circ}$，
-    つまり$N(x, \varepsilon) \subseteq A^{\circ}$である。
-    $x \in \left( A^{\circ} \right)^{\circ}$である。
+    である．$N(x, \varepsilon) = N(x, \varepsilon)^{\circ} \subseteq A^{\circ}$，
+    つまり$N(x, \varepsilon) \subseteq A^{\circ}$である．
+    $x \in \left( A^{\circ} \right)^{\circ}$である．
 
-    $\overline{\overline{A}} \subseteq \overline{A}$より，$\subseteq$向きを示す。
-    $x \in \overline{\overline{A}}$とする。
+    $\overline{\overline{A}} \subseteq \overline{A}$より，$\subseteq$向きを示す．
+    $x \in \overline{\overline{A}}$とする．
     \begin{equation}
         \forall \varepsilon > 0, \quad N(x,\varepsilon) \cap \overline{A} \neq \emptyset
     \end{equation}
-    である。$y \in N(x, \varepsilon) \cap \overline{A}$，$\delta := \varepsilon - d(x,y) > 0$とする。
-    $y \in \overline{A}$より$N(y, \delta) \cap A \neq \emptyset$である。
+    である．$y \in N(x, \varepsilon) \cap \overline{A}$，$\delta := \varepsilon - d(x,y) > 0$とする．
+    $y \in \overline{A}$より$N(y, \delta) \cap A \neq \emptyset$である．
     $N(y, \delta) \subseteq N(x,\varepsilon)$より，上と同じロジックで
-    $\emptyset \neq N(y, \delta) \cap A \subseteq N(x, \varepsilon) \cap A$である。よって，$x \in \overline{A}$である。
+    $\emptyset \neq N(y, \delta) \cap A \subseteq N(x, \varepsilon) \cap A$である．よって，$x \in \overline{A}$である．
 \end{proof}
 
 \begin{prop}
@@ -261,15 +251,15 @@
         & \Longleftrightarrow \exists x \in A, \quad \forall \varepsilon > 0, \quad N(x, \varepsilon) \cap (X \setminus A) \neq \emptyset \\
         & \Longleftrightarrow X \setminus A \text{が閉でない}
     \end{align*}
-    ここで2行目の同値性は，$x$は$X \setminus A$の触点であるが$X \setminus A$でないことから従う。
+    ここで2行目の同値性は，$x$は$X \setminus A$の触点であるが$X \setminus A$でないことから従う．
 \end{proof}
 
-開集合全体の集合を\nw{開集合系}といい，記号$\mathcal{O}$で表す。
-閉集合全体の集合を\nw{閉集合系}といい，記号$\mathfrak{A}$で表す。
+開集合全体の集合を\nw{開集合系}といい，記号$\mathcal{O}$で表す．
+閉集合全体の集合を\nw{閉集合系}といい，記号$\mathfrak{A}$で表す．
 
 \begin{prop}
     \label{prop:open_set_axiom}
-    開集合系$\mathcal{O}$について以下が成り立つ。
+    開集合系$\mathcal{O}$について以下が成り立つ．
 
     \midashi{1. } $X \in \mathcal{O}$，$\emptyset \in \mathcal{O}$
 
@@ -281,20 +271,20 @@
 \begin{proof}
     \midashi{1. } obvious.
 
-    \midashi{2. } $x \in O_{1} \cap O_{2} \cap \dots \cap O_{k}$をとる。$i = 1,2,\dots,k$に対して$\varepsilon_{i} > 0$が存在して
+    \midashi{2. } $x \in O_{1} \cap O_{2} \cap \dots \cap O_{k}$をとる．$i = 1,2,\dots,k$に対して$\varepsilon_{i} > 0$が存在して
     \begin{equation}
         N(x_{i}, \varepsilon_{i}) \subseteq O_{i}
     \end{equation}
-    である。${\displaystyle \varepsilon := \min_{i} \varepsilon_{i}}$とすると，
-    $N(x, \varepsilon) \subseteq O_{1} \cap O_{2} \cap \dots \cap O_{k}$である。
-    $x$は$O_{1} \cap O_{2} \cap \dots \cap O_{k}$の内点である。よって，$\left( O_{1} \cap O_{2} \cap \dots \cap O_{k} \right)^{\circ} = O_{1} \cap O_{2} \cap \dots \cap O_{k}$である。
+    である．${\displaystyle \varepsilon := \min_{i} \varepsilon_{i}}$とすると，
+    $N(x, \varepsilon) \subseteq O_{1} \cap O_{2} \cap \dots \cap O_{k}$である．
+    $x$は$O_{1} \cap O_{2} \cap \dots \cap O_{k}$の内点である．よって，$\left( O_{1} \cap O_{2} \cap \dots \cap O_{k} \right)^{\circ} = O_{1} \cap O_{2} \cap \dots \cap O_{k}$である．
 
     \midashi{3. } ${x \in \displaystyle \bigcup_{\lambda \in \Lambda} O_{\lambda}}$とすると，
-    $\exists \lambda \in \Lambda, \quad x \in O_{\lambda}$である。${\displaystyle \exists \varepsilon > 0, \quad N(x, \varepsilon) \subseteq O_{\lambda} \subseteq \bigcup_{\lambda} O_{\lambda}}$とする。
+    $\exists \lambda \in \Lambda, \quad x \in O_{\lambda}$である．${\displaystyle \exists \varepsilon > 0, \quad N(x, \varepsilon) \subseteq O_{\lambda} \subseteq \bigcup_{\lambda} O_{\lambda}}$とする．
 \end{proof}
 
 \begin{prop}
-    閉集合系$\mathfrak{A}$について以下が成り立つ。
+    閉集合系$\mathfrak{A}$について以下が成り立つ．
     
     \midashi{1. } $X \in \mathfrak{A}$，$\emptyset \in \mathfrak{A}$
 
@@ -304,7 +294,7 @@
 \end{prop}
 
 \begin{proof}
-    \midashi{1. } $\mathfrak{A} = \sets{ X \setminus O | O \in \mathcal{O}}$に注意すると明らか。
+    \midashi{1. } $\mathfrak{A} = \sets{ X \setminus O | O \in \mathcal{O}}$に注意すると明らか．
 
     \midashi{2. } $A_{i} = X \setminus O_{i}$とかくと，
     \begin{equation}
@@ -312,12 +302,12 @@
         = (X \setminus O_{1}) \cup (X \setminus O_{2}) \cup \dots \cup (X \setminus O_{k})
         = X \setminus (O_{1} \cap O_{2} \cap \dots \cap O_{k}) \in \mathfrak{A}
     \end{equation}
-    である。
+    である．
 
-    \midashi{3. } ${\displaystyle \bigcap_{\lambda \in \Lambda} A_{\lambda} = \bigcap_{\lambda \in \Lambda} (X \setminus O_{\lambda}) = X \setminus \bigcup_{\lambda \in \Lambda} O_{\lambda}}$であるから従う。
+    \midashi{3. } ${\displaystyle \bigcap_{\lambda \in \Lambda} A_{\lambda} = \bigcap_{\lambda \in \Lambda} (X \setminus O_{\lambda}) = X \setminus \bigcup_{\lambda \in \Lambda} O_{\lambda}}$であるから従う．
 \end{proof}
 
-収束性，連続性なども距離空間で定義できる。
+収束性，連続性なども距離空間で定義できる．
 
 \begin{teigi}[収束性・連続性]
     \midashi{1. } $a_{i} \in X$（$i=1,2,\dots$）：\nw{収束}とは，
@@ -331,23 +321,23 @@
     \end{equation}
 \end{teigi}
 
-では，$X$上の異なる距離$d$，$d'$の下で連続性や収束性も変わるのか。
+では，$X$上の異なる距離$d$，$d'$の下で連続性や収束性も変わるのか．
 
 $\longrightarrow$位相空間の考え方へ
 
 実際，開集合系を与える（空間に「位相」を与える）ことによって，
 連続性や収束性が定義でき，
-開集合系が同じとき，連続性や収束性も等しくなる。
+開集合系が同じとき，連続性や収束性も等しくなる．
 
 \begin{rei}
-    $(\mathbb{R}^{n},d_{2})$と$(\mathbb{R}^{n},d_{\infty})$が定義する開集合系は等しい。（位相は等しい）
+    $(\mathbb{R}^{n},d_{2})$と$(\mathbb{R}^{n},d_{\infty})$が定義する開集合系は等しい．（位相は等しい）
     \begin{proof}
-        $A$：$d_{2}$の下で開集合とする。
-        $x \in A$をとる。$\exists \varepsilon > 0, \quad N_{2}(x,\varepsilon) \subseteq A$である。
-        $\exists c > 0, \quad N_{\infty} (x, c \varepsilon) \subseteq N_{2} (x, \varepsilon) \subseteq A$である。
-        $A$は$d_{\infty}$の下でも開。逆も同様に言える。 
+        $A$：$d_{2}$の下で開集合とする．
+        $x \in A$をとる．$\exists \varepsilon > 0, \quad N_{2}(x,\varepsilon) \subseteq A$である．
+        $\exists c > 0, \quad N_{\infty} (x, c \varepsilon) \subseteq N_{2} (x, \varepsilon) \subseteq A$である．
+        $A$は$d_{\infty}$の下でも開．逆も同様に言える． 
     \end{proof}
-    結局，連続性や収束性はどちらの距離で考えても同じになる。
+    結局，連続性や収束性はどちらの距離で考えても同じになる．
 \end{rei}
 
 \begin{rei}
@@ -359,14 +349,14 @@ $\longrightarrow$位相空間の考え方へ
         \item $\forall u,v \in \mathbb{R}^{n}$，$\left\| u + v \right\| \le \left\| u \right\| + \left\| v \right\|$
         \vspace{-0.5\baselineskip}
     \end{itemize}
-    を満たすものである。このとき，$d(x,y) := \left\| x - y \right\|$で定義すると距離関数である。
+    を満たすものである．このとき，$d(x,y) := \left\| x - y \right\|$で定義すると距離関数である．
 \end{rei}
 
 \midashi{知っておいてほしいこと}
 \begin{itemize}
     \vspace{-0.5\baselineskip}
-    \item $\mathbb{R}^{n}$上のどんなノルムを定める「位相」は等しい。
-    \item 無限次元では，そうはいかない（{\bf らしい}）。
+    \item $\mathbb{R}^{n}$上のどんなノルムを定める「位相」は等しい．
+    \item 無限次元では，そうはいかない（\textbf{らしい}）．
 \end{itemize}
 
 \expandafter\ifx\csname readornot\endcsname\relax
