@@ -8,7 +8,7 @@
 \fi
 
 \section{距離空間}
-
+\subsection{距離空間}
 \begin{teigi}[距離空間]
     $X$を非空な集合，$d \colon X \times X \to \mathbb{R}$を実数値関数とする．次の3つの条件\textbf{D1}，\textbf{D2}，\textbf{D3}を考える．
     
@@ -19,7 +19,7 @@
     $d$が\textbf{D1}，\textbf{D2}，\textbf{D3}の条件を満たすとき，$d$を$X$上の\nw{距離関数}という．また，$X$あるいは$(X,d)$を\nw{距離空間（metric space）}という．
 \end{teigi}
 
-\begin{remark}~\par
+\begin{remark}~\vspace{-0.5\baselineskip}
     \begin{itemize}
         \item \textbf{D2.}は対称性を表し，\textbf{D3.}は三角不等式と呼ばれる．
         \item \textbf{D1.}，\textbf{D2.}，\textbf{D3.}を満たさないような関数として，例えば${d_{2}}^{2}$（2乗距離）がある．
@@ -60,20 +60,16 @@
 \end{rei}
 
 \begin{proof}
-    ここでは$d_{1}$が\textbf{D3.}の三角不等式を満たすことと\textbf{D1.}の零点が対角集合に限られることのみを示す．
-
-    \midashi{\textbullet\;D3.について}
+    ここでは$d_{1}$が\textbf{D3.}の三角不等式を満たすことと\textbf{D1.}の零点が対角集合に限られることのみを示す．\par
+    \midashi{[D3.について]}
     \begin{align*}
         d_{1} (f,h)
         &= \int_{a}^{b} \left| f(t) - h(t) \right| \dx{t} \\
       &\le \int_{a}^{b} \left( \left| f(t) - g(t) \right| + \left| g(t) - h(t) \right| \right) \dx{t} \\
       &\le \int_{a}^{b} \left| f(t) - g(t) \right| \dx{t} +  \int_{a}^{b} \left| g(t) - h(t) \right| \dx{t} \\
-        &= d_{1} (f,g) + d_{1} (g,h)
+        &= d_{1} (f,g) + d_{1} (g,h).
     \end{align*}
-    で従う．
-
-    \midashi{\textbullet\;零点が対角集合に限られることについて}
-
+    \midashi{[零点が対角集合に限られることについて]}\par
     $f = g$ならば$d_{1} (f,g) = 0$は明らかであるので，問題はその逆である．
 
     もし，$f(x) \neq g(x)$ならばある$x_{0} \in [a,b]$で$\left| f(x_{0}) - g(x_{0}) \right|> 0$であり，
@@ -103,28 +99,28 @@
 以下，$(X,d)$を距離空間とする．
 
 \begin{teigi}[内点・外点・境界点・触点]~\par
-    \midashi{1. } $a \in X$，$\varepsilon > 0$とする．集合$N(a,\varepsilon) := \sets{x \in X | d(a,x) < \varepsilon}$を，$a$の\nw{$\varepsilon$-近傍}という．
+    \midashi{(1) } $a \in X$，$\varepsilon > 0$とする．集合$N(a,\varepsilon) := \sets{x \in X | d(a,x) < \varepsilon}$を，$a$の\nw{$\varepsilon$-近傍}という．
 
-    \midashi{2. } $A \subseteq X$の\nw{内点}とは，次の条件を満たす点$x \in X$のこと：
+    \midashi{(2) } $A \subseteq X$の\nw{内点}とは，次の条件を満たす点$x \in X$のこと：
     \begin{equation}
         \exists \varepsilon > 0, \quad N(x,\varepsilon) \subseteq A
     \end{equation}
     また，$A$の内点全体の集合$A^{\circ} = \sets{x \in X | N(x, \varepsilon) \subseteq A}$のことを$A$の\nw{内部}という．
 
-    \midashi{3. } $A \subseteq X$の\nw{外点}とは，次の条件を満たす点$x \in X$のこと：
+    \midashi{(3) } $A \subseteq X$の\nw{外点}とは，次の条件を満たす点$x \in X$のこと：
     \begin{equation}
         \exists \varepsilon > 0, \quad N(x , \varepsilon ) \cap A = \emptyset
     \end{equation}
     言い換えると，$A$の補集合の内点のこと．
     また，$A$の外点全体の集合$(X \setminus A)^{\circ}$を$A$の\nw{外部}という．
 
-    \midashi{4. } $A \subseteq X$の\nw{境界点}とは，次の条件を満たす点$x \in X$のこと：
+    \midashi{(4) } $A \subseteq X$の\nw{境界点}とは，次の条件を満たす点$x \in X$のこと：
     \begin{equation}
         \forall \varepsilon > 0, \quad N(x, \varepsilon) \cap A \neq \emptyset, \, N(x,\varepsilon) \cap (X \setminus A) \neq \emptyset
     \end{equation}
     また，$A$の境界点全体の集合のことを$A$の\nw{境界}といい，記号$\partial A$で表す．
 
-    \midashi{5. } $A \subseteq X$の\nw{触点}とは，次の条件を満たす点$x \in X$のこと：
+    \midashi{(5) } $A \subseteq X$の\nw{触点}とは，次の条件を満たす点$x \in X$のこと：
     \begin{equation}
         \forall \varepsilon > 0, \quad N (x,\varepsilon) \cap A \neq \emptyset
     \end{equation}
@@ -181,24 +177,16 @@
     \label{fig:in_ex_boundary}
 \end{figure}
 
-この定義から，内部，外部，境界点について
-\begin{equation}
-    X = A^{\circ} \dcup \partial A \dcup (X \setminus A)^{\circ}
-\end{equation}
-と互いに非交な集合に分解できる．
+この定義から，内部，外部，境界点について$X = A^{\circ} \dcup \partial A \dcup (X \setminus A)^{\circ}$と互いに非交な集合に分解できる．
 また，閉包について，次の二つが成り立つ．
 \begin{align}
     & A ^ { \circ } \subseteq A \subseteq \overline{A}, \\
     & \overline { A } = A ^ { \circ } \cup \partial A.
 \end{align}
 
-\begin{teigi}[開集合・閉集合]
-    \begin{equation*}
-        \begin{array}{lcccl}
-            A \subseteq X \text{：\nw{開集合}} & \defines & \forall x \in A, \quad \exists \varepsilon > 0, \quad  N(x , \varepsilon ) \subseteq A & \Longleftrightarrow & A = A^{\circ} \\
-            A \subseteq X \text{：\nw{閉集合}} & \defines & 「\forall x \in X, \quad \forall \varepsilon > 0, \quad  N(x , \varepsilon ) \cap A \neq \emptyset \Longrightarrow x \in A」& \Longleftrightarrow & A = \overline{A} \\
-        \end{array}
-    \end{equation*}
+\begin{teigi}[開集合・閉集合]~\par
+    \midashi{(1) } $A \subseteq X \text{：\nw{開集合}}  \defines \;\forall x \in A, \quad \exists \varepsilon > 0, \quad  N(x , \varepsilon ) \subseteq A \iff A = A^{\circ}$\par
+    \midashi{(2) } $A \subseteq X \text{：\nw{閉集合}} \defines \; 「\forall x \in X, \quad \forall \varepsilon > 0, \quad  N(x , \varepsilon ) \cap A \neq \emptyset \Longrightarrow x \in A」\iff A = \overline{A}$
 \end{teigi}
 
 \begin{hodai}
@@ -208,9 +196,9 @@
 \begin{proof}
     $y \in N ( x, \varepsilon)$をとる．$\delta := \varepsilon - d ( x , y ) > 0$とすると，
     $z \in N(y, \varepsilon)$に対して，三角不等式より
-    \begin{equation}
+    \begin{equation*}
         d(x,z) \le d(x,y) + d(y,z) < \varepsilon
-    \end{equation}
+    \end{equation*}
 である．よって，$N(y,\delta) \subseteq N(x,\varepsilon)$となる．
 \end{proof}
 
@@ -221,9 +209,9 @@
 \begin{proof}
     $\left( A^{\circ} \right)^{\circ} \subseteq A^{\circ}$より，$\supseteq$向きを示す．
     $x \in A^{\circ}$とする．
-    \begin{equation}
+    \begin{equation*}
        \exists \varepsilon > 0, \quad N(x, \varepsilon) \subseteq A
-    \end{equation}
+    \end{equation*}
     である．$N(x, \varepsilon) = N(x, \varepsilon)^{\circ} \subseteq A^{\circ}$，
     つまり$N(x, \varepsilon) \subseteq A^{\circ}$である．
     $x \in \left( A^{\circ} \right)^{\circ}$である．
@@ -239,10 +227,9 @@
     $\emptyset \neq N(y, \delta) \cap A \subseteq N(x, \varepsilon) \cap A$である．よって，$x \in \overline{A}$である．
 \end{proof}
 
-\begin{prop}
-    \midashi{1. } $A$：開 $\Longrightarrow$ $X \setminus A$：閉
-
-    \midashi{2. } $A$：閉 $\Longrightarrow$ $X \setminus A$：開
+\begin{prop}~\par
+    \midashi{(1) } $A$：開 $\Longrightarrow$ $X \setminus A$：閉\par
+    \midashi{(2) } $A$：閉 $\Longrightarrow$ $X \setminus A$：開
 \end{prop}
 
 \begin{proof}
@@ -251,7 +238,7 @@
         & \Longleftrightarrow \exists x \in A, \quad \forall \varepsilon > 0, \quad N(x, \varepsilon) \cap (X \setminus A) \neq \emptyset \\
         & \Longleftrightarrow X \setminus A \text{が閉でない}
     \end{align*}
-    ここで2行目の同値性は，$x$は$X \setminus A$の触点であるが$X \setminus A$でないことから従う．
+    ここで2行目の同値性は，$x$は$X \setminus A$の触点であるが$X \setminus A$の元でないことから従う．
 \end{proof}
 
 開集合全体の集合を\nw{開集合系}といい，記号$\mathcal{O}$で表す．
@@ -259,63 +246,57 @@
 
 \begin{prop}
     \label{prop:open_set_axiom}
-    開集合系$\mathcal{O}$について以下が成り立つ．
-
-    \midashi{1. } $X \in \mathcal{O}$，$\emptyset \in \mathcal{O}$
-
-    \midashi{2. } $O_{1}, O_{2}, \cdots, O_{k} \in \mathcal{O} \Longrightarrow O_{1} \cap O_{2} \cap \cdots \cap O_{k} \in \mathcal{O}$
-
-    \midashi{3. } 任意の集合$\Lambda$に対して$O_{\lambda} \in \mathcal{O}$（$\forall \lambda \in \Lambda$） ${\displaystyle \Longrightarrow \bigcup_{\lambda \in \Lambda} O_{\lambda} \in \mathcal{O}}$
+    開集合系$\mathcal{O}$について以下が成り立つ．\par
+    \midashi{(1) } $X \in \mathcal{O}$，$\emptyset \in \mathcal{O}$\par
+    \midashi{(2) } $O_{1}, O_{2}, \cdots, O_{k} \in \mathcal{O} \Longrightarrow O_{1} \cap O_{2} \cap \cdots \cap O_{k} \in \mathcal{O}$\par
+    \midashi{(3) } 任意の集合$\Lambda$に対して$O_{\lambda} \in \mathcal{O}$（$\forall \lambda \in \Lambda$） ${\displaystyle \Longrightarrow \bigcup_{\lambda \in \Lambda} O_{\lambda} \in \mathcal{O}}$
 \end{prop}
 
 \begin{proof}
-    \midashi{1. } obvious.
+    \midashi{(1) } obvious.
 
-    \midashi{2. } $x \in O_{1} \cap O_{2} \cap \dots \cap O_{k}$をとる．$i = 1,2,\dots,k$に対して$\varepsilon_{i} > 0$が存在して
-    \begin{equation}
+    \midashi{(2) } $x \in O_{1} \cap O_{2} \cap \dots \cap O_{k}$をとる．$i = 1,2,\dots,k$に対して$\varepsilon_{i} > 0$が存在して
+    \begin{equation*}
         N(x_{i}, \varepsilon_{i}) \subseteq O_{i}
-    \end{equation}
+    \end{equation*}
     である．${\displaystyle \varepsilon := \min_{i} \varepsilon_{i}}$とすると，
     $N(x, \varepsilon) \subseteq O_{1} \cap O_{2} \cap \dots \cap O_{k}$である．
     $x$は$O_{1} \cap O_{2} \cap \dots \cap O_{k}$の内点である．よって，$\left( O_{1} \cap O_{2} \cap \dots \cap O_{k} \right)^{\circ} = O_{1} \cap O_{2} \cap \dots \cap O_{k}$である．
 
-    \midashi{3. } ${x \in \displaystyle \bigcup_{\lambda \in \Lambda} O_{\lambda}}$とすると，
+    \midashi{(3) } ${x \in \displaystyle \bigcup_{\lambda \in \Lambda} O_{\lambda}}$とすると，
     $\exists \lambda \in \Lambda, \quad x \in O_{\lambda}$である．${\displaystyle \exists \varepsilon > 0, \quad N(x, \varepsilon) \subseteq O_{\lambda} \subseteq \bigcup_{\lambda} O_{\lambda}}$とする．
 \end{proof}
 
 \begin{prop}
-    閉集合系$\mathfrak{A}$について以下が成り立つ．
-    
-    \midashi{1. } $X \in \mathfrak{A}$，$\emptyset \in \mathfrak{A}$
-
-    \midashi{2. } $A_{1}, A_{2}, \cdots, A_{k} \in \mathfrak{A} \Longrightarrow A_{1} \cup A_{2} \cup \cdots \cup A_{k} \in \mathfrak{A}$
-
-    \midashi{3. } 任意の集合$\Lambda$に対して$A_{\lambda} \in \mathfrak{A}$（$\forall \lambda \in \Lambda$） ${\displaystyle \Longrightarrow \bigcap_{\lambda \in \Lambda} A_{\lambda} \in \mathfrak{A}}$
+    閉集合系$\mathfrak{A}$について以下が成り立つ．\par
+    \midashi{(1) } $X \in \mathfrak{A}$，$\emptyset \in \mathfrak{A}$\par
+    \midashi{(2) } $A_{1}, A_{2}, \cdots, A_{k} \in \mathfrak{A} \Longrightarrow A_{1} \cup A_{2} \cup \cdots \cup A_{k} \in \mathfrak{A}$\par
+    \midashi{(3) } 任意の集合$\Lambda$に対して$A_{\lambda} \in \mathfrak{A}$（$\forall \lambda \in \Lambda$） ${\displaystyle \Longrightarrow \bigcap_{\lambda \in \Lambda} A_{\lambda} \in \mathfrak{A}}$
 \end{prop}
 
 \begin{proof}
-    \midashi{1. } $\mathfrak{A} = \sets{ X \setminus O | O \in \mathcal{O}}$に注意すると明らか．
+    \midashi{(1) } $\mathfrak{A} = \sets{ X \setminus O | O \in \mathcal{O}}$に注意すると明らか．
 
-    \midashi{2. } $A_{i} = X \setminus O_{i}$とかくと，
-    \begin{equation}
+    \midashi{(2) } $A_{i} = X \setminus O_{i}$とかくと，
+    \begin{equation*}
         A_{1} \cup A_{2} \cup \dots \cup A_{k}
         = (X \setminus O_{1}) \cup (X \setminus O_{2}) \cup \dots \cup (X \setminus O_{k})
         = X \setminus (O_{1} \cap O_{2} \cap \dots \cap O_{k}) \in \mathfrak{A}
-    \end{equation}
+    \end{equation*}
     である．
 
-    \midashi{3. } ${\displaystyle \bigcap_{\lambda \in \Lambda} A_{\lambda} = \bigcap_{\lambda \in \Lambda} (X \setminus O_{\lambda}) = X \setminus \bigcup_{\lambda \in \Lambda} O_{\lambda}}$であるから従う．
+    \midashi{(3) } ${\displaystyle \bigcap_{\lambda \in \Lambda} A_{\lambda} = \bigcap_{\lambda \in \Lambda} (X \setminus O_{\lambda}) = X \setminus \bigcup_{\lambda \in \Lambda} O_{\lambda}}$であるから従う．
 \end{proof}
 
 収束性，連続性なども距離空間で定義できる．
 
 \begin{teigi}[収束性・連続性]
-    \midashi{1. } $a_{i} \in X$（$i=1,2,\dots$）：\nw{収束}とは，
+    \midashi{(1) } $a_{i} \in X$（$i=1,2,\dots$）：\nw{収束}とは，
     \begin{equation}
         \lim_{i \to \infty} a_{i} = a \defines \lim_{i \to \infty} d(a, a_{i}) = 0
     \end{equation}
     
-    \midashi{2. } $f:X \longrightarrow \mathbb{R}$が$a \in X$で\nw{連続}とは，
+    \midashi{(2) } $f:X \longrightarrow \mathbb{R}$が$a \in X$で\nw{連続}とは，
     \begin{equation}
         \forall \varepsilon > 0, \quad \exists \delta > 0, d(a,x) < \delta \Longrightarrow \left| f(a) - f(x) \right| < \varepsilon
     \end{equation}
@@ -349,7 +330,7 @@ $\longrightarrow$位相空間の考え方へ
         \item $\forall u,v \in \mathbb{R}^{n}$，$\left\| u + v \right\| \le \left\| u \right\| + \left\| v \right\|$
         \vspace{-0.5\baselineskip}
     \end{itemize}
-    を満たすものである．このとき，$d(x,y) := \left\| x - y \right\|$で定義すると距離関数である．
+    を満たすものである．このとき，$d(x,y) := \left\| x - y \right\|$で定義するとこれは距離関数である．
 \end{rei}
 
 \midashi{知っておいてほしいこと}
